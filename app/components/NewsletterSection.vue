@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import { Badge as ShadBadge } from '~/components/ui/badge'
 import { Button as ShadButton } from '~/components/ui/button'
+
+const { t } = useI18n()
 </script>
 
 <template>
@@ -11,13 +13,14 @@ import { Button as ShadButton } from '~/components/ui/button'
     </div>
     <div>
       <p class="eyebrow">
-        THE COMPENDIUM LETTER
-        <ShadBadge variant="outline" class="soon-tag">COMING SOON</ShadBadge>
+        {{ t('newsletter.eyebrow') }}
+        <ShadBadge variant="outline" class="soon-tag">{{
+          t('newsletter.soon')
+        }}</ShadBadge>
       </p>
-      <h2>Keep the connections coming.</h2>
+      <h2>{{ t('newsletter.title') }}</h2>
       <p>
-        Ecosystem discoveries, useful bridges, and guides worth opening.<br />A
-        thoughtful Scala read, in the making.
+        {{ t('newsletter.body') }}
       </p>
     </div>
     <div class="newsletter-action">
@@ -26,8 +29,9 @@ import { Button as ShadButton } from '~/components/ui/button'
         size="content"
         class="button"
         href="https://github.com/yuri4n/the-scala-compendium/issues/new?title=Newsletter%20topic%20suggestion"
-        >Shape the first issue <UIcon name="i-lucide-arrow-right" /></ShadButton
-      ><small>Email subscriptions are not open yet.</small>
+        >{{ t('newsletter.action') }}
+        <UIcon name="i-lucide-arrow-right" /></ShadButton
+      ><small>{{ t('newsletter.status') }}</small>
     </div>
   </section>
 </template>

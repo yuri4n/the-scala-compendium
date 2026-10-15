@@ -1,9 +1,16 @@
+<script setup lang="ts">
+const { t } = useI18n()
+const localePath = useLocalePath()
+</script>
+
 <template>
-  <footer>
-    <a class="footer-brand" href="#">The Scala Compendium.</a>
-    <p>One language. Many ways forward.</p>
+  <footer class="site-footer">
+    <NuxtLink class="footer-brand" :to="localePath('/')"
+      >The Scala Compendium.</NuxtLink
+    >
+    <p>{{ t('site.footer') }}</p>
     <a href="https://github.com/yuri4n/the-scala-compendium"
-      >Built in the open <UIcon name="i-lucide-arrow-up-right"
+      >{{ t('site.open') }}<UIcon name="i-lucide-arrow-up-right"
     /></a>
   </footer>
 </template>

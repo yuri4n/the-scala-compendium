@@ -1,0 +1,465 @@
+[
+  {
+    "id": "start-scala",
+    "title": "Start a Scala project",
+    "audience": "Newcomers and developers returning to Scala",
+    "summary": "Build a small, tested application before choosing a larger ecosystem.",
+    "outcome": "A runnable project, a working editor, and a first test you can extend.",
+    "prerequisites": [
+      "Basic familiarity with programming concepts such as functions and variables.",
+      "A JDK supported by your chosen Scala version and build tool."
+    ],
+    "steps": [
+      {
+        "title": "Learn the shared language",
+        "body": "Start with functions, collections, case classes, pattern matching, and Option or Either. Write a small transformation of ordinary data. These foundations carry across Scala ecosystems and let you separate domain logic from concurrency and I/O."
+      },
+      {
+        "title": "Run and inspect a small project",
+        "body": "Use Scala CLI to compile and run a small program with explicit dependencies. Open it in Metals or IntelliJ, check that navigation and compiler diagnostics work, and run one unit test from both the terminal and editor."
+      },
+      {
+        "title": "Choose tools around the project",
+        "body": "For a team codebase, begin with its existing build tool and conventions. Record its Scala version, JDK, target platforms, and test command. Add an HTTP, database, or effect library when a concrete requirement makes its role clear."
+      }
+    ],
+    "decisions": [
+      "Scala CLI is useful for learning and small programs; an established sbt or Mill build may already solve your team's needs.",
+      "Scala 2 and Scala 3 dependency coordinates and compiler plugins can differ. Check the version and platform before adding a library."
+    ],
+    "resources": [
+      {
+        "label": "Scala 3 Book",
+        "url": "https://docs.scala-lang.org/scala3/book/introduction.html"
+      },
+      {
+        "label": "Scala CLI getting started",
+        "url": "https://scala-cli.virtuslab.org/docs/getting_started/"
+      },
+      {
+        "label": "Scala IDEs",
+        "url": "https://docs.scala-lang.org/getting-started/scala-ides.html"
+      }
+    ],
+    "related": [
+      "scala-cli",
+      "metals",
+      "munit"
+    ]
+  },
+  {
+    "id": "build-http-api",
+    "title": "Build an HTTP API",
+    "audience": "Service developers and teams connecting applications",
+    "summary": "Choose a server around your application, then implement one complete request path.",
+    "outcome": "A tested endpoint with explicit input validation, errors, and resource ownership.",
+    "prerequisites": [
+      "A Scala project that builds and runs tests.",
+      "A basic understanding of HTTP requests, responses, and status codes."
+    ],
+    "steps": [
+      {
+        "title": "Start with the service's runtime",
+        "body": "Keep the runtime already used by an existing service unless there is a reason to change it. For a new service, compare http4s with Cats Effect, ZIO HTTP with ZIO, or a broader framework such as Play against the team's requirements and experience."
+      },
+      {
+        "title": "Describe the HTTP boundary",
+        "body": "Define request inputs, successful outputs, and domain errors before wiring the endpoint. Tapir can describe these contracts and generate documentation across supported server interpreters. Choose the interpreter that matches your server and business-logic effect type."
+      },
+      {
+        "title": "Build and test one vertical slice",
+        "body": "Decode and validate input, call application logic, map failures to responses, and test the result. Include malformed input and a failed dependency. Give HTTP clients, connection pools, and the server explicit lifetimes so shutdown releases resources."
+      }
+    ],
+    "decisions": [
+      "Tapir shares endpoint descriptions across interpreters; it does not automatically convert arbitrary business logic between effect runtimes.",
+      "Check streaming, WebSocket, multipart, and platform support on the selected backend before committing to an integration."
+    ],
+    "resources": [
+      {
+        "label": "Tapir server integrations",
+        "url": "https://tapir.softwaremill.com/en/latest/server/overview.html"
+      },
+      {
+        "label": "http4s documentation",
+        "url": "https://http4s.org/"
+      },
+      {
+        "label": "ZIO HTTP documentation",
+        "url": "https://zio.dev/zio-http/"
+      }
+    ],
+    "related": [
+      "tapir",
+      "http4s",
+      "zio-http",
+      "cats-effect",
+      "zio",
+      "scala-future"
+    ]
+  },
+  {
+    "id": "query-data",
+    "title": "Work with databases and data",
+    "audience": "Backend developers, data engineers, and application teams",
+    "summary": "Separate service database access from distributed analytical processing.",
+    "outcome": "A data access path with deliberate transactions, resource limits, and integration tests.",
+    "prerequisites": [
+      "Basic SQL or familiarity with the data format you will process.",
+      "A local database, test database, or representative dataset."
+    ],
+    "steps": [
+      {
+        "title": "Identify the workload",
+        "body": "Decide whether you need transactional queries for an application, a local ingestion pipeline, or distributed analytical processing. A JDBC-backed service and a Spark job have different execution, deployment, and operational needs. Start with the smallest model that fits the workload."
+      },
+      {
+        "title": "Choose how to express queries",
+        "body": "For SQL access, compare a SQL-first library such as Doobie with a query DSL such as Quill or Slick. Check the database driver, supported dialect, Scala version, and runtime integration. For Spark, follow the compatibility and deployment requirements of the Spark release you use."
+      },
+      {
+        "title": "Make correctness operational",
+        "body": "Specify transaction boundaries, connection-pool ownership, and concurrency limits. Test queries and schema migrations against the database you deploy. For batch processing, include representative data, malformed records, and reruns so retries do not silently duplicate results."
+      }
+    ],
+    "decisions": [
+      "A query DSL and a database driver solve different problems. Verify which backend executes the generated query and manages its resources.",
+      "Distributed processing adds cluster and data-partitioning concerns; it is a separate decision from choosing an application's effect runtime."
+    ],
+    "resources": [
+      {
+        "label": "Doobie documentation",
+        "url": "https://typelevel.org/doobie/"
+      },
+      {
+        "label": "ZIO Quill documentation",
+        "url": "https://zio.dev/zio-quill/"
+      },
+      {
+        "label": "Spark SQL guide",
+        "url": "https://spark.apache.org/docs/latest/sql-programming-guide.html"
+      }
+    ],
+    "related": [
+      "doobie",
+      "quill",
+      "spark",
+      "fs2",
+      "zio-streams"
+    ]
+  },
+  {
+    "id": "process-streams",
+    "title": "Process streams and messages",
+    "audience": "Developers building pipelines, feeds, queues, and distributed services",
+    "summary": "Choose stream processing, actors, and clustering according to the problem each solves.",
+    "outcome": "A pipeline whose demand, failure, and shutdown behavior you can explain.",
+    "prerequisites": [
+      "A concrete source and destination for the data or messages.",
+      "Basic knowledge of asynchronous work and the runtime used by your application."
+    ],
+    "steps": [
+      {
+        "title": "Separate the architectural requirements",
+        "body": "A local processing pipeline, message-driven state, and a distributed cluster are different needs. Decide which ones your application actually has. Actors can organize stateful components, while streams organize data flow; neither choice automatically requires a cluster."
+      },
+      {
+        "title": "Choose a stream library that fits",
+        "body": "Start with FS2 for a Cats Effect stack, ZIO Streams for ZIO, or Kyo Stream for Kyo. In an existing actor stack, consider Akka Streams or Pekko Streams. Check the connectors you need and document any protocol adapter between stream implementations."
+      },
+      {
+        "title": "Specify demand and delivery behavior",
+        "body": "Bound concurrency and buffering, decide how failures restart or stop processing, and test shutdown while work is active. With a broker, inspect acknowledgement and offset-commit behavior separately. Backpressure within a stream does not by itself establish end-to-end delivery guarantees."
+      }
+    ],
+    "decisions": [
+      "Akka and Apache Pekko are distinct ecosystems. Match documentation, dependencies, connectors, and operational tools to the one you deploy.",
+      "A Reactive Streams adapter exchanges elements and demand; check cancellation, resource ownership, and failure translation at the boundary."
+    ],
+    "resources": [
+      {
+        "label": "FS2 guide",
+        "url": "https://fs2.io/#/guide"
+      },
+      {
+        "label": "Apache Pekko Streams",
+        "url": "https://pekko.apache.org/docs/pekko/current/stream/index.html"
+      },
+      {
+        "label": "Akka Streams",
+        "url": "https://doc.akka.io/libraries/akka-core/current/stream/index.html"
+      }
+    ],
+    "related": [
+      "fs2",
+      "zio-streams",
+      "kyo-stream",
+      "akka-typed",
+      "pekko-typed"
+    ]
+  },
+  {
+    "id": "build-browser-ui",
+    "title": "Build for the browser",
+    "audience": "Frontend developers and teams sharing Scala domain code",
+    "summary": "Use Scala.js with a clear boundary between portable code, browser APIs, and server resources.",
+    "outcome": "A browser interface connected to a server through an explicit HTTP contract.",
+    "prerequisites": [
+      "Basic HTML, browser events, and HTTP knowledge.",
+      "A Scala.js-compatible build with the JavaScript tooling its tutorial requires."
+    ],
+    "steps": [
+      {
+        "title": "Learn the JavaScript boundary",
+        "body": "Run the Scala.js tutorial and inspect the generated application in a browser. Learn how dependencies are published for Scala.js and how Scala code calls JavaScript APIs. A JVM library is not automatically available in the browser."
+      },
+      {
+        "title": "Build a small interactive interface",
+        "body": "Use Laminar or another Scala.js UI framework to render state and respond to events. Keep DOM operations and browser-specific APIs separate from portable models and validation. Test a real interaction before expanding the interface."
+      },
+      {
+        "title": "Connect through a deliberate contract",
+        "body": "Define the HTTP requests, responses, and failures shared with the server. Share compatible source or generated models where useful, and test serialization on both sides. Database connections, server resources, and server runtimes stay behind the network boundary."
+      }
+    ],
+    "decisions": [
+      "Check each dependency's Scala.js and browser support; Scala version compatibility alone does not establish platform compatibility.",
+      "Sharing domain models can reduce duplication, but it does not remove versioning, authentication, or network-failure concerns."
+    ],
+    "resources": [
+      {
+        "label": "Scala.js basic tutorial",
+        "url": "https://www.scala-js.org/doc/tutorial/basic/"
+      },
+      {
+        "label": "Laminar documentation",
+        "url": "https://laminar.dev/documentation"
+      },
+      {
+        "label": "Tapir documentation",
+        "url": "https://tapir.softwaremill.com/"
+      }
+    ],
+    "related": [
+      "scala-js",
+      "laminar",
+      "tapir"
+    ]
+  },
+  {
+    "id": "test-behavior",
+    "title": "Test behavior and failure",
+    "audience": "Library authors and application teams in every ecosystem",
+    "summary": "Combine small examples, useful properties, and tests of resource and failure boundaries.",
+    "outcome": "A focused test suite that explains expected behavior and checks important failure paths.",
+    "prerequisites": [
+      "A repeatable command that compiles and tests the project.",
+      "One behavior or invariant that the application must preserve."
+    ],
+    "steps": [
+      {
+        "title": "Start with domain behavior",
+        "body": "Use MUnit or ScalaTest to check ordinary functions and important examples. Keep pure domain tests independent of the application runtime when practical. Prefer assertions about externally visible behavior over assertions that repeat an implementation's internal steps."
+      },
+      {
+        "title": "Add properties where they help",
+        "body": "Use ScalaCheck or your framework's property support for invariants, parsers, codecs, and transformations. Choose generators that represent valid and invalid inputs deliberately. Keep example tests for edge cases that must remain easy to understand and reproduce."
+      },
+      {
+        "title": "Exercise asynchronous boundaries",
+        "body": "Use your runtime's testing support for time, fibers, and scoped resources. Test cleanup after failure and cancellation, plus the behavior of external integrations. ZIO Test and Kyo's documented test modules provide ecosystem-specific support; use the integration intended for your computation type."
+      }
+    ],
+    "decisions": [
+      "A controlled test clock helps with timing logic, but integration tests still need to verify the real external system's behavior.",
+      "Property tests complement concrete examples. A large number of generated inputs does not compensate for a weak or incorrect property."
+    ],
+    "resources": [
+      {
+        "label": "MUnit getting started",
+        "url": "https://scalameta.org/munit/docs/getting-started.html"
+      },
+      {
+        "label": "ScalaCheck",
+        "url": "https://github.com/typelevel/scalacheck"
+      },
+      {
+        "label": "ZIO Test documentation",
+        "url": "https://zio.dev/zio-test/"
+      }
+    ],
+    "related": [
+      "munit",
+      "scalacheck",
+      "kyo-test",
+      "zio",
+      "cats-effect"
+    ]
+  },
+  {
+    "id": "modernize-scala",
+    "title": "Modernize an existing application",
+    "audience": "Teams migrating Scala versions, libraries, and infrastructure",
+    "summary": "Build a compatibility inventory and make changes in bounded, testable stages.",
+    "outcome": "A migration plan with explicit dependency checks, verification steps, and deployment boundaries.",
+    "prerequisites": [
+      "A working baseline build and tests for the current application.",
+      "An inventory of deployed versions, external integrations, and persisted data formats."
+    ],
+    "steps": [
+      {
+        "title": "Record the compatibility constraints",
+        "body": "Inventory the Scala and JDK versions, macros, compiler plugins, frameworks, and deployment targets. Identify which dependencies supply public types or persisted formats. Make the existing build and tests repeatable before changing the language or runtime."
+      },
+      {
+        "title": "Port the language in stages",
+        "body": "For Scala 2.13 to Scala 3, check library availability, macro implementations, compiler-plugin replacements, and scala-reflect usage. Follow the official migration workflow and move a bounded module first. Existing Scala 2 compatibility does not guarantee that macros or plugins will work unchanged."
+      },
+      {
+        "title": "Separate infrastructure changes",
+        "body": "Treat an effect-runtime replacement or Akka-to-Pekko migration as its own project. Audit configuration, serializers, persistence plugins, and operational tooling. Rehearse state recovery and deployment behavior in a representative environment before changing production components."
+      }
+    ],
+    "decisions": [
+      "Changing the language, runtime, and deployment architecture together makes failures harder to isolate. Choose an order that preserves a useful baseline.",
+      "The baseline Akka-to-Pekko guide targets Akka 2.6 to Pekko 1.0. Check additional guides for your actual target release and do not assume mixed-cluster compatibility."
+    ],
+    "resources": [
+      {
+        "label": "Scala 3 migration tutorial",
+        "url": "https://docs.scala-lang.org/scala3/guides/migration/tutorial-intro.html"
+      },
+      {
+        "label": "Scala 3 migration prerequisites",
+        "url": "https://docs.scala-lang.org/scala3/guides/migration/tutorial-prerequisites.html"
+      },
+      {
+        "label": "Akka to Apache Pekko migration",
+        "url": "https://pekko.apache.org/docs/pekko/current/migration/migration-guide-akka-1.0.x.html"
+      }
+    ],
+    "related": [
+      "metals",
+      "akka-typed",
+      "pekko-typed",
+      "zio-cats",
+      "kyo-zio"
+    ]
+  },
+  {
+    "id": "write-tools",
+    "title": "Write scripts and direct-style tools",
+    "audience": "Developers automating work or building command-line applications",
+    "summary": "Start with straightforward Scala and add concurrency when the workload benefits from it.",
+    "outcome": "A small tool with explicit dependencies, useful errors, and a repeatable way to run it.",
+    "prerequisites": [
+      "A concrete automation task and representative input.",
+      "Scala CLI or another build tool configured for the intended deployment environment."
+    ],
+    "steps": [
+      {
+        "title": "Keep the first version small",
+        "body": "Use Scala CLI and the standard library to implement the main transformation. Add focused utilities such as os-lib for filesystem and process operations. Keep the inputs, outputs, and side effects obvious so the tool remains easy to inspect."
+      },
+      {
+        "title": "Make execution predictable",
+        "body": "Pin dependencies, validate arguments, and report failures with useful messages and exit behavior. Test the core transformation independently of file or process access. Choose how users will run or package the tool before relying on machine-specific configuration."
+      },
+      {
+        "title": "Add structured concurrency deliberately",
+        "body": "Keep operations sequential until parallel work is useful. If tasks need shared lifetimes, cancellation, and cleanup, evaluate structured concurrency. Ox provides direct-style concurrency and streams for Scala 3 on JDK 21+; verify that those requirements match the machines running your tool."
+      }
+    ],
+    "decisions": [
+      "A small sequential program may already meet the requirement. Concurrency adds resource limits and failure-propagation decisions that need explicit ownership.",
+      "JVM virtual-thread libraries and browser or native deployments have different constraints. Confirm the target platform before adopting a concurrency model."
+    ],
+    "resources": [
+      {
+        "label": "Scala CLI getting started",
+        "url": "https://scala-cli.virtuslab.org/docs/getting_started/"
+      },
+      {
+        "label": "os-lib",
+        "url": "https://github.com/com-lihaoyi/os-lib"
+      },
+      {
+        "label": "Ox documentation",
+        "url": "https://ox.softwaremill.com/"
+      }
+    ],
+    "related": [
+      "scala-cli",
+      "ox",
+      "scala-future",
+      "kyo"
+    ]
+  },
+  {
+    "id": "connect-ecosystems",
+    "title": "Connect ecosystems deliberately",
+    "audience": "Teams integrating libraries or evolving an existing stack",
+    "summary": "Distinguish typeclass support, effect bridges, asynchronous boundaries, shared descriptions, and migrations.",
+    "outcome": "An integration boundary with documented requirements, failure behavior, and resource ownership.",
+    "prerequisites": [
+      "The exact source and target libraries, versions, and deployment platforms.",
+      "A clear owner for execution, cancellation, resources, and error translation at the boundary."
+    ],
+    "steps": [
+      {
+        "title": "Use a Cats Effect library from ZIO",
+        "body": "First check whether the library is polymorphic in its effect type and which Cats Effect capabilities it requires. zio-interop-cats supplies supported typeclass instances for ZIO, enabling integrations with libraries such as FS2 and Doobie. Align dependency versions, provide required environments, and test cleanup and cancellation. This does not make every library hard-coded to cats.effect.IO accept an arbitrary ZIO[R, E, A]."
+      },
+      {
+        "title": "Call ZIO from Kyo, or Kyo from ZIO",
+        "body": "Use kyo-zio at a deliberate boundary and choose its effect, stream, or layer API for the value being adapted. Provide a ZIO effect's environment before lifting it into Kyo. Test interruption and finalization in both directions. Typed failures are mapped, but compound ZIO Cause structures collapse to a single Kyo error, so diagnostic information is not identical across the boundary."
+      },
+      {
+        "title": "Wrap an API that returns Future",
+        "body": "Construct the Future inside the target runtime's documented suspension or interop operation. Keep the API's ExecutionContext and blocking policy explicit, and map failures where they enter the application. Wrapping a Future does not add cancellation to the underlying operation: document whether that work can be stopped independently. Keep blocking waits out of request and stream-processing paths."
+      },
+      {
+        "title": "Share HTTP endpoint descriptions",
+        "body": "Use Tapir to describe inputs, outputs, and errors, then select the interpreter for your HTTP server. Supply business logic in the form that interpreter expects. Verify its streaming, WebSocket, multipart, and platform support. Sharing an endpoint description does not convert arbitrary application code between ZIO, Cats Effect, Future, or direct style."
+      },
+      {
+        "title": "Migrate an Akka service to Apache Pekko",
+        "body": "Follow the migration guides for your source and target versions. Audit artifact coordinates, imports, configuration prefixes, remoting addresses, serializers, persistence plugins, and operational tooling. Rehearse state recovery and deployment before changing production nodes. The baseline guide covers Akka 2.6 to Pekko 1.0; shared ancestry does not establish drop-in or mixed-cluster compatibility for other releases."
+      }
+    ],
+    "decisions": [
+      "Choose the narrowest documented integration that preserves the behavior you need. Typeclass instances, effect conversion, and protocol adapters are different mechanisms.",
+      "Check cancellation, resource finalization, typed errors, and diagnostic information explicitly. Successful compilation does not establish equivalent runtime behavior."
+    ],
+    "resources": [
+      {
+        "label": "ZIO interop with Cats",
+        "url": "https://github.com/zio/interop-cats"
+      },
+      {
+        "label": "Kyo and ZIO bridge",
+        "url": "https://github.com/getkyo/kyo/tree/main/kyo-zio"
+      },
+      {
+        "label": "Scala Futures and Promises",
+        "url": "https://docs.scala-lang.org/overviews/core/futures.html"
+      },
+      {
+        "label": "Tapir server integrations",
+        "url": "https://tapir.softwaremill.com/en/latest/server/overview.html"
+      },
+      {
+        "label": "Akka to Apache Pekko migration",
+        "url": "https://pekko.apache.org/docs/pekko/current/migration/migration-guide-akka-1.0.x.html"
+      }
+    ],
+    "related": [
+      "zio-cats",
+      "kyo-zio",
+      "scala-future",
+      "tapir",
+      "akka-typed",
+      "pekko-typed"
+    ]
+  }
+]

@@ -14,8 +14,9 @@ The official `@vercel/analytics/nuxt` module is already registered. It injects
 the client script and tracks Nuxt page navigation. Analytics collection is
 only verified after the deployed service is enabled and receives traffic.
 
-Vercel supplies the production URL used by the shared site configuration. If
-using a custom domain, set `NUXT_SITE_URL` to that public canonical URL.
+The app uses `https://the-scala-compendium.vercel.app` as its canonical URL
+for all languages, including preview builds. If using a custom domain, set
+`NUXT_SITE_URL` to that public canonical URL before rebuilding.
 
 The dashboard route does not require a `VERCEL_TOKEN` in this cloud environment.
 The optional CLI connection requirement was prepared before the owner chose

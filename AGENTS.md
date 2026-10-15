@@ -7,7 +7,7 @@ These instructions are for AI agents that work in this repository. They use ASD-
 This repository holds the app The Scala Compendium (package name `the-scala-compendium`).
 
 - Stack: Nuxt 4.6, Nuxt UI 4, Tailwind CSS 4 (through Nuxt UI), TypeScript 6, pnpm 10.34.6, Node 24.
-- The app extends two layers of the yuri4n.dev library: `@yuri4n/nuxt-ui` and `@yuri4n/nuxt-base`.
+- The app extends three layers of the yuri4n.dev library: `@yuri4n/nuxt-preferences`, `@yuri4n/nuxt-ui`, and `@yuri4n/nuxt-base`.
 - Node: `mise.toml` pins `node = "24"`, and `package.json` sets `engines.node` to `24.x`. Do not change them to `lts` or `latest`. `lts` becomes Node 26 in late October 2026. Vercel has no Node 26 runtime. Nuxt 4.6 needs Node `^24.15.0` on the 24 line.
 
 ## 2. Commands

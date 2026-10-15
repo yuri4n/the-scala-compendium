@@ -1,10 +1,10 @@
 <script setup lang="ts">
 import type { AtlasItem } from '~~/shared/utils/atlas'
-import { ecosystemNames, maintainerNames } from '~~/shared/utils/atlas'
 import { Badge as ShadBadge } from '~/components/ui/badge'
 import { Button as ShadButton } from '~/components/ui/button'
 
 const { item } = defineProps<{ item: AtlasItem | undefined }>()
+const { t, ecosystemLabel, maintainerLabel, statusLabel } = useAtlasContent()
 </script>
 
 <template>
@@ -14,25 +14,29 @@ const { item } = defineProps<{ item: AtlasItem | undefined }>()
         <div class="detail-symbol" :class="[item.kind, item.ecosystems[0]]">
           <UIcon
             :name="
-              item.kind === 'library' ? 'i-lucide-book-open' : 'i-lucide-link'
+              item.kind === 'tool'
+                ? 'i-lucide-wrench'
+                : item.kind === 'library'
+                  ? 'i-lucide-book-open'
+                  : 'i-lucide-link'
             "
           />
         </div>
         <span class="detail-kind">{{
           item.kind === 'bridge'
-            ? 'Community bridge'
+            ? t('atlas.bridge')
             : item.kind === 'proposal'
-              ? 'Proposed guide'
+              ? t('atlas.proposal')
               : item.category
         }}</span>
         <h2>{{ item.name }}</h2>
         <p v-if="item.maintainer" class="detail-byline">
-          By {{ maintainerNames[item.maintainer] }}
+          {{ t('details.by', { name: maintainerLabel(item.maintainer) }) }}
           <ShadBadge
             v-if="item.status"
             variant="outline"
             class="project-status"
-            >{{ item.status }}</ShadBadge
+            >{{ statusLabel(item.status) }}</ShadBadge
           >
         </p>
         <div class="membership">
@@ -45,7 +49,7 @@ const { item } = defineProps<{ item: AtlasItem | undefined }>()
             >
             <ShadBadge variant="outline" :class="`${ecosystem}-text`"
               ><i class="dot" :class="[`${ecosystem}-dot`]" />{{
-                ecosystemNames[ecosystem]
+                ecosystemLabel(ecosystem)
               }}</ShadBadge
             >
           </template>
@@ -53,7 +57,7 @@ const { item } = defineProps<{ item: AtlasItem | undefined }>()
         <p class="detail-description">{{ item.description }}</p>
       </div>
       <div class="detail-integration">
-        <h3>Before you connect</h3>
+        <h3>{{ t('details.before') }}</h3>
         <p class="compatibility">{{ item.compatibility }}</p>
         <div v-if="item.note" class="detail-note">
           <UIcon name="i-lucide-info" />
@@ -69,10 +73,10 @@ const { item } = defineProps<{ item: AtlasItem | undefined }>()
           :href="item.url"
           >{{
             item.kind === 'proposal'
-              ? 'Contribute a guide'
+              ? t('details.contributeGuide')
               : item.accessNote
-                ? 'Open repository'
-                : 'Read the documentation'
+                ? t('details.openRepo')
+                : t('details.readDocs')
           }}<UIcon name="i-lucide-arrow-up-right"
         /></ShadButton>
         <p v-if="item.accessNote" class="repository-access">
@@ -84,14 +88,15 @@ const { item } = defineProps<{ item: AtlasItem | undefined }>()
           :href="item.secondaryUrl"
           >{{ item.secondarySource }}<UIcon name="i-lucide-arrow-up-right"
         /></a>
-        <p class="source-label">SOURCE / {{ item.source }}</p>
+        <p class="source-label">
+          {{ t('details.source') }} / {{ item.source }}
+        </p>
       </div>
     </template>
     <div v-else class="panel-empty">
-      <h2>Explore a connection</h2>
+      <h2>{{ t('details.emptyTitle') }}</h2>
       <p>
-        Select a library or bridge from the map or list to see its documentation
-        and compatibility notes.
+        {{ t('details.emptyBody') }}
       </p>
     </div>
   </div>

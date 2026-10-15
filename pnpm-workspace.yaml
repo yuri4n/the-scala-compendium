@@ -12,6 +12,7 @@ trustPolicyIgnoreAfter: 525600
 # library's own pnpm-workspace.yaml there).
 packages:
   - vendor/yuri4n.dev/layers/base
+  - vendor/yuri4n.dev/layers/preferences
   - vendor/yuri4n.dev/layers/ui
   - vendor/yuri4n.dev/packages/eslint-config
 

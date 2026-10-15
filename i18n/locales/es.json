@@ -1,0 +1,990 @@
+{
+  "nav": {
+    "atlas": "Atlas del ecosistema",
+    "paths": "Guías prácticas",
+    "community": "Comunidad",
+    "newsletter": "El boletín",
+    "contribute": "Contribuir",
+    "skip": "Saltar al contenido",
+    "main": "Navegación principal",
+    "home": "Inicio de The Scala Compendium"
+  },
+  "site": {
+    "description": "Un mapa práctico de bibliotecas, herramientas y opciones de integración de Scala: sistemas de efectos, actores, Futures, frontend, datos y pruebas.",
+    "footer": "Un lenguaje. Muchos caminos para avanzar.",
+    "open": "Construido en abierto"
+  },
+  "ecosystems": {
+    "all": "Todos los ecosistemas",
+    "zio": "ZIO",
+    "typelevel": "Typelevel",
+    "kyo": "Kyo",
+    "akka": "Akka",
+    "pekko": "Apache Pekko",
+    "future": "Scala Future",
+    "ox": "Ox",
+    "turbolift": "Turbolift",
+    "shared": "Herramientas compartidas"
+  },
+  "atlas": {
+    "eyebrow": "EL ECOSISTEMA SCALA, EN PERSPECTIVA",
+    "title": "Mundos distintos.",
+    "titleAccent": "Un terreno común.",
+    "intro": "Encuentra bibliotecas y herramientas, comprende dónde se conectan y elige un camino para lo que quieres construir.",
+    "help": "Cómo leer este mapa",
+    "filters": "Filtrar por ecosistema",
+    "search": "Buscar bibliotecas, herramientas y puentes",
+    "searchPlaceholder": "Busca una biblioteca o herramienta…",
+    "display": "Modo de visualización",
+    "mapView": "Vista de mapa",
+    "listView": "Vista de lista",
+    "canvasTitle": "EL ATLAS DEL ECOSISTEMA",
+    "bridgesOnly": "Solo puentes",
+    "scrollLabel": "Mapa del ecosistema con desplazamiento. Usa Tab para seleccionar bibliotecas y puentes.",
+    "zioSubtitle": "Efectos tipados. Un conjunto completo de herramientas.",
+    "typelevelSubtitle": "Piezas pequeñas. Composición potente.",
+    "kyoSubtitle": "Efectos algebraicos. Posibilidades abiertas.",
+    "widerTitle": "Más del panorama de Scala",
+    "widerIntro": "Actores, flujos de datos, Futures y enfoques emergentes.",
+    "sharedTitle": "Bases compartidas",
+    "sharedIntro": "HTTP, datos, pruebas, plataformas y herramientas de compilación. Elige el backend documentado cuando sea necesario.",
+    "sharedCount": "{count} herramientas y bibliotecas",
+    "groupLabel": "Ecosistema {name}",
+    "noResults": "No se encontraron conexiones",
+    "noResultsHelp": "Prueba con el nombre de una biblioteca, otro ecosistema o una búsqueda más amplia.",
+    "clear": "Limpiar filtros",
+    "results": "Resultados: {count} · Puentes de la comunidad: {bridges}",
+    "hint": "Selecciona una biblioteca o un puente para explorar",
+    "mobileHint": "Desplázate horizontalmente para explorar el mapa",
+    "listHint": "Las mismas conexiones, en una lista",
+    "details": "DETALLES DE LA CONEXIÓN",
+    "detailsLabel": "Detalles del elemento seleccionado",
+    "back": "Volver al atlas",
+    "selected": "Selección: {name}. Detalles actualizados.",
+    "noneSelected": "Ningún elemento seleccionado.",
+    "legendEcosystem": "Ecosistema",
+    "legendLibrary": "Biblioteca o herramienta",
+    "bridge": "Puente de la comunidad",
+    "proposal": "Guía propuesta",
+    "library": "Biblioteca",
+    "tool": "Herramienta",
+    "legendNote": "Las intersecciones muestran oportunidades de integración documentadas. Compartir herramientas no implica compartir un entorno de ejecución.",
+    "note": "Un mapa vivo que nunca abarca todo el territorio. Ayúdanos a documentar lo que funciona y lo que aún necesita un puente.",
+    "suggest": "Sugerir una conexión",
+    "compare": "Comprender los distintos enfoques",
+    "nodeLabel": "{name}, {kind}, {ecosystems}",
+    "and": " y ",
+    "proposedContribution": "Contribución propuesta"
+  },
+  "details": {
+    "by": "Por {name}",
+    "before": "Antes de conectar",
+    "readDocs": "Leer la documentación",
+    "openRepo": "Abrir el repositorio",
+    "contributeGuide": "Contribuir con una guía",
+    "source": "FUENTE",
+    "emptyTitle": "Explora una conexión",
+    "emptyBody": "Selecciona una biblioteca, herramienta o puente del mapa o la lista para consultar su documentación y sus notas de compatibilidad.",
+    "unpublished": "Sin publicar",
+    "development": "En desarrollo",
+    "kyoMaintainer": "Proyecto Kyo"
+  },
+  "paths": {
+    "eyebrow": "EMPIEZA POR LO QUE QUIERES CONSTRUIR",
+    "title": "Un recorrido práctico por Scala.",
+    "intro": "Sigue un camino concreto, comprende sus ventajas y limitaciones y continúa con la documentación original.",
+    "read": "Leer la guía",
+    "back": "Todas las guías prácticas",
+    "for": "A quién va dirigida",
+    "before": "Antes de empezar",
+    "steps": "Un camino para seguir",
+    "decisions": "Decisiones que conviene tomar conscientemente",
+    "outcome": "Qué obtendrás",
+    "resources": "Continúa con la documentación",
+    "related": "Explora estas herramientas en el atlas",
+    "updated": "Revisado en octubre de 2026. Consulta la documentación de las versiones que uses.",
+    "notFound": "Guía no encontrada"
+  },
+  "orientation": {
+    "eyebrow": "COMPRENDE LAS CAPAS",
+    "title": "¿Qué estás eligiendo realmente?",
+    "intro": "Un entorno de ejecución de efectos gestiona cálculos y recursos. Un sistema de actores organiza componentes que se comunican mediante mensajes. Los flujos de datos, servidores HTTP, bases de datos, códecs y herramientas de compilación resuelven otras partes del problema. Empieza por la aplicación que necesitas y luego elige las herramientas que te permitan construirla.",
+    "closing": "Estas capas se pueden combinar. Un servicio con actores puede usar internamente una biblioteca de efectos, y un servicio HTTP puede funcionar sin un sistema de actores distribuido.",
+    "next": "Qué revisar",
+    "items": {
+      "typelevel": {
+        "title": "Cats Effect y Typelevel",
+        "model": "Programas con efectos y bibliotecas componibles",
+        "body": "Cats ofrece tipos de datos funcionales y clases de tipos. Cats Effect añade un entorno de ejecución de efectos y un modelo de recursos; FS2, http4s y Doobie se apoyan en abstracciones compatibles. Usar solo Cats o Circe no requiere un entorno de ejecución de IO.",
+        "check": "Revisa si la biblioteca acepta un tipo de efecto abstracto o está ligada a IO. Usa versiones compatibles y define explícitamente el ciclo de vida de los recursos."
+      },
+      "zio": {
+        "title": "ZIO",
+        "model": "Errores tipados, entornos y efectos con ámbitos de recursos",
+        "body": "ZIO describe cálculos mediante un entorno, un tipo de error y un resultado. Las capas ensamblan servicios, los ámbitos gestionan recursos y ZIO Streams se encarga de los flujos de datos. Los módulos puros, como los códecs JSON, también pueden ser útiles fuera de una aplicación ZIO.",
+        "check": "Decide qué errores pertenecen al canal tipado, cómo se proporcionan las dependencias y qué ámbitos gestionan los recursos de larga duración."
+      },
+      "kyo": {
+        "title": "Kyo",
+        "model": "Efectos pendientes y manejadores componibles",
+        "body": "Kyo representa los efectos que un cálculo todavía necesita manejar. Sus módulos abarcan concurrencia, flujos de datos, HTTP, datos e interfaces. kyo-zio realiza conversiones en los límites documentados; kyo-compat permite escribir bibliotecas sobre una API compartida de portabilidad.",
+        "check": "Consulta las plataformas y versiones que admite actualmente el módulo. Distingue entre manejar un efecto, convertirlo y programar sobre una API portable."
+      },
+      "actors": {
+        "title": "Akka y Apache Pekko",
+        "model": "Actores, flujos de datos y módulos para sistemas distribuidos",
+        "body": "Los sistemas de actores organizan el estado y el comportamiento mediante mensajes y supervisión. Sus módulos de flujos de datos y clústeres resuelven necesidades relacionadas, pero distintas. Akka y Pekko son productos diferentes, con sus propios artefactos, ciclos de versiones y requisitos de distribución.",
+        "check": "Elige actores, flujos de datos, clústeres o persistencia según las necesidades de la aplicación. Verifica las licencias, los serializadores, los complementos de almacenamiento y el comportamiento durante las actualizaciones."
+      },
+      "future": {
+        "title": "Future de la biblioteca estándar",
+        "model": "Resultados asíncronos con un ExecutionContext",
+        "body": "Future es una interfaz habitual para integrar Scala y Java. Future.apply programa el trabajo de inmediato; la composición usa funciones de retorno, map y flatMap. Future por sí mismo no proporciona cancelación ni ámbitos estructurados de recursos.",
+        "check": "Identifica el contexto de ejecución, aísla el trabajo bloqueante y define quién gestiona los tiempos de espera, la cancelación y la liberación de recursos."
+      },
+      "direct": {
+        "title": "Estilo directo, Ox y bibliotecas de efectos más pequeñas",
+        "model": "Distintas formas de expresar y controlar los cálculos",
+        "body": "Scala sin bibliotecas adicionales es útil para scripts y servicios. Ox añade concurrencia estructurada y flujos de datos en estilo directo sobre Scala 3 y JDK 21+. Turbolift explora los efectos algebraicos y sus manejadores. Son modelos distintos, cada uno con sus propios requisitos de plataforma.",
+        "check": "Empieza por las restricciones de despliegue y la experiencia del equipo. Revisa la interrupción, la gestión de recursos y las integraciones disponibles antes de adoptar un nuevo entorno de ejecución."
+      },
+      "shared": {
+        "title": "Bibliotecas y herramientas para varios ecosistemas",
+        "model": "Descripciones, datos, plataformas y herramientas de desarrollo",
+        "body": "Los códecs, las transformaciones de modelos, los frameworks de pruebas y las herramientas de compilación suelen funcionar sin depender de un entorno de ejecución de efectos. Tapir y sttp admiten varios ecosistemas mediante intérpretes o backends explícitos. Scala.js y Scala Native definen destinos de compilación, no sistemas de efectos.",
+        "check": "Una API compartida no implica interoperabilidad automática entre entornos de ejecución. Revisa el módulo concreto, el artefacto de plataforma, la versión binaria de Scala y las capacidades del backend."
+      }
+    }
+  },
+  "community": {
+    "eyebrow": "UNA INVITACIÓN A LA COMUNIDAD SCALA",
+    "title": "Muchos enfoques. Una comunidad Scala.",
+    "first": "Scala toma forma gracias a quienes lo construyen, mantienen, enseñan y usan. Cada persona aporta herramientas y convicciones distintas. También compartimos un lenguaje, un conjunto de conocimientos y una responsabilidad con quienes vienen después.",
+    "second": "Este compendio es una invitación a colaborar más allá de esas diferencias: explicar con honestidad las ventajas y limitaciones, documentar lo que funciona, construir los puentes que faltan y orientar a quienes están empezando. Aporta la experiencia de tu ecosistema y da espacio a la experiencia de los demás.",
+    "closing": "Hagamos que sea más fácil entender Scala, dar los primeros pasos y crear con él, entre todos.",
+    "contribute": "Contribuir al mapa",
+    "find": "Encuentra tu comunidad",
+    "questions": "Pregunta y comparte con usuarios de Scala"
+  },
+  "newsletter": {
+    "eyebrow": "EL BOLETÍN DEL COMPENDIO",
+    "soon": "PRÓXIMAMENTE",
+    "title": "Sigamos creando conexiones.",
+    "body": "Hallazgos del ecosistema, puentes útiles y guías que vale la pena leer. Una lectura sobre Scala preparada con cuidado, en camino.",
+    "action": "Ayuda a dar forma al primer número",
+    "status": "Las suscripciones por correo aún no están abiertas."
+  },
+  "catalogue": {
+    "zio": {
+      "category": "Sistema de efectos",
+      "description": "Errores tipados, entornos y concurrencia estructurada en un solo sistema de efectos.",
+      "compatibility": "Elige módulos ZIO compatibles con tu versión de Scala. Las aplicaciones ZIO gestionan su propio entorno de ejecución y sus ámbitos de recursos.",
+      "source": "Documentación de ZIO"
+    },
+    "zio-streams": {
+      "category": "Flujos de datos",
+      "description": "Flujos de datos componibles con contrapresión en el ecosistema ZIO.",
+      "compatibility": "Se basa en ZIO. Para conectar con otro sistema de flujos de datos se necesita un puente explícito.",
+      "source": "Documentación de ZIO"
+    },
+    "zio-http": {
+      "category": "HTTP",
+      "description": "Clientes y servidores HTTP, endpoints tipados y WebSockets basados en ZIO.",
+      "compatibility": "Sigue las indicaciones sobre el backend de cliente y servidor para tu plataforma. Gestiona los servicios mediante capas ZIO y ámbitos de recursos.",
+      "source": "Documentación de ZIO HTTP"
+    },
+    "zio-json": {
+      "category": "JSON",
+      "description": "Deriva codificadores y decodificadores JSON para tipos de datos de Scala, con errores de decodificación comprensibles.",
+      "compatibility": "La codificación y decodificación básicas no requieren ejecutar un efecto ZIO. Revisa las dependencias de plataforma al usar tipos de zona horaria de Java.",
+      "source": "Documentación de ZIO JSON"
+    },
+    "zio-schema": {
+      "category": "Modelado de datos",
+      "description": "Describe estructuras de datos como valores y deriva códecs, transformaciones y migraciones.",
+      "compatibility": "Añade los módulos de derivación y de formatos específicos que necesites. Compartir un esquema no preserva automáticamente la compatibilidad del formato de intercambio.",
+      "source": "Documentación de ZIO Schema"
+    },
+    "zio-config": {
+      "category": "Configuración",
+      "description": "Configuración tipada con derivación automática y fuentes como HOCON, YAML y TOML.",
+      "compatibility": "La serie 4.x amplía la API Config del núcleo de ZIO. Elige módulos de fuentes compatibles y sigue la guía de migración si vienes de versiones anteriores.",
+      "source": "Documentación de ZIO Config"
+    },
+    "zio-cli": {
+      "category": "Línea de comandos",
+      "description": "Compón comandos, opciones y argumentos tipados, junto con textos de ayuda, para aplicaciones ZIO.",
+      "compatibility": "Los manejadores de comandos se ejecutan en ZIO. Revisa si tu plataforma admite las funciones de sistema de archivos y procesos que usa la aplicación.",
+      "source": "Documentación de ZIO CLI"
+    },
+    "zio-kafka": {
+      "category": "Mensajería",
+      "description": "API de ZIO y ZStream para consumidores, productores y administración de Kafka.",
+      "compatibility": "Encapsula el cliente Java de Kafka. Define con cuidado los ámbitos de los clientes y el comportamiento de confirmación de offsets y entrega.",
+      "source": "Documentación de ZIO Kafka"
+    },
+    "zio-logging": {
+      "category": "Observabilidad",
+      "description": "Registro estructurado con contexto local a cada fibra, salida configurable e integraciones con backends de registro.",
+      "compatibility": "El núcleo de registro admite JVM, JS y Native. Las integraciones con backends son módulos JVM; elige el adaptador correspondiente a tu versión de SLF4J.",
+      "source": "Documentación de ZIO Logging"
+    },
+    "h34s": {
+      "category": "Scala.js · Nuxt / Nitro",
+      "description": "Un conjunto de herramientas Scala.js para manejadores de servidor de Nuxt y Nitro. El repositorio actual contiene una base de pruebas y experimentación implementada con ZIO.",
+      "compatibility": "La base recuperada todavía no es un MVP verificado ni una biblioteca publicada. Se prevé un núcleo Kyo con integración opcional con ZIO. Su ubicación en el mapa refleja la implementación actual con ZIO.",
+      "source": "README de h34s y notas de la base inicial",
+      "note": "En el horizonte: kyo-h34s y zio-h34s. Son nombres propuestos para integraciones; todavía no se han verificado implementaciones independientes.",
+      "secondarySource": "Leer las notas de la base inicial",
+      "accessNote": "Repositorio privado. Se necesita permiso para acceder al código fuente."
+    },
+    "cats-effect": {
+      "category": "Sistema de efectos",
+      "description": "Programas asíncronos puros, concurrencia estructurada y gestión segura de recursos.",
+      "compatibility": "Es una base para FS2 y http4s. Usa versiones de las bibliotecas de tu aplicación compatibles con Cats Effect.",
+      "source": "Documentación de Cats Effect"
+    },
+    "fs2": {
+      "category": "Flujos de datos",
+      "description": "Flujos de datos componibles con gestión segura de recursos, basados en Cats Effect.",
+      "compatibility": "El parámetro de efecto de Stream funciona con las abstracciones de Cats Effect. La interoperabilidad con Reactive Streams es una integración aparte.",
+      "source": "Documentación de FS2"
+    },
+    "http4s": {
+      "category": "HTTP",
+      "description": "Clientes y servidores HTTP funcionales basados en Cats Effect y FS2.",
+      "compatibility": "Gestiona clientes y servidores con Resource. Usa versiones compatibles de http4s, FS2 y Cats Effect.",
+      "source": "Documentación de http4s"
+    },
+    "doobie": {
+      "category": "Bases de datos",
+      "description": "Acceso funcional a JDBC. Compón programas de base de datos y ejecútalos como transacciones dentro de un efecto.",
+      "compatibility": "Usa controladores JDBC y un transactor basado en Cats Effect. Los controladores y las bases de datos tienen sus propios requisitos de ejecución.",
+      "source": "Documentación de Doobie"
+    },
+    "kyo": {
+      "category": "Sistema de efectos",
+      "description": "Herramientas de efectos algebraicos con un conjunto abierto de efectos pendientes y manejadores componibles.",
+      "compatibility": "Consulta la documentación actual de Kyo para conocer los módulos y plataformas admitidos. El manejo de efectos difiere del de Cats Effect y ZIO.",
+      "source": "Repositorio de Kyo"
+    },
+    "kyo-stream": {
+      "category": "Flujos de datos",
+      "description": "Cálculos sobre flujos de datos en Kyo, con procesamiento componible y efectos explícitos.",
+      "compatibility": "Los flujos de Kyo usan efectos Kyo. Utiliza un adaptador documentado para conectar con ZIO Streams o Reactive Streams.",
+      "source": "Documentación de flujos de datos de Kyo Prelude"
+    },
+    "kyo-http": {
+      "category": "HTTP",
+      "description": "Clientes y servidores HTTP con cuerpos transmitidos como flujos de datos, middleware componible y compatibilidad con OpenAPI.",
+      "compatibility": "Usa efectos Kyo. Elige el backend documentado para tu plataforma; el despliegue del servidor Scala.js usa Node.js.",
+      "source": "Documentación de los módulos de Kyo"
+    },
+    "kyo-sql": {
+      "category": "Bases de datos",
+      "description": "SQL directo y consultas tipadas con un mismo modelo de ejecución y conexiones de base de datos gestionadas por Kyo.",
+      "compatibility": "Añade un módulo de controlador para tu base de datos. PostgreSQL y MySQL usan sus protocolos de red nativos; SQLite usa un backend nativo embebido.",
+      "source": "Documentación de los módulos de Kyo"
+    },
+    "kyo-schema": {
+      "category": "Esquemas y datos",
+      "description": "Deriva esquemas, validación, lentes, diferencias estructurales y conversiones a partir de tipos de Scala.",
+      "compatibility": "El núcleo se puede usar sin el entorno de ejecución de efectos de Kyo. JSON, YAML, Protobuf y otros formatos requieren sus propios módulos de códecs.",
+      "source": "Documentación de los módulos de Kyo"
+    },
+    "kyo-ui": {
+      "category": "Interfaces de usuario",
+      "description": "Interfaces reactivas descritas como valores puros de Scala, con ejecutores para navegador, control desde el servidor y SSR.",
+      "compatibility": "El montaje en el DOM usa Scala.js. El renderizado controlado desde el servidor usa manejadores HTTP y WebSocket; elige el ejecutor adecuado para el destino de despliegue.",
+      "source": "Documentación de los módulos de Kyo"
+    },
+    "kyo-config": {
+      "category": "Configuración",
+      "description": "Configuración tipada e indicadores de funcionalidad, con ajustes estáticos y reglas dinámicas de habilitación gradual.",
+      "compatibility": "Los indicadores estáticos se resuelven una sola vez; los dinámicos se evalúan para una clave proporcionada. Las propiedades del sistema tienen prioridad sobre las variables de entorno y los valores predeterminados.",
+      "source": "Documentación de los módulos de Kyo"
+    },
+    "kyo-stm": {
+      "category": "Estado compartido",
+      "description": "Memoria transaccional por software para componer actualizaciones atómicas de referencias, mapas y tablas.",
+      "compatibility": "Los cuerpos de las transacciones pueden volver a ejecutarse después de un conflicto. Mantén la E/S externa y otros efectos secundarios observables fuera de la transacción.",
+      "source": "Documentación de los módulos de Kyo"
+    },
+    "kyo-test": {
+      "category": "Pruebas",
+      "description": "Un framework de pruebas para cálculos Kyo, con pruebas asíncronas y soporte opcional para pruebas de propiedades e instantáneas.",
+      "compatibility": "Las suites manejan sus efectos adicionales antes de ejecutarse. Admite JVM, Scala.js y Scala Native; es distinto del puente kyo-zio-test.",
+      "source": "Documentación de los módulos de Kyo"
+    },
+    "tui4s": {
+      "category": "Interfaces de terminal",
+      "description": "Un ejecutor de terminal para kyo-ui. Crea interfaces de terminal con Kyo y renderiza celdas mediante jatatui.",
+      "compatibility": "Una versión inicial sin publicar que requiere Scala 3.9+ y JDK 25. El ejecutor actual usa Kyo. Se prevén integraciones con ZIO y Cats Effect.",
+      "source": "README de tui4s",
+      "accessNote": "El acceso al repositorio puede requerir permiso."
+    },
+    "zio-cats": {
+      "category": "Interoperabilidad de efectos",
+      "description": "Incorpora las abstracciones de Cats y Cats Effect a aplicaciones ZIO. Un puente entre dos ecosistemas consolidados.",
+      "compatibility": "Revisa la matriz de compatibilidad del proyecto de interoperabilidad para las versiones de ZIO y Cats Effect. Define explícitamente la cancelación, el ciclo de vida de los recursos y quién gestiona el entorno de ejecución en el límite entre ambos.",
+      "source": "Documentación de interoperabilidad de ZIO",
+      "note": "Un adaptador conecta API; no hace idéntica su semántica."
+    },
+    "kyo-zio": {
+      "category": "Efectos, flujos de datos y capas",
+      "description": "Integración bidireccional entre Kyo y ZIO que abarca efectos, flujos de datos y capas.",
+      "compatibility": "Sigue la guía actual del módulo. El puente de efectos documentado acepta valores ZIO cuyo entorno ya se haya proporcionado. Revisa el comportamiento ante fallos e interrupciones antes de combinar entornos de ejecución.",
+      "source": "Documentación de los módulos de Kyo",
+      "note": "Proporciona las dependencias de ZIO antes de elevar un efecto a Kyo."
+    },
+    "kyo-compat": {
+      "category": "Portabilidad de bibliotecas",
+      "description": "Escribe una biblioteca sobre una API compartida y ofrece implementaciones para Kyo, ZIO, Scala Future, Twitter Future y Ox.",
+      "compatibility": "Es una API de portabilidad para autores de bibliotecas, no un conversor de efectos arbitrarios. Los fallos portables usan Throwable. Elige el artefacto de backend para tu entorno de ejecución; Cats Effect no figura como backend documentado.",
+      "source": "Documentación del módulo de compatibilidad de Kyo",
+      "note": "Se muestra en la intersección de Kyo y ZIO. También ofrece implementaciones para Scala Future, Twitter Future y Ox."
+    },
+    "reactive-streams": {
+      "category": "Integración mediante protocolos",
+      "description": "El adaptador de Kyo para conectar sus flujos con otras bibliotecas de flujos de datos, incluida FS2 mediante su propio adaptador.",
+      "compatibility": "Es una vía indirecta, no un adaptador directo entre Kyo y Cats Effect. Ambos lados necesitan API Publisher/Subscriber compatibles. Revisa las plataformas admitidas, el almacenamiento en búfer, la cancelación y la conversión de errores.",
+      "source": "Documentación de Kyo Reactive Streams",
+      "note": "Conecta mediante un protocolo compartido y revisa el adaptador de cada lado.",
+      "secondarySource": "Interoperabilidad de FS2"
+    },
+    "akka-typed": {
+      "category": "Actores",
+      "description": "Actores tipados para sistemas concurrentes y distribuidos, con protocolos de mensajes y ciclos de vida de actores supervisados.",
+      "compatibility": "Usa el sistema de actores de Akka y módulos Akka compatibles. Los tipos de actores de Pekko pertenecen a otro entorno de ejecución. Revisa los requisitos vigentes de distribución y licencia al elegir una versión de Akka.",
+      "source": "Documentación de Akka Typed"
+    },
+    "akka-streams": {
+      "category": "Flujos de datos",
+      "description": "Flujos asíncronos componibles con contrapresión, construidos a partir de fuentes, transformaciones y destinos.",
+      "compatibility": "Los flujos se ejecutan mediante la materialización de Akka. Usa adaptadores Reactive Streams documentados para otros sistemas de flujos y revisa la cancelación y el almacenamiento en búfer en el límite entre sistemas.",
+      "source": "Documentación de Akka Streams"
+    },
+    "pekko-typed": {
+      "category": "Actores",
+      "description": "API de actores tipados de Apache Pekko para aplicaciones concurrentes y distribuidas, con protocolos de mensajes y supervisión.",
+      "compatibility": "Usa sistemas de actores Pekko y módulos Pekko compatibles. El origen compartido con Akka no hace intercambiables sus objetos en ejecución. Sigue la guía de migración al trasladar una aplicación existente.",
+      "source": "Documentación de Apache Pekko"
+    },
+    "pekko-streams": {
+      "category": "Flujos de datos",
+      "description": "Procesamiento asíncrono de flujos con contrapresión en el ecosistema Apache Pekko, mediante fuentes, transformaciones y destinos.",
+      "compatibility": "Usa los tipos de flujos y el materializador de Pekko. Para conectar con otros sistemas de flujos se necesitan adaptadores documentados e interfaces Publisher/Subscriber compatibles.",
+      "source": "Documentación de Apache Pekko Streams"
+    },
+    "scala-future": {
+      "category": "Biblioteca estándar",
+      "description": "Resultados asíncronos de la biblioteca estándar. Compón funciones de retorno, map y flatMap con un ExecutionContext, sin necesitar una biblioteca de efectos.",
+      "compatibility": "Future.apply programa el trabajo de inmediato. Future por sí mismo no ofrece cancelación integrada ni ámbitos estructurados de recursos. Usa adaptadores explícitos al entrar en un entorno de ejecución de efectos.",
+      "source": "Guía de Futures y Promises de Scala",
+      "note": "kyo-compat ofrece un backend Scala Future para bibliotecas escritas sobre su API compartida."
+    },
+    "ox": {
+      "category": "Concurrencia en estilo directo",
+      "description": "Concurrencia estructurada en estilo directo, flujos de datos, gestión de recursos y resiliencia para Scala sobre la JVM.",
+      "compatibility": "Requiere Scala 3 y JDK 21+. La creación de tareas dentro de ámbitos y la interrupción forman parte de su modelo de concurrencia. kyo-compat ofrece un backend Ox para bibliotecas que usan su API de portabilidad.",
+      "source": "Documentación de SoftwareMill Ox"
+    },
+    "turbolift": {
+      "category": "Efectos algebraicos",
+      "description": "Efectos algebraicos y manejadores para Scala 3, con cálculos componibles y efectos definidos por el usuario.",
+      "compatibility": "Requiere Java 11+. Su módulo opcional turbolift-spot ofrece instancias de Cats para Computation e instancias de Cats Effect para su efecto IO. Revisa las versiones admitidas por el módulo antes de integrarlo.",
+      "source": "Documentación y repositorio de Turbolift",
+      "secondarySource": "Explorar el repositorio"
+    },
+    "cats": {
+      "category": "Fundamentos funcionales",
+      "description": "Clases de tipos, tipos de datos y sintaxis fundamentales para componer programas funcionales en Scala.",
+      "compatibility": "Se puede usar sin Cats Effect. Elige artefactos que correspondan a tu versión de Scala y a la plataforma de destino.",
+      "source": "Documentación de Cats"
+    },
+    "circe": {
+      "category": "JSON",
+      "description": "Valores JSON, codificadores, decodificadores y derivación para modelos de datos de Scala.",
+      "compatibility": "Los códecs del núcleo funcionan sin depender de un entorno de ejecución de efectos. El soporte de JSON en flujos de datos se obtiene mediante integraciones aparte, como circe-fs2.",
+      "source": "Documentación de Circe"
+    },
+    "skunk": {
+      "category": "Bases de datos",
+      "description": "Acceso tipado a PostgreSQL basado en Cats Effect y FS2, con sesiones gestionadas como recursos.",
+      "compatibility": "Es específico para PostgreSQL. Adquiere sesiones y pools mediante Resource y usa códecs que correspondan a los tipos de las columnas de la base de datos.",
+      "source": "Documentación de Skunk"
+    },
+    "fs2-kafka": {
+      "category": "Mensajería",
+      "description": "Flujos de consumidores y productores Kafka con contrapresión, procesamiento por lotes y confirmaciones de offsets.",
+      "compatibility": "Usa el cliente Java de Kafka. Configura explícitamente el procesamiento, las confirmaciones, los reintentos y el comportamiento de entrega.",
+      "source": "Documentación de FS2 Kafka"
+    },
+    "decline": {
+      "category": "Línea de comandos",
+      "description": "Compón opciones, argumentos y subcomandos tipados de línea de comandos usando Cats.",
+      "compatibility": "El analizador principal no requiere Cats Effect. Añade decline-effect para integrar CommandIOApp.",
+      "source": "Documentación de Decline"
+    },
+    "akka-http": {
+      "category": "HTTP",
+      "description": "Clientes y servidores HTTP y un DSL de enrutamiento basados en Akka Actors y Streams.",
+      "compatibility": "Usa versiones compatibles de HTTP y Streams. Revisa los requisitos de licencia y acceso al repositorio de la versión de Akka elegida.",
+      "source": "Documentación de Akka HTTP"
+    },
+    "akka-cluster": {
+      "category": "Actores distribuidos",
+      "description": "Gestión de miembros del clúster y coordinación de sistemas de actores distribuidos entre máquinas.",
+      "compatibility": "Configura la serialización, el descubrimiento de nodos, la declaración de nodos fuera de servicio y el apagado. Pertenecer a un clúster no hace duradero el estado de la aplicación. Revisa los requisitos de licencia y acceso al repositorio de la versión de Akka elegida.",
+      "source": "Documentación de Akka Cluster"
+    },
+    "akka-persistence": {
+      "category": "Persistencia por eventos",
+      "description": "Recupera el estado de los actores reproduciendo eventos persistidos, con instantáneas opcionales.",
+      "compatibility": "Elige complementos de registro de eventos y de almacenamiento de instantáneas, define identificadores de persistencia estables y planifica la evolución de la serialización. Revisa los requisitos de licencia y acceso al repositorio de la versión de Akka elegida.",
+      "source": "Documentación de Akka Persistence"
+    },
+    "pekko-http": {
+      "category": "HTTP",
+      "description": "Clientes y servidores HTTP y enrutamiento basados en Apache Pekko Actors y Streams.",
+      "compatibility": "HTTP tiene su propio ciclo de versiones. Elige una versión compatible de Pekko Streams y revisa los cambios de migración si vienes de Akka HTTP.",
+      "source": "Documentación de Apache Pekko HTTP"
+    },
+    "pekko-cluster": {
+      "category": "Actores distribuidos",
+      "description": "Gestión de miembros del clúster y coordinación de sistemas distribuidos de actores Apache Pekko.",
+      "compatibility": "Configura la serialización, el arranque del clúster, la declaración de nodos fuera de servicio y el apagado. Trata los clústeres mixtos Akka/Pekko como un asunto de migración aparte, dependiente de las versiones concretas.",
+      "source": "Documentación de Apache Pekko Cluster"
+    },
+    "pekko-persistence": {
+      "category": "Persistencia por eventos",
+      "description": "Actores basados en eventos que reconstruyen su estado después de un reinicio o un traslado.",
+      "compatibility": "Requiere un complemento de registro de eventos y, opcionalmente, un almacén de instantáneas. Valida los datos persistidos, los serializadores y la compatibilidad de los complementos durante las migraciones.",
+      "source": "Documentación de Apache Pekko Persistence"
+    },
+    "play": {
+      "category": "Framework web",
+      "description": "Play 3 es un framework web para Scala y Java con enrutamiento, controladores asíncronos, JSON, plantillas y WebSockets.",
+      "compatibility": "Play 3 usa Pekko; Play 2.9 usa Akka. Las acciones asíncronas de Scala devuelven Future, y el trabajo bloqueante necesita un contexto de ejecución adecuado.",
+      "source": "Documentación de Play Framework"
+    },
+    "tapir": {
+      "category": "HTTP y API",
+      "description": "Describe endpoints HTTP una sola vez e interprétalos como servidores, clientes o documentación de API.",
+      "compatibility": "Elige un intérprete explícito de servidor o cliente. Las integraciones oficiales incluyen ZIO, Cats Effect, Future, Akka HTTP y Pekko HTTP; las descripciones de endpoints no convierten entre sus entornos de ejecución.",
+      "source": "Documentación de Tapir"
+    },
+    "sttp": {
+      "category": "HTTP y API",
+      "description": "Describe solicitudes HTTP y el manejo de respuestas mediante una API de cliente común para Scala.",
+      "compatibility": "Elige un backend que cubra la plataforma, el tipo de efecto y las funciones de flujos de datos y WebSocket que necesitas. Los backends gestionan conexiones y tienen capacidades distintas.",
+      "source": "Documentación del cliente sttp"
+    },
+    "upickle": {
+      "category": "Datos y serialización",
+      "description": "Serialización JSON y MessagePack con lectores y escritores para tipos de datos de Scala.",
+      "compatibility": "La codificación y decodificación no requieren un entorno de ejecución de efectos. Comparte códecs y configuraciones compatibles entre productores y consumidores, y usa artefactos de plataforma adecuados para tu compilación.",
+      "source": "Documentación de uPickle"
+    },
+    "chimney": {
+      "category": "Datos y serialización",
+      "description": "Deriva transformaciones con seguridad de tipos entre modelos de datos de Scala, con ajustes explícitos cuando sus estructuras difieren.",
+      "compatibility": "El código de transformación es independiente del entorno de ejecución de efectos. Elige la documentación de tu serie de versiones: el código de la serie 2.x requiere versiones de Scala y JDK más recientes que la serie 1.x.",
+      "source": "Documentación de Chimney"
+    },
+    "slick": {
+      "category": "Datos y serialización",
+      "description": "Compón consultas relacionales y acciones de base de datos en Scala, con mapeos tipados y acceso a SQL directo.",
+      "compatibility": "Elige el perfil de base de datos y el controlador JDBC. Sigue la API de ejecución de tu versión de Slick; la documentación actual de desarrollo difiere de las versiones anteriores basadas en Future.",
+      "source": "Documentación de Slick"
+    },
+    "quill": {
+      "category": "Datos y serialización",
+      "description": "Escribe consultas Scala en bloques quote que pueden traducirse a SQL durante la compilación.",
+      "compatibility": "Elige un contexto de base de datos, como JDBC, ZIO JDBC o Doobie. El soporte de Scala 3 proviene de la implementación ProtoQuill; los módulos disponibles dependen de la versión de Scala y del contexto.",
+      "source": "Documentación de ZIO Quill"
+    },
+    "laminar": {
+      "category": "Plataformas e interfaces",
+      "description": "Crea interfaces reactivas para el navegador en Scala.js con señales y flujos de eventos de Airstream.",
+      "compatibility": "Se ejecuta en el navegador mediante Scala.js. Usa dependencias compatibles con JavaScript; las integraciones con bibliotecas de efectos del servidor son decisiones de arquitectura aparte.",
+      "source": "Documentación de Laminar"
+    },
+    "scala-js": {
+      "category": "Plataformas e interfaces",
+      "description": "Compila Scala a JavaScript para aplicaciones de navegador, programas Node.js y código compartido entre cliente y servidor.",
+      "compatibility": "Las dependencias deben admitir Scala.js. Las API y bibliotecas específicas de la JVM no están disponibles automáticamente; la interoperabilidad con JavaScript y los entornos de ejecución tienen sus propias restricciones.",
+      "source": "Documentación de Scala.js"
+    },
+    "scala-native": {
+      "category": "Plataformas e interfaces",
+      "description": "Compila Scala de forma anticipada en aplicaciones nativas con un entorno de ejecución administrado y ligero.",
+      "compatibility": "Usa dependencias compatibles con Native y las herramientas de compilación nativa documentadas. Revisa los sistemas operativos admitidos, las bibliotecas nativas y la cobertura de la API de Java.",
+      "source": "Documentación de Scala Native"
+    },
+    "scala-cli": {
+      "category": "Compilación y herramientas",
+      "description": "Compila, ejecuta, prueba y empaqueta archivos fuente y scripts de Scala con una configuración concisa.",
+      "compatibility": "Es adecuado para scripts, ejemplos y proyectos pequeños. Su alcance documentado no sustituye a una herramienta de compilación multimódulo ni a un sistema extensible de tareas.",
+      "source": "Documentación de Scala CLI"
+    },
+    "sbt": {
+      "category": "Compilación y herramientas",
+      "description": "Compila, prueba y publica proyectos Scala y Java, con soporte para compilaciones multiproyecto e incrementales.",
+      "compatibility": "Fija la versión de sbt y usa complementos compatibles. sbt 1.x y 2.x requieren sus respectivas guías de compilación y migración.",
+      "source": "Documentación de sbt"
+    },
+    "mill": {
+      "category": "Compilación y herramientas",
+      "description": "Define procesos de compilación modulares para compilar, probar y empaquetar proyectos Scala, Java y Kotlin.",
+      "compatibility": "Usa el lanzador, la versión y la sintaxis de compilación que espera el proyecto. Los módulos y tareas de Mill son distintos de los complementos y ajustes de sbt.",
+      "source": "Documentación de Mill"
+    },
+    "metals": {
+      "category": "Compilación y herramientas",
+      "description": "Servidor de lenguaje para Scala que permite navegar por el código, obtener diagnósticos y completar código en editores compatibles.",
+      "compatibility": "Importa el proyecto mediante un sistema de compilación compatible y configura su JDK. Las funciones disponibles varían según el editor, el servidor de compilación y la versión del compilador Scala.",
+      "source": "Documentación de Metals"
+    },
+    "scalafmt": {
+      "category": "Compilación y herramientas",
+      "description": "Da un formato uniforme al código fuente de Scala desde editores, herramientas de compilación o la línea de comandos.",
+      "compatibility": "Fija la versión del formateador y elige el dialecto de Scala adecuado en la configuración del proyecto para que el formato local y el de CI coincidan.",
+      "source": "Documentación de Scalafmt"
+    },
+    "scalafix": {
+      "category": "Compilación y herramientas",
+      "description": "Aplica reescrituras automáticas de Scala y reglas de análisis estático para mantenimiento y migraciones.",
+      "compatibility": "Las reglas semánticas requieren una salida SemanticDB compatible del compilador; las reglas sintácticas no necesitan esa configuración semántica. Revisa qué versiones de Scala admite cada regla.",
+      "source": "Documentación de Scalafix"
+    },
+    "munit": {
+      "category": "Pruebas",
+      "description": "Escribe pruebas concisas de Scala con aserciones útiles, comparaciones de diferencias, preparación de pruebas y API extensibles.",
+      "compatibility": "Admite JVM, Scala.js y Scala Native con los artefactos correspondientes. Las extensiones de pruebas específicas para efectos son integraciones aparte.",
+      "source": "Documentación de MUnit"
+    },
+    "scalatest": {
+      "category": "Pruebas",
+      "description": "Herramientas de pruebas para Scala y Java con varios estilos de pruebas, aserciones y opciones de integración.",
+      "compatibility": "Selecciona los módulos y el estilo de pruebas que usa tu proyecto. El soporte de asincronía y efectos depende de la API de pruebas o integración elegida, no de la ejecución automática de efectos arbitrarios.",
+      "source": "Documentación de ScalaTest"
+    },
+    "scalacheck": {
+      "category": "Pruebas",
+      "description": "Prueba propiedades con entradas generadas y reduce los fallos a contraejemplos más simples.",
+      "compatibility": "Funciona por separado o mediante integraciones con frameworks de pruebas. Los generadores y las propiedades deben representar restricciones significativas del dominio; las comprobaciones generadas no demuestran todos los casos posibles.",
+      "source": "Documentación de ScalaCheck"
+    },
+    "spark": {
+      "category": "Procesamiento de datos",
+      "description": "Procesamiento distribuido de datos con API de Scala para SQL, DataFrames, aprendizaje automático y Structured Streaming.",
+      "compatibility": "Usa la versión binaria de Scala, la versión de Java y las dependencias que correspondan a la distribución de Spark. El código de los ejecutores y la serialización deben funcionar en el entorno del clúster.",
+      "source": "Documentación de Apache Spark"
+    },
+    "mixed-guide": {
+      "category": "Contribución propuesta",
+      "description": "Una propuesta de guía comunitaria para combinar ZIO, bibliotecas de Typelevel y Kyo en una misma arquitectura.",
+      "compatibility": "Es una propuesta editorial, no un adaptador publicado ni una integración validada entre los tres ecosistemas. Una contribución debe documentar versiones, límites entre entornos de ejecución, gestión de recursos y cancelación.",
+      "source": "Ayuda a escribir esta guía",
+      "note": "No se afirma que exista un adaptador entre los tres ecosistemas. Ayuda a documentar un caso de uso concreto.",
+      "name": "Guía de integración"
+    }
+  },
+  "guides": {
+    "start-scala": {
+      "title": "Inicia un proyecto en Scala",
+      "audience": "Personas que comienzan con Scala o retoman su uso",
+      "summary": "Crea una aplicación pequeña y con pruebas antes de elegir un ecosistema más amplio.",
+      "outcome": "Un proyecto ejecutable, un editor listo para trabajar y una primera prueba que puedas ampliar.",
+      "prerequisites": [
+        "Conocimientos básicos de conceptos de programación, como funciones y variables.",
+        "Un JDK compatible con la versión de Scala y la herramienta de compilación que hayas elegido."
+      ],
+      "steps": [
+        {
+          "title": "Aprende los fundamentos comunes del lenguaje",
+          "body": "Comienza con funciones, colecciones, clases case, coincidencia de patrones y Option o Either. Escribe una transformación pequeña de datos comunes. Estos fundamentos se aplican en los distintos ecosistemas de Scala y permiten separar la lógica de dominio de la concurrencia y las operaciones de entrada y salida."
+        },
+        {
+          "title": "Ejecuta y examina un proyecto pequeño",
+          "body": "Usa Scala CLI para compilar y ejecutar un programa pequeño con dependencias explícitas. Ábrelo en Metals o IntelliJ, verifica que funcionen la navegación y los diagnósticos del compilador, y ejecuta una prueba unitaria tanto desde la terminal como desde el editor."
+        },
+        {
+          "title": "Elige las herramientas según el proyecto",
+          "body": "Si trabajas en el código de un equipo, comienza con su herramienta de compilación y sus convenciones actuales. Registra la versión de Scala, el JDK, las plataformas de destino y el comando para ejecutar las pruebas. Agrega una biblioteca de HTTP, de acceso a bases de datos o de efectos cuando un requisito concreto aclare para qué la necesitas."
+        }
+      ],
+      "decisions": [
+        "Scala CLI resulta útil para aprender y crear programas pequeños; una configuración existente de sbt o Mill puede cubrir ya las necesidades del equipo.",
+        "Las coordenadas de las dependencias y los complementos del compilador pueden diferir entre Scala 2 y Scala 3. Revisa la versión y la plataforma antes de agregar una biblioteca."
+      ],
+      "resources": [
+        {
+          "label": "Libro de Scala 3",
+          "url": "https://docs.scala-lang.org/scala3/book/introduction.html"
+        },
+        {
+          "label": "Primeros pasos con Scala CLI",
+          "url": "https://scala-cli.virtuslab.org/docs/getting_started/"
+        },
+        {
+          "label": "Entornos de desarrollo para Scala",
+          "url": "https://docs.scala-lang.org/getting-started/scala-ides.html"
+        }
+      ]
+    },
+    "build-http-api": {
+      "title": "Crea una API HTTP",
+      "audience": "Desarrolladores de servicios y equipos que conectan aplicaciones",
+      "summary": "Elige un servidor según las necesidades de la aplicación y luego implementa el recorrido completo de una solicitud.",
+      "outcome": "Un punto de acceso con pruebas, validación explícita de entradas, manejo de errores y responsabilidades claras sobre los recursos.",
+      "prerequisites": [
+        "Un proyecto de Scala que compile y ejecute pruebas.",
+        "Conocimientos básicos de solicitudes, respuestas y códigos de estado HTTP."
+      ],
+      "steps": [
+        {
+          "title": "Comienza por el entorno de ejecución del servicio",
+          "body": "Conserva el entorno de ejecución de un servicio existente, salvo que haya un motivo para cambiarlo. Para un servicio nuevo, compara http4s con Cats Effect, ZIO HTTP con ZIO o un marco de trabajo más amplio como Play, según los requisitos y la experiencia del equipo."
+        },
+        {
+          "title": "Describe la interfaz HTTP",
+          "body": "Define las entradas de las solicitudes, las respuestas exitosas y los errores de dominio antes de conectar el punto de acceso. Tapir permite describir estos contratos y generar documentación para los intérpretes de servidor compatibles. Elige el intérprete que corresponda a tu servidor y al tipo de efecto de la lógica de negocio."
+        },
+        {
+          "title": "Implementa y prueba una funcionalidad de principio a fin",
+          "body": "Decodifica y valida las entradas, llama a la lógica de la aplicación, convierte los fallos en respuestas y prueba el resultado. Incluye entradas mal formadas y el fallo de una dependencia. Define explícitamente los ciclos de vida de los clientes HTTP, los grupos de conexiones y el servidor para que los recursos se liberen al cerrar el servicio."
+        }
+      ],
+      "decisions": [
+        "Tapir comparte descripciones de puntos de acceso entre intérpretes; no convierte automáticamente cualquier lógica de negocio entre entornos de ejecución de efectos.",
+        "Antes de decidirte por una integración, verifica que la implementación de servidor elegida admita flujos de datos, WebSocket, mensajes multiparte y las plataformas que necesitas."
+      ],
+      "resources": [
+        {
+          "label": "Integraciones de servidor de Tapir",
+          "url": "https://tapir.softwaremill.com/en/latest/server/overview.html"
+        },
+        {
+          "label": "Documentación de http4s",
+          "url": "https://http4s.org/"
+        },
+        {
+          "label": "Documentación de ZIO HTTP",
+          "url": "https://zio.dev/zio-http/"
+        }
+      ]
+    },
+    "query-data": {
+      "title": "Trabaja con bases de datos y procesamiento de datos",
+      "audience": "Desarrolladores de servidores, ingenieros de datos y equipos de aplicaciones",
+      "summary": "Distingue el acceso a bases de datos de un servicio del procesamiento analítico distribuido.",
+      "outcome": "Un mecanismo de acceso a datos con transacciones bien definidas, límites de recursos y pruebas de integración.",
+      "prerequisites": [
+        "Conocimientos básicos de SQL o del formato de los datos que vas a procesar.",
+        "Una base de datos local, una base de datos de prueba o un conjunto de datos representativo."
+      ],
+      "steps": [
+        {
+          "title": "Identifica la carga de trabajo",
+          "body": "Determina si necesitas consultas transaccionales para una aplicación, un flujo local de ingesta de datos o procesamiento analítico distribuido. Un servicio basado en JDBC y un trabajo de Spark tienen necesidades distintas de ejecución, despliegue y operación. Comienza con el modelo más sencillo que se ajuste a la carga de trabajo."
+        },
+        {
+          "title": "Elige cómo expresar las consultas",
+          "body": "Para acceder mediante SQL, compara una biblioteca centrada en SQL, como Doobie, con un lenguaje de dominio específico para consultas, como Quill o Slick. Revisa el controlador de la base de datos, el dialecto admitido, la versión de Scala y la integración con el entorno de ejecución. Para Spark, sigue los requisitos de compatibilidad y despliegue de la versión que utilices."
+        },
+        {
+          "title": "Verifica el funcionamiento correcto en condiciones reales",
+          "body": "Especifica los límites de las transacciones, quién administra el grupo de conexiones y los límites de concurrencia. Prueba las consultas y las migraciones del esquema en la base de datos que usarás en el despliegue. Para el procesamiento por lotes, incluye datos representativos, registros mal formados y ejecuciones repetidas para evitar que los reintentos dupliquen resultados sin que se detecte."
+        }
+      ],
+      "decisions": [
+        "Un lenguaje de dominio específico para consultas y un controlador de base de datos resuelven problemas distintos. Verifica qué componente ejecuta la consulta generada y administra sus recursos.",
+        "El procesamiento distribuido agrega aspectos relacionados con los clústeres y la partición de datos; es una decisión independiente de la elección del entorno de ejecución de efectos de una aplicación."
+      ],
+      "resources": [
+        {
+          "label": "Documentación de Doobie",
+          "url": "https://typelevel.org/doobie/"
+        },
+        {
+          "label": "Documentación de ZIO Quill",
+          "url": "https://zio.dev/zio-quill/"
+        },
+        {
+          "label": "Guía de Spark SQL",
+          "url": "https://spark.apache.org/docs/latest/sql-programming-guide.html"
+        }
+      ]
+    },
+    "process-streams": {
+      "title": "Procesa flujos y mensajes",
+      "audience": "Desarrolladores de flujos de procesamiento, fuentes de datos continuas, colas y servicios distribuidos",
+      "summary": "Elige el procesamiento de flujos, los actores y los clústeres según el problema que resuelve cada uno.",
+      "outcome": "Un flujo de procesamiento cuyo comportamiento ante la demanda, los fallos y el cierre puedas explicar.",
+      "prerequisites": [
+        "Un origen y un destino concretos para los datos o mensajes.",
+        "Conocimientos básicos de tareas asíncronas y del entorno de ejecución de tu aplicación."
+      ],
+      "steps": [
+        {
+          "title": "Distingue los requisitos de arquitectura",
+          "body": "Un flujo local de procesamiento, el manejo de estado mediante mensajes y un clúster distribuido responden a necesidades distintas. Determina cuáles tiene realmente tu aplicación. Los actores permiten organizar componentes con estado, mientras que los flujos organizan el recorrido de los datos; ninguna de las dos opciones requiere automáticamente un clúster."
+        },
+        {
+          "title": "Elige una biblioteca de flujos adecuada",
+          "body": "Comienza con FS2 si usas Cats Effect, ZIO Streams si usas ZIO o Kyo Stream si usas Kyo. En un sistema que ya utiliza actores, considera Akka Streams o Pekko Streams. Revisa los conectores que necesitas y documenta cualquier adaptador de protocolo entre implementaciones de flujos."
+        },
+        {
+          "title": "Define el comportamiento de la demanda y la entrega",
+          "body": "Limita la concurrencia y el almacenamiento temporal, decide cómo los fallos reinician o detienen el procesamiento y prueba el cierre mientras hay tareas en curso. Si usas un intermediario de mensajes, revisa por separado el comportamiento de las confirmaciones de recepción y de las posiciones de lectura. La contrapresión dentro de un flujo no establece por sí sola garantías de entrega de extremo a extremo."
+        }
+      ],
+      "decisions": [
+        "Akka y Apache Pekko son ecosistemas distintos. Usa la documentación, las dependencias, los conectores y las herramientas de operación que correspondan al que despliegues.",
+        "Un adaptador de Reactive Streams intercambia elementos y demanda; verifica cómo se manejan la cancelación, la responsabilidad sobre los recursos y la conversión de fallos en el límite de la integración."
+      ],
+      "resources": [
+        {
+          "label": "Guía de FS2",
+          "url": "https://fs2.io/#/guide"
+        },
+        {
+          "label": "Apache Pekko Streams",
+          "url": "https://pekko.apache.org/docs/pekko/current/stream/index.html"
+        },
+        {
+          "label": "Akka Streams",
+          "url": "https://doc.akka.io/libraries/akka-core/current/stream/index.html"
+        }
+      ]
+    },
+    "build-browser-ui": {
+      "title": "Desarrolla para el navegador",
+      "audience": "Desarrolladores de interfaces y equipos que comparten código de dominio en Scala",
+      "summary": "Usa Scala.js con una separación clara entre el código portable, las API del navegador y los recursos del servidor.",
+      "outcome": "Una interfaz en el navegador conectada a un servidor mediante un contrato HTTP explícito.",
+      "prerequisites": [
+        "Conocimientos básicos de HTML, eventos del navegador y HTTP.",
+        "Una configuración de compilación compatible con Scala.js y las herramientas de JavaScript que requiera su tutorial."
+      ],
+      "steps": [
+        {
+          "title": "Aprende cómo interactuar con JavaScript",
+          "body": "Sigue el tutorial de Scala.js y examina la aplicación generada en un navegador. Aprende cómo se publican las dependencias para Scala.js y cómo el código de Scala llama a las API de JavaScript. Una biblioteca de la JVM no está disponible automáticamente en el navegador."
+        },
+        {
+          "title": "Crea una interfaz interactiva pequeña",
+          "body": "Usa Laminar u otro marco de trabajo de interfaces para Scala.js que permita representar el estado y responder a eventos. Mantén las operaciones del DOM y las API específicas del navegador separadas de los modelos y las validaciones portables. Prueba una interacción real antes de ampliar la interfaz."
+        },
+        {
+          "title": "Conecta mediante un contrato bien definido",
+          "body": "Define las solicitudes, respuestas y fallos HTTP que comparte la interfaz con el servidor. Comparte código fuente compatible o modelos generados cuando sea útil y prueba la serialización en ambos lados. Las conexiones a bases de datos, los recursos del servidor y sus entornos de ejecución permanecen del lado del servidor, detrás de la interfaz de red."
+        }
+      ],
+      "decisions": [
+        "Revisa la compatibilidad de cada dependencia con Scala.js y los navegadores; la compatibilidad con una versión de Scala no garantiza por sí sola la compatibilidad con una plataforma.",
+        "Compartir modelos de dominio puede reducir la duplicación, pero no elimina los aspectos relacionados con el manejo de versiones, la autenticación o los fallos de red."
+      ],
+      "resources": [
+        {
+          "label": "Tutorial básico de Scala.js",
+          "url": "https://www.scala-js.org/doc/tutorial/basic/"
+        },
+        {
+          "label": "Documentación de Laminar",
+          "url": "https://laminar.dev/documentation"
+        },
+        {
+          "label": "Documentación de Tapir",
+          "url": "https://tapir.softwaremill.com/"
+        }
+      ]
+    },
+    "test-behavior": {
+      "title": "Prueba el comportamiento y los fallos",
+      "audience": "Autores de bibliotecas y equipos de aplicaciones de cualquier ecosistema",
+      "summary": "Combina ejemplos pequeños, propiedades útiles y pruebas del manejo de recursos y fallos.",
+      "outcome": "Un conjunto de pruebas enfocado que explique el comportamiento esperado y compruebe los casos de fallo importantes.",
+      "prerequisites": [
+        "Un comando reproducible que compile el proyecto y ejecute sus pruebas.",
+        "Un comportamiento o una invariante que la aplicación deba preservar."
+      ],
+      "steps": [
+        {
+          "title": "Comienza por el comportamiento del dominio",
+          "body": "Usa MUnit o ScalaTest para verificar funciones comunes y ejemplos importantes. Siempre que sea práctico, mantén las pruebas puras del dominio independientes del entorno de ejecución de la aplicación. Prioriza las aserciones sobre el comportamiento observable desde fuera por encima de las que repiten los pasos internos de una implementación."
+        },
+        {
+          "title": "Agrega propiedades cuando sean útiles",
+          "body": "Usa ScalaCheck o las funciones de pruebas basadas en propiedades de tu marco de trabajo para verificar invariantes, analizadores sintácticos, códecs y transformaciones. Elige de forma deliberada generadores que representen entradas válidas e inválidas. Conserva pruebas con ejemplos para los casos límite que deban ser fáciles de entender y reproducir."
+        },
+        {
+          "title": "Prueba las interacciones asíncronas",
+          "body": "Usa las herramientas de prueba de tu entorno de ejecución para controlar el tiempo, las fibras y los recursos con alcance delimitado. Prueba la liberación de recursos tras un fallo o una cancelación, así como el comportamiento de las integraciones externas. ZIO Test y los módulos de prueba documentados de Kyo ofrecen funciones específicas para sus ecosistemas; usa la integración prevista para tu tipo de cómputo."
+        }
+      ],
+      "decisions": [
+        "Un reloj controlado en las pruebas ayuda a verificar la lógica temporal, pero las pruebas de integración deben comprobar también el comportamiento del sistema externo real.",
+        "Las pruebas basadas en propiedades complementan los ejemplos concretos. Una gran cantidad de entradas generadas no compensa una propiedad débil o incorrecta."
+      ],
+      "resources": [
+        {
+          "label": "Primeros pasos con MUnit",
+          "url": "https://scalameta.org/munit/docs/getting-started.html"
+        },
+        {
+          "label": "ScalaCheck",
+          "url": "https://github.com/typelevel/scalacheck"
+        },
+        {
+          "label": "Documentación de ZIO Test",
+          "url": "https://zio.dev/zio-test/"
+        }
+      ]
+    },
+    "modernize-scala": {
+      "title": "Moderniza una aplicación existente",
+      "audience": "Equipos que migran versiones de Scala, bibliotecas e infraestructura",
+      "summary": "Prepara un inventario de compatibilidad y realiza los cambios en etapas delimitadas que puedas verificar con pruebas.",
+      "outcome": "Un plan de migración con comprobaciones explícitas de dependencias, pasos de verificación y límites de despliegue.",
+      "prerequisites": [
+        "Una compilación funcional de referencia y pruebas de la aplicación actual.",
+        "Un inventario de las versiones desplegadas, las integraciones externas y los formatos de los datos persistidos."
+      ],
+      "steps": [
+        {
+          "title": "Registra las restricciones de compatibilidad",
+          "body": "Haz un inventario de las versiones de Scala y del JDK, las macros, los complementos del compilador, los marcos de trabajo y los destinos de despliegue. Identifica qué dependencias proporcionan tipos públicos o formatos de persistencia. Asegúrate de que la compilación y las pruebas existentes sean reproducibles antes de cambiar el lenguaje o el entorno de ejecución."
+        },
+        {
+          "title": "Migra el lenguaje por etapas",
+          "body": "Para migrar de Scala 2.13 a Scala 3, revisa la disponibilidad de bibliotecas, las implementaciones de macros, los reemplazos de complementos del compilador y el uso de scala-reflect. Sigue el procedimiento oficial de migración y comienza por un módulo bien delimitado. La compatibilidad existente con Scala 2 no garantiza que las macros o los complementos funcionen sin cambios."
+        },
+        {
+          "title": "Separa los cambios de infraestructura",
+          "body": "Trata el reemplazo del entorno de ejecución de efectos o la migración de Akka a Pekko como un proyecto independiente. Revisa la configuración, los serializadores, los complementos de persistencia y las herramientas de operación. Ensaya la recuperación del estado y el comportamiento durante el despliegue en un entorno representativo antes de modificar los componentes de producción."
+        }
+      ],
+      "decisions": [
+        "Cambiar el lenguaje, el entorno de ejecución y la arquitectura de despliegue al mismo tiempo dificulta aislar los fallos. Elige un orden que permita conservar una referencia útil.",
+        "La guía básica de migración de Akka a Pekko cubre el paso de Akka 2.6 a Pekko 1.0. Consulta las guías adicionales correspondientes a tu versión de destino y no des por sentada la compatibilidad de un clúster que combine Akka y Pekko."
+      ],
+      "resources": [
+        {
+          "label": "Tutorial de migración a Scala 3",
+          "url": "https://docs.scala-lang.org/scala3/guides/migration/tutorial-intro.html"
+        },
+        {
+          "label": "Requisitos previos para migrar a Scala 3",
+          "url": "https://docs.scala-lang.org/scala3/guides/migration/tutorial-prerequisites.html"
+        },
+        {
+          "label": "Migración de Akka a Apache Pekko",
+          "url": "https://pekko.apache.org/docs/pekko/current/migration/migration-guide-akka-1.0.x.html"
+        }
+      ]
+    },
+    "write-tools": {
+      "title": "Escribe scripts y herramientas con estilo directo",
+      "audience": "Desarrolladores que automatizan tareas o crean aplicaciones de línea de comandos",
+      "summary": "Comienza con código Scala sencillo y agrega concurrencia cuando la carga de trabajo se beneficie de ella.",
+      "outcome": "Una herramienta pequeña con dependencias explícitas, errores útiles y una forma reproducible de ejecutarla.",
+      "prerequisites": [
+        "Una tarea concreta que quieras automatizar y una entrada representativa.",
+        "Scala CLI u otra herramienta de compilación configurada para el entorno de despliegue previsto."
+      ],
+      "steps": [
+        {
+          "title": "Mantén pequeña la primera versión",
+          "body": "Usa Scala CLI y la biblioteca estándar para implementar la transformación principal. Agrega utilidades específicas, como os-lib, para operar con el sistema de archivos y los procesos. Mantén claras las entradas, las salidas y los efectos secundarios para que la herramienta siga siendo fácil de examinar."
+        },
+        {
+          "title": "Haz que la ejecución sea predecible",
+          "body": "Fija las versiones de las dependencias, valida los argumentos y comunica los fallos con mensajes útiles y un comportamiento de salida adecuado. Prueba la transformación principal de forma independiente del acceso a archivos o procesos. Decide cómo los usuarios ejecutarán o empaquetarán la herramienta antes de depender de configuraciones específicas de una máquina."
+        },
+        {
+          "title": "Agrega concurrencia estructurada con un propósito claro",
+          "body": "Mantén las operaciones secuenciales hasta que el trabajo en paralelo resulte útil. Si las tareas necesitan compartir ciclos de vida, cancelación y liberación de recursos, evalúa la concurrencia estructurada. Ox ofrece concurrencia y flujos con estilo directo para Scala 3 en JDK 21+; verifica que las máquinas donde se ejecutará la herramienta cumplan esos requisitos."
+        }
+      ],
+      "decisions": [
+        "Un programa secuencial pequeño puede ser suficiente para cumplir el requisito. La concurrencia agrega límites de recursos y decisiones sobre la propagación de fallos cuya responsabilidad debe quedar explícita.",
+        "Las bibliotecas de hilos virtuales de la JVM y los despliegues en el navegador o en código nativo tienen restricciones distintas. Confirma la plataforma de destino antes de adoptar un modelo de concurrencia."
+      ],
+      "resources": [
+        {
+          "label": "Primeros pasos con Scala CLI",
+          "url": "https://scala-cli.virtuslab.org/docs/getting_started/"
+        },
+        {
+          "label": "os-lib",
+          "url": "https://github.com/com-lihaoyi/os-lib"
+        },
+        {
+          "label": "Documentación de Ox",
+          "url": "https://ox.softwaremill.com/"
+        }
+      ]
+    },
+    "connect-ecosystems": {
+      "title": "Conecta ecosistemas con un propósito claro",
+      "audience": "Equipos que integran bibliotecas o hacen evolucionar sus tecnologías actuales",
+      "summary": "Distingue la compatibilidad con clases de tipos, los puentes entre efectos, los límites asíncronos, las descripciones compartidas y las migraciones.",
+      "outcome": "Una interfaz de integración con requisitos documentados, comportamiento definido ante fallos y responsabilidades claras sobre los recursos.",
+      "prerequisites": [
+        "Las bibliotecas, las versiones y las plataformas de despliegue exactas de origen y destino.",
+        "Una responsabilidad clara sobre la ejecución, la cancelación, los recursos y la conversión de errores en el límite de la integración."
+      ],
+      "steps": [
+        {
+          "title": "Usa una biblioteca de Cats Effect desde ZIO",
+          "body": "Primero verifica si la biblioteca es polimórfica respecto de su tipo de efecto y qué capacidades de Cats Effect requiere. zio-interop-cats proporciona las instancias de clases de tipos compatibles con ZIO y permite integraciones con bibliotecas como FS2 y Doobie. Usa versiones compatibles de las dependencias, proporciona los entornos necesarios y prueba la liberación de recursos y la cancelación. Esto no hace que cualquier biblioteca programada específicamente para cats.effect.IO acepte un ZIO[R, E, A] arbitrario."
+        },
+        {
+          "title": "Llama a ZIO desde Kyo o a Kyo desde ZIO",
+          "body": "Usa kyo-zio en un punto de integración bien definido y elige su API de efectos, flujos o capas según el valor que adaptes. Proporciona el entorno de un efecto de ZIO antes de incorporarlo a Kyo. Prueba la interrupción y la finalización en ambas direcciones. Los fallos tipados se convierten, pero las estructuras compuestas de ZIO Cause se reducen a un único error de Kyo, por lo que la información de diagnóstico no es idéntica a ambos lados de la integración."
+        },
+        {
+          "title": "Envuelve una API que devuelve Future",
+          "body": "Crea el Future dentro de la operación de suspensión o interoperabilidad documentada para el entorno de ejecución de destino. Mantén explícitos el ExecutionContext y la política de bloqueo de la API, y convierte los fallos al ingresar en la aplicación. Envolver un Future no agrega cancelación a la operación subyacente: documenta si ese trabajo puede detenerse de forma independiente. Evita las esperas bloqueantes en los recorridos de procesamiento de solicitudes y flujos."
+        },
+        {
+          "title": "Comparte descripciones de puntos de acceso HTTP",
+          "body": "Usa Tapir para describir las entradas, las salidas y los errores, y luego selecciona el intérprete para tu servidor HTTP. Proporciona la lógica de negocio en la forma que ese intérprete espera. Verifica su compatibilidad con flujos de datos, WebSocket, mensajes multiparte y plataformas. Compartir la descripción de un punto de acceso no convierte automáticamente cualquier código de aplicación entre ZIO, Cats Effect, Future o el estilo directo."
+        },
+        {
+          "title": "Migra un servicio de Akka a Apache Pekko",
+          "body": "Sigue las guías de migración correspondientes a tus versiones de origen y destino. Revisa las coordenadas de los artefactos, las importaciones, los prefijos de configuración, las direcciones de comunicación remota, los serializadores, los complementos de persistencia y las herramientas de operación. Ensaya la recuperación del estado y el despliegue antes de modificar los nodos de producción. La guía básica cubre el paso de Akka 2.6 a Pekko 1.0; su origen común no garantiza que otras versiones puedan reemplazarse sin ajustes ni convivir en un mismo clúster."
+        }
+      ],
+      "decisions": [
+        "Elige la integración documentada de menor alcance que preserve el comportamiento que necesitas. Las instancias de clases de tipos, la conversión de efectos y los adaptadores de protocolo son mecanismos distintos.",
+        "Verifica explícitamente la cancelación, la liberación de recursos, los errores tipados y la información de diagnóstico. Una compilación exitosa no garantiza un comportamiento equivalente durante la ejecución."
+      ],
+      "resources": [
+        {
+          "label": "Interoperabilidad de ZIO con Cats",
+          "url": "https://github.com/zio/interop-cats"
+        },
+        {
+          "label": "Puente entre Kyo y ZIO",
+          "url": "https://github.com/getkyo/kyo/tree/main/kyo-zio"
+        },
+        {
+          "label": "Futures y Promises en Scala",
+          "url": "https://docs.scala-lang.org/overviews/core/futures.html"
+        },
+        {
+          "label": "Integraciones de servidor de Tapir",
+          "url": "https://tapir.softwaremill.com/en/latest/server/overview.html"
+        },
+        {
+          "label": "Migración de Akka a Apache Pekko",
+          "url": "https://pekko.apache.org/docs/pekko/current/migration/migration-guide-akka-1.0.x.html"
+        }
+      ]
+    }
+  }
+}

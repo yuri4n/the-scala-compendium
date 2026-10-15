@@ -9,10 +9,16 @@ sit in the intersections. Search, ecosystem filters, a bridges-only filter,
 and a list view expose the same typed catalogue. Selection opens documentation
 and compatibility notes. Proposed guides are distinct from published bridges.
 
-Featured groups highlight yuri4n’s tui4s and h34s and Kyo’s integration modules,
+The catalogue includes yuri4n’s tui4s and h34s and Kyo’s integration modules,
 with maintainer and development labels. Additional regions cover Akka, Apache
 Pekko, Scala Futures, Ox, and Turbolift. They use the same catalogue and filters.
-Candidate h34s integrations remain clearly marked in its notes.
+Shared tools cover APIs, data, frontend platforms, testing, builds, and editors.
+Candidate h34s integrations remain clearly marked in its notes. Nine practical
+guides connect these choices to everyday development tasks.
+
+The complete catalogue, guides, and community invitation are available in
+English, Spanish, and Brazilian Portuguese. Appearance follows the system by
+default; language and explicit light/dark choices persist.
 
 ## Requirements and setup
 
@@ -63,7 +69,9 @@ the saved environment install script contains the exact commands.
 - `shared/utils/atlas.ts`: typed catalogue and pure filtering.
 - `app/assets/css/main.css`: app skin and semantic token values.
 - `app/assets/css/atlas.css`: diagram layout and responsive rules.
-- `vendor/yuri4n.dev`: unmodified Nuxt UI, base, and ESLint layers.
+- `shared/data/guides.json`: guide structure, related entries, and source URLs.
+- `i18n/locales/`: complete English, Spanish, and Brazilian Portuguese content.
+- `vendor/yuri4n.dev`: unmodified UI, base, preferences, and ESLint layers.
 
 The map scrolls horizontally on narrow screens, while the detail panel stacks
 below it. List view provides a compact alternative. All Lucide icons are
@@ -80,7 +88,7 @@ Prefer primary sources when suggesting a connection. Explain dependency,
 platform, cancellation, and resource boundaries; an overlap is not a claim of
 automatic compatibility. See `PRODUCT.md` for the editorial scope.
 
-The owner will import the repository through the Vercel dashboard. See
+The owner imported the repository through the Vercel dashboard. See
 [Vercel setup](docs/vercel.md) for production, branch previews, and enabling
 Web Analytics. The official Analytics Nuxt module is installed; collection
 requires the deployed Vercel service. A live deployment has not yet been
@@ -89,3 +97,14 @@ verified.
 The interface uses adapted shadcn-vue controls and Inspira UI accents. See
 [component sources](docs/ui-sources.md) for provenance, licenses, and the
 pending Spectrum documentation review.
+
+## Shared app preferences
+
+`@yuri4n/nuxt-preferences` supplies localized routing, `<AppPreferences />`,
+language persistence, and System/Light/Dark behavior. The app supplies its
+messages and both semantic color palettes. The submodule and CI workflow use
+the same release candidate, `v0.1.1-rc.1`.
+
+See [the app preferences standard](docs/app-preferences.md) for adoption in
+other apps. The Nuxt starter adopts the same layer; existing applications need
+their own content translations and dark palette when they migrate.

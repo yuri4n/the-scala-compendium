@@ -11,6 +11,11 @@ A common starting point for Scala developers choosing libraries, learning effect
 - Integration notes that distinguish direct compatibility, adapters, and architectural boundaries.
 - A newsletter page with an honest publishing status; subscriptions require a configured provider.
 - Contribution guidance so developers can propose corrections and new guides through GitHub.
+- Complete English, Spanish, and Brazilian Portuguese content, with persistent
+  language selection and System/Light/Dark appearance.
+- Nine practical guides for learning Scala, HTTP, data, streams, frontend,
+  testing, modernization, command-line tools, and ecosystem integration.
+- A dedicated invitation to community unity, with a serious, restrained tone.
 
 ## Editorial principles
 
@@ -36,6 +41,12 @@ runtime compatibility. The initial catalogue is a curated starting point,
 not a complete inventory. Cover practical ZIO and Kyo modules for HTTP, data,
 configuration, and application tooling alongside their effect and streaming
 cores. Link each module to its primary documentation.
+
+Give shared tooling its own place: build tools, editors, formatters, testing,
+serialization, frontend platforms, HTTP abstractions, and data processing.
+Explain the distinction between an effect runtime, an application framework,
+a backend interpreter, and a shared tool. An item can have several memberships
+without appearing twice in the unfiltered map.
 
 ## Follow-up capabilities
 

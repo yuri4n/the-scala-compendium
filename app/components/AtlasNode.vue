@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import type { AtlasItem } from '~~/shared/utils/atlas'
-import { ecosystemNames, maintainerNames } from '~~/shared/utils/atlas'
 import { Button as ShadButton } from '~/components/ui/button'
 
 const {
@@ -9,9 +8,9 @@ const {
   list = false,
 } = defineProps<{ item: AtlasItem; selected: boolean; list?: boolean }>()
 const emit = defineEmits<{ select: [id: string] }>()
-const ecosystemLabels = computed(() =>
-  item.ecosystems.map((key) => ecosystemNames[key]),
-)
+const { t, ecosystemLabel, maintainerLabel, statusLabel, kindLabel } =
+  useAtlasContent()
+const ecosystemLabels = computed(() => item.ecosystems.map(ecosystemLabel))
 </script>
 
 <template>
@@ -31,7 +30,13 @@ const ecosystemLabels = computed(() =>
     "
     :data-item="item.id"
     :aria-pressed="selected"
-    :aria-label="`${item.name}, ${item.kind === 'proposal' ? 'proposed guide' : item.kind}, ${ecosystemLabels.join(' and ')}`"
+    :aria-label="
+      t('atlas.nodeLabel', {
+        name: item.name,
+        kind: kindLabel(item.kind),
+        ecosystems: ecosystemLabels.join(t('atlas.and')),
+      })
+    "
     :aria-describedby="
       item.maintainer ? `${list ? 'list' : 'map'}-${item.id}-byline` : undefined
     "
@@ -53,17 +58,19 @@ const ecosystemLabels = computed(() =>
         :id="`${list ? 'list' : 'map'}-${item.id}-byline`"
         class="node-byline"
       >
-        {{ maintainerNames[item.maintainer]
-        }}<template v-if="item.status"> · {{ item.status }}</template>
+        {{ maintainerLabel(item.maintainer)
+        }}<template v-if="item.status">
+          · {{ statusLabel(item.status) }}</template
+        >
       </span>
     </span>
     <template v-if="list">
       <span class="list-membership">{{ ecosystemLabels.join(' + ') }}</span>
       <span class="list-kind">{{
         item.kind === 'proposal'
-          ? 'Proposed guide'
+          ? t('atlas.proposal')
           : item.kind === 'bridge'
-            ? 'Community bridge'
+            ? t('atlas.bridge')
             : item.category
       }}</span>
     </template>

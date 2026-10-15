@@ -1,15 +1,17 @@
 <script setup lang="ts">
+const { t } = useI18n()
 useSeoMeta({
-  title: 'Ecosystem Atlas',
-  description:
-    'Explore Scala libraries and connections across ZIO, Typelevel, Kyo, Akka, Pekko, Futures, and emerging approaches. An interactive atlas with guides and integration notes.',
+  title: () => t('nav.atlas'),
+  description: () => t('site.description'),
 })
 </script>
 
 <template>
   <div>
     <EcosystemAtlas />
+    <EcosystemOrientation />
     <LearningPaths />
+    <CommunityInvitation />
     <NewsletterSection />
   </div>
 </template>

@@ -5,39 +5,63 @@ uses the owner's Nuxt starter, shadcn-vue controls, and Inspira UI patterns and
 newsletter accent. Both requested skills, `better-ui` and `ui-taste`, were
 read completely with supporting paths resolved from their supplied directories.
 
-## Map-first revision
+## Map and content
 
-The diagram now uses the full content width, within a 1920px page limit, and a
-780px canvas height. Connection details sit below the map. The prominent
-featured panels are removed; maintainer and development labels remain in the
-catalogue. Seven ZIO modules and seven Kyo modules bring the catalogue to 36
-entries, including four documented bridges and one proposed guide. The 29
-nodes in the overlap diagram are joined by seven entries in separate regions.
+The diagram uses the full content width within a 1920px page limit and an
+820px canvas. Connection details sit below it. Prominent project panels are
+removed; maintainer and development labels stay with their catalogue entries.
+The 67 entries include 34 nodes in the overlap diagram, 14 entries in other
+named ecosystems, and 19 shared libraries/tools in an expandable section.
+Four documented bridges and one proposed guide remain distinct.
 
-| Severity         | Location                                 | Finding                                                                        | Resolution                                                                               |
-| ---------------- | ---------------------------------------- | ------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- |
-| Medium, resolved | app/components/EcosystemAtlas.vue:76     | Selection scrolled away from keyboard focus and could hide the return control. | Scroll and focus the details aside; Back to atlas focuses and reveals the selected node. |
-| Medium, resolved | app/components/inspira/BorderBeam.vue:46 | The moving decoration could temporarily widen the mobile document.             | Clip the decoration inside its own border; check overflow at four animation positions.   |
-| Low, resolved    | app/assets/css/atlas.css:431             | A permanent sidebar and featured panels constrained the diagram.               | Use a full-width canvas and move details below it, with readable node sizes.             |
+Nine practical guides, a seven-part ecosystem orientation, and a dedicated
+community invitation are complete in English, Spanish, and Brazilian
+Portuguese. Review checked source caveats, related item IDs, translated
+placeholders, and unchanged official resource URLs. Shared tools and backend
+interpreters do not imply that effect runtimes are interchangeable. Play has
+Pekko/Future memberships but renders once in the unfiltered map.
+
+## Resolved findings
+
+- Selection now scrolls and focuses the details aside. Back to atlas reveals
+  and focuses the selected node, including an entry inside shared tools.
+- The newsletter decoration is clipped inside its border, preventing mobile
+  overflow during its animation. Reduced motion disables the animation.
+- The permanent sidebar and promotional panels no longer constrain the map.
+- Locale entries explicitly declare their language codes, preserving
+  canonical and alternate-language metadata when app locale files merge.
+- Appearance now has a real dark palette and defaults to System. The shared
+  layer persists explicit choices and follows system changes when selected.
 
 ## Production checks
 
-Rendered screenshots were inspected at 1440px and 1963px desktop widths and
-390px mobile width. Layout measurements also passed at 1100px, 900px, and
-360px: no page-wide overflow, no diagram-node collisions, and no browser
-runtime errors. The map scrolls independently on narrow screens; list view
-provides a direct alternative. Desktop map widths measured 1374px and 1854px.
+Screenshots were inspected at desktop and mobile sizes in light and dark.
+All three languages passed geometry checks at 1440px, 1963px, 900px, 390px,
+360px: no document overflow and no diagram-node collisions. Desktop map
+widths measured 1374px and 1854px. Narrow screens scroll the map independently;
+list view remains available. All 27 localized guide routes returned 200 and
+rendered their steps, related tools, and correct HTML language without page
+width overflow.
 
-The desktop and 360px mobile Playwright scenarios exercise combined filters,
-search recovery, owner status, new module documentation, keyboard focus,
-return navigation, and separate Akka/Pekko/Future memberships. Both pass,
-alongside six unit/component tests, lint, typecheck, and production builds for
-Node and Vercel. Reduced motion disables the beam animation. Static pattern
-backgrounds and semantic colors remain present in the production build.
+Fourteen unit/component tests and nine production-browser tests pass. Browser
+coverage includes combined filters, recovery, owner status, unique nodes,
+keyboard return focus, mobile animation overflow, browser language detection,
+localized navigation, nested-page switching, cookie persistence, canonical
+and alternate links, a real 404, live system appearance changes, persistent
+explicit light/dark overrides, and returning to System.
 
-The Analytics test verifies one Nuxt script injection with the remote script
-stubbed. Live collection and the deployed Vercel URL are not verified. Real
-iOS-device and Safari rendering are not verified. Email subscriptions remain
-unimplemented; the interface states that status explicitly.
+The root Playwright configuration builds and serves the production app by
+default; CI uses the same command. `PLAYWRIGHT_BASE_URL` can reuse an existing
+production server. Frozen install, lint, typecheck, and Node/Vercel production
+builds are release checks; remote CI and deployment require separate proof.
 
-Approve
+## Limits
+
+The Analytics test verifies one Nuxt script injection with its Vercel endpoint
+stubbed. A standalone local server cannot serve that endpoint; collection
+requires Web Analytics enabled on Vercel. Live collection and the public
+release are not verified while network access is blocked. Real iOS-device and
+Safari rendering are not verified. Newsletter subscriptions remain
+unimplemented, and the interface states that status explicitly.
+
+Approve for local UI review. Production publication remains pending.
