@@ -32,6 +32,9 @@ Pekko/Future memberships but renders once in the unfiltered map.
   canonical and alternate-language metadata when app locale files merge.
 - Appearance now has a real dark palette and defaults to System. The shared
   layer persists explicit choices and follows system changes when selected.
+- Ecosystem chips now toggle independently. Match any (OR) combines their
+  results; Match all (AND) finds shared memberships. Search and bridges-only
+  compose with both modes, and multiply classified entries still render once.
 
 ## Production checks
 
@@ -43,12 +46,14 @@ list view remains available. All 27 localized guide routes returned 200 and
 rendered their steps, related tools, and correct HTML language without page
 width overflow.
 
-Fourteen unit/component tests and nine production-browser tests pass. Browser
+Twenty-one unit/component tests and ten production-browser tests pass. Browser
 coverage includes combined filters, recovery, owner status, unique nodes,
 keyboard return focus, mobile animation overflow, browser language detection,
 localized navigation, nested-page switching, cookie persistence, canonical
 and alternate links, a real 404, live system appearance changes, persistent
 explicit light/dark overrides, and returning to System.
+The filter regression also checks independent toggles, unions, two-way and
+three-way intersections, proposed-guide exclusion, and reset behavior.
 
 The root Playwright configuration builds and serves the production app by
 default; CI uses the same command. `PLAYWRIGHT_BASE_URL` can reuse an existing

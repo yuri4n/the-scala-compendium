@@ -74,7 +74,11 @@
     "compare": "Entenda as diferentes abordagens",
     "nodeLabel": "{name}, {kind}, {ecosystems}",
     "and": " e ",
-    "proposedContribution": "Contribuição proposta"
+    "proposedContribution": "Contribuição proposta",
+    "matchLabel": "Combinar ecossistemas",
+    "matchAny": "Qualquer um (OU)",
+    "matchAll": "Todos (E)",
+    "multiSelectHelp": "Selecione vários ecossistemas para explorá-los juntos."
   },
   "details": {
     "by": "Por {name}",

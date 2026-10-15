@@ -7,6 +7,7 @@ A common starting point for Scala developers choosing libraries, learning effect
 - An interactive atlas covering ZIO, Typelevel, Kyo, Akka, Apache Pekko,
   standard-library Futures, and smaller approaches such as Ox and Turbolift,
   with library and bridge search, ecosystem filters, and an equivalent list view.
+  Ecosystem chips allow multiple selections with explicit OR/AND matching.
 - Learning paths that explain prerequisites and link to primary documentation.
 - Integration notes that distinguish direct compatibility, adapters, and architectural boundaries.
 - A newsletter page with an honest publishing status; subscriptions require a configured provider.

@@ -102,6 +102,10 @@ test('show Play once and find it through either membership', async ({
   expect(new Set(ids).size).toBe(ids.length)
 
   for (const ecosystem of ['Apache Pekko', 'Scala Future']) {
+    await page.getByRole(
+      'button',
+      { name: 'All ecosystems', exact: true },
+    ).click()
     await page.getByRole('button', { name: ecosystem, exact: true }).click()
     await expect(play).toHaveCount(1)
     await play.click()
@@ -113,6 +117,15 @@ test('show Play once and find it through either membership', async ({
     await page.getByRole('button', { name: 'Back to atlas' }).click()
     await expect(play).toBeFocused()
   }
+  // Both filters include Play, but it must still have one map node.
+  await page.getByRole('button', { name: 'Apache Pekko', exact: true }).click()
+  await expect(play).toHaveCount(1)
+  await page.getByRole(
+    'combobox',
+    { name: 'Match ecosystems', exact: true },
+  ).selectOption('all')
+  await expect(play).toHaveCount(1)
+  await expect(page.locator('.map-node')).toHaveCount(1)
   await page.getByRole('button', { name: 'List view' }).click()
   await expect(page.locator('.list-item[data-item="play"]')).toHaveCount(1)
 })
@@ -165,10 +178,114 @@ test('keep the mobile map and list usable without page overflow', async ({
     'href',
     'https://pekko.apache.org/docs/pekko/current/stream/index.html',
   )
+  await page.getByRole(
+    'button',
+    { name: 'All ecosystems', exact: true },
+  ).click()
   await page.getByRole('button', { name: 'Scala Future', exact: true }).click()
   await expect(page.locator('.list-item[data-item="scala-future"]'))
     .toBeVisible()
   await page.getByRole('switch', { name: 'Bridges only' }).click()
   await expect(page.locator('.list-item[data-item="kyo-compat"]')).toBeVisible()
   await expect(page.locator('.list-item:not(.bridge)')).toHaveCount(0)
+})
+
+test('combine ecosystems with OR and AND and reset empty matches', async ({
+  page,
+}) => {
+  const all = page.getByRole(
+    'button',
+    { name: 'All ecosystems', exact: true },
+  )
+  const zio = page.getByRole('button', { name: 'ZIO', exact: true })
+  const kyo = page.getByRole('button', { name: 'Kyo', exact: true })
+  const typelevel = page.getByRole(
+    'button',
+    { name: 'Typelevel', exact: true },
+  )
+  const match = page.getByRole(
+    'combobox',
+    { name: 'Match ecosystems', exact: true },
+  )
+  const bridgeSwitch = page.getByRole('switch', { name: 'Bridges only' })
+  const rows = page.locator('.list-item')
+  const readIds = () => rows.evaluateAll(nodes =>
+    nodes.map(node => node.getAttribute('data-item')).sort(),
+  )
+
+  await expect(all).toHaveAttribute('aria-pressed', 'true')
+  await expect(match).toHaveValue('any')
+  await expect(match.locator('option[value="any"]'))
+    .toHaveText('Match any (OR)')
+  await expect(match.locator('option[value="all"]'))
+    .toHaveText('Match all (AND)')
+  await page.getByRole('button', { name: 'List view' }).click()
+
+  // Derive the union from independently observed single-ecosystem results.
+  // This checks the interaction without duplicating the filtering function.
+  await zio.click()
+  await expect(zio).toHaveAttribute('aria-pressed', 'true')
+  await expect(all).toHaveAttribute('aria-pressed', 'false')
+  await expect(page.locator('.list-item[data-item="zio"]')).toBeVisible()
+  await expect(page.locator('.list-item[data-item="kyo"]')).toHaveCount(0)
+  const zioIds = await readIds()
+  await all.click()
+  await expect(zio).toHaveAttribute('aria-pressed', 'false')
+  await kyo.click()
+  await expect(page.locator('.list-item[data-item="kyo"]')).toBeVisible()
+  await expect(page.locator('.list-item[data-item="zio"]')).toHaveCount(0)
+  const kyoIds = await readIds()
+
+  await zio.click()
+  await expect(zio).toHaveAttribute('aria-pressed', 'true')
+  await expect(kyo).toHaveAttribute('aria-pressed', 'true')
+  const unionIds = [...new Set([...zioIds, ...kyoIds])].sort()
+  await expect.poll(readIds).toEqual(unionIds)
+  await expect(page.locator('.list-item[data-item="cats-effect"]'))
+    .toHaveCount(0)
+
+  // Selecting an active chip removes only that ecosystem.
+  await kyo.click()
+  await expect(kyo).toHaveAttribute('aria-pressed', 'false')
+  await expect(zio).toHaveAttribute('aria-pressed', 'true')
+  await expect.poll(readIds).toEqual(zioIds)
+  await kyo.click()
+  await expect.poll(readIds).toEqual(unionIds)
+
+  await match.selectOption('all')
+  await expect.poll(readIds).toEqual([
+    'kyo-compat',
+    'kyo-zio',
+    'mixed-guide',
+  ])
+  await expect(page.locator('.list-item[data-item="mixed-guide"]'))
+    .toHaveAccessibleName(/Proposed guide/)
+  await bridgeSwitch.click()
+  await expect.poll(readIds).toEqual(['kyo-compat', 'kyo-zio'])
+  await expect(rows.locator('.list-kind')).toHaveText([
+    'Community bridge',
+    'Community bridge',
+  ])
+
+  await bridgeSwitch.click()
+  await typelevel.click()
+  await expect(typelevel).toHaveAttribute('aria-pressed', 'true')
+  await expect.poll(readIds).toEqual(['mixed-guide'])
+  await bridgeSwitch.click()
+  await expect(rows).toHaveCount(0)
+  await expect(page.getByRole('heading', { name: 'No connections found' }))
+    .toBeVisible()
+
+  await page.getByRole('button', { name: 'Clear filters' }).click()
+  await expect(all).toHaveAttribute('aria-pressed', 'true')
+  for (const chip of [zio, kyo, typelevel])
+    await expect(chip).toHaveAttribute('aria-pressed', 'false')
+  await expect(match).toHaveValue('any')
+  await expect(bridgeSwitch).not.toBeChecked()
+  await expect(page.getByRole('searchbox')).toHaveValue('')
+  await expect(page.getByRole('searchbox')).toBeFocused()
+  await expect(page.locator('.list-item[data-item="zio"]')).toBeVisible()
+  await expect(page.locator('.list-item[data-item="kyo"]')).toBeVisible()
+  await expect(page.locator('.list-item[data-item="cats-effect"]'))
+    .toBeVisible()
 })

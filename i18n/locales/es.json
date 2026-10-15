@@ -74,7 +74,11 @@
     "compare": "Comprender los distintos enfoques",
     "nodeLabel": "{name}, {kind}, {ecosystems}",
     "and": " y ",
-    "proposedContribution": "Contribución propuesta"
+    "proposedContribution": "Contribución propuesta",
+    "matchLabel": "Combinar ecosistemas",
+    "matchAny": "Cualquiera (O)",
+    "matchAll": "Todos (Y)",
+    "multiSelectHelp": "Selecciona varios ecosistemas para explorarlos juntos."
   },
   "details": {
     "by": "Por {name}",

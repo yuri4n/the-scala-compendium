@@ -2,6 +2,7 @@ export type Ecosystem
   = | 'zio' | 'typelevel' | 'kyo'
     | 'akka' | 'pekko' | 'future' | 'ox' | 'turbolift' | 'shared'
 export type EcosystemFilter = Ecosystem | 'all'
+export type EcosystemMatch = 'any' | 'all'
 export type Maintainer = 'yuri4n' | 'kyo'
 export const maintainerNames: Record<Maintainer, string> = {
   yuri4n: 'yuri4n',
@@ -1275,8 +1276,9 @@ export const atlasItems: AtlasItem[] = [
 ]
 
 export function filterAtlas(
-  { ecosystem = 'all', query = '', bridgesOnly = false }: {
-    ecosystem?: EcosystemFilter
+  { ecosystems = [], match = 'any', query = '', bridgesOnly = false }: {
+    ecosystems?: Ecosystem[]
+    match?: EcosystemMatch
     query?: string
     bridgesOnly?: boolean
   } = {},
@@ -1284,7 +1286,9 @@ export function filterAtlas(
 ) {
   const term = query.trim().toLowerCase()
   return items.filter(item =>
-    (ecosystem === 'all' || item.ecosystems.includes(ecosystem))
+    (!ecosystems.length || (match === 'all'
+      ? ecosystems.every(ecosystem => item.ecosystems.includes(ecosystem))
+      : ecosystems.some(ecosystem => item.ecosystems.includes(ecosystem))))
     && (!bridgesOnly || item.kind === 'bridge')
     && [
       item.name,

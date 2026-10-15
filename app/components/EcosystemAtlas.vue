@@ -1,5 +1,9 @@
 <script setup lang="ts">
-import type { EcosystemFilter } from '~~/shared/utils/atlas'
+import type {
+  Ecosystem,
+  EcosystemFilter,
+  EcosystemMatch,
+} from '~~/shared/utils/atlas'
 import {
   additionalEcosystems,
   diagramEcosystems,
@@ -28,7 +32,8 @@ const regions = computed(() =>
     name: ecosystemLabel(id),
   })),
 )
-const ecosystem = ref<EcosystemFilter>('all')
+const selectedEcosystems = ref<Ecosystem[]>([])
+const matchMode = ref<EcosystemMatch>('any')
 const query = ref(typeof route.query.q === 'string' ? route.query.q : '')
 const bridgesOnly = ref(false)
 const view = ref<'map' | 'list'>('map')
@@ -40,7 +45,8 @@ const canvas = useTemplateRef('canvas')
 const matches = computed(() =>
   filterAtlas(
     {
-      ecosystem: ecosystem.value,
+      ecosystems: selectedEcosystems.value,
+      match: matchMode.value,
       query: query.value,
       bridgesOnly: bridgesOnly.value,
     },
@@ -65,9 +71,12 @@ const additionalGroups = computed(() =>
         (item) =>
           item.x === undefined &&
           item.ecosystems.includes(id) &&
-          (additionalEcosystems.some((value) => value === ecosystem.value)
-            ? id === ecosystem.value
-            : id === item.ecosystems[0]),
+          id ===
+            (item.ecosystems.find(
+              (value) =>
+                additionalEcosystems.includes(value) &&
+                selectedEcosystems.value.includes(value),
+            ) ?? item.ecosystems[0]),
       ),
     }))
     .filter((group) => group.items.length),
@@ -128,8 +137,23 @@ watch(
     query.value = typeof value === 'string' ? value : ''
   },
 )
+function isEcosystemSelected(id: EcosystemFilter) {
+  return id === 'all'
+    ? selectedEcosystems.value.length === 0
+    : selectedEcosystems.value.includes(id)
+}
+function toggleEcosystem(id: EcosystemFilter) {
+  if (id === 'all') {
+    selectedEcosystems.value = []
+    matchMode.value = 'any'
+    return
+  }
+  selectedEcosystems.value = isEcosystemSelected(id)
+    ? selectedEcosystems.value.filter((value) => value !== id)
+    : [...selectedEcosystems.value, id]
+}
 function clearFilters() {
-  ecosystem.value = 'all'
+  toggleEcosystem('all')
   query.value = ''
   bridgesOnly.value = false
   searchInput.value?.focus()
@@ -178,27 +202,39 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleShortcut))
       >
     </div>
     <div class="atlas-toolbar">
-      <div
-        class="ecosystem-filters"
-        role="group"
-        :aria-label="t('atlas.filters')"
-      >
-        <ShadButton
-          v-for="option in ecosystems"
-          :key="option.id"
-          variant="ghost"
-          size="content"
-          class="filter"
-          :class="[{ active: ecosystem === option.id }]"
-          :aria-pressed="ecosystem === option.id"
-          @click="ecosystem = option.id"
+      <div class="ecosystem-selection">
+        <div
+          class="ecosystem-filters"
+          role="group"
+          :aria-label="t('atlas.filters')"
         >
-          <span
-            v-if="option.id !== 'all'"
-            class="dot"
-            :class="[`${option.id}-dot`]"
-          />{{ option.name }}
-        </ShadButton>
+          <ShadButton
+            v-for="option in ecosystems"
+            :key="option.id"
+            variant="ghost"
+            size="content"
+            class="filter"
+            :class="[{ active: isEcosystemSelected(option.id) }]"
+            :aria-pressed="isEcosystemSelected(option.id)"
+            @click="toggleEcosystem(option.id)"
+          >
+            <span
+              v-if="option.id !== 'all'"
+              class="dot"
+              :class="[`${option.id}-dot`]"
+            />{{ option.name }}
+          </ShadButton>
+        </div>
+        <div class="filter-logic">
+          <label class="match-control">
+            <span>{{ t('atlas.matchLabel') }}</span>
+            <select v-model="matchMode" aria-describedby="match-help">
+              <option value="any">{{ t('atlas.matchAny') }}</option>
+              <option value="all">{{ t('atlas.matchAll') }}</option>
+            </select>
+          </label>
+          <span id="match-help">{{ t('atlas.multiSelectHelp') }}</span>
+        </div>
       </div>
       <div class="toolbar-right">
         <label class="search"
@@ -259,7 +295,8 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleShortcut))
                 `${option.id}-region`,
                 {
                   'region-muted':
-                    ecosystem !== 'all' && !activeRegions.has(option.id),
+                    selectedEcosystems.length > 0 &&
+                    !activeRegions.has(option.id),
                 },
               ]"
               aria-hidden="true"
@@ -313,7 +350,9 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleShortcut))
         <details
           v-if="view === 'map' && sharedItems.length"
           class="shared-toolbox"
-          :open="ecosystem === 'shared' || query.trim().length > 0"
+          :open="
+            selectedEcosystems.includes('shared') || query.trim().length > 0
+          "
         >
           <summary>
             <span

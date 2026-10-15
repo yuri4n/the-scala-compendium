@@ -214,10 +214,37 @@ h1 span {
 }
 .atlas-toolbar {
   display: flex;
-  align-items: center;
+  align-items: flex-end;
   justify-content: space-between;
   gap: 20px;
   margin-bottom: 18px;
+}
+.ecosystem-selection {
+  flex: 1;
+  min-width: 0;
+}
+.filter-logic {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  margin-top: 12px;
+  font-size: 11px;
+  color: var(--muted-foreground);
+}
+.match-control {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.match-control select {
+  min-height: 36px;
+  padding: 6px 8px;
+  border: 1px solid var(--input);
+  border-radius: 5px;
+  background: var(--card);
+  color: var(--foreground);
+  font: inherit;
 }
 .ecosystem-filters {
   display: flex;

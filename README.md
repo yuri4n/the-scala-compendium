@@ -5,7 +5,8 @@ A common starting point for Scala developers, built from
 
 The main interface is an interactive Venn-style atlas. ZIO, Typelevel, and Kyo
 occupy overlapping regions; libraries sit inside their ecosystem and bridges
-sit in the intersections. Search, ecosystem filters, a bridges-only filter,
+sit in the intersections. Search, multi-select ecosystem filters with OR/AND
+matching, a bridges-only filter,
 and a list view expose the same typed catalogue. Selection opens documentation
 and compatibility notes. Proposed guides are distinct from published bridges.
 
