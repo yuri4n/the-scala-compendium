@@ -1,45 +1,39 @@
+<script setup lang="ts">
+import guides from '#shared/data/guides.json'
+
+const { t } = useI18n()
+const localePath = useLocalePath()
+</script>
+
 <template>
-  <section id="paths" class="learning-section">
-    <div class="section-heading">
+  <section id="paths" class="guide-section" aria-labelledby="paths-title">
+    <div class="guide-section-heading">
       <div>
-        <p class="eyebrow">CHOOSE YOUR STARTING POINT</p>
-        <h2>Start with the foundations.</h2>
+        <p class="guide-eyebrow">{{ t('paths.eyebrow') }}</p>
+        <h2 id="paths-title">{{ t('paths.title') }}</h2>
       </div>
-      <span class="section-aside">Official guides. Solid foundations.</span>
+      <p class="guide-section-intro">{{ t('paths.intro') }}</p>
     </div>
-    <div class="path-grid">
-      <a
-        class="path-card"
-        href="https://docs.scala-lang.org/scala3/book/introduction.html"
-        ><span class="path-index">01 / FOUNDATIONS</span>
-        <h3>Start with Scala</h3>
-        <p>Types, functions, and the language that connects it all.</p>
-        <span class="path-link"
-          >Open the Scala 3 Book
-          <UIcon name="i-lucide-arrow-up-right" /></span></a
-      ><a
-        class="path-card"
-        href="https://typelevel.org/cats-effect/docs/getting-started"
-        ><span class="path-index typelevel-text">02 / TYPELEVEL</span>
-        <h3>Think in effects</h3>
-        <p>Explore IO, resource safety, and the Cats Effect ecosystem.</p>
-        <span class="path-link"
-          >Cats Effect getting started
-          <UIcon name="i-lucide-arrow-up-right" /></span></a
-      ><a class="path-card" href="https://zio.dev/overview/getting-started"
-        ><span class="path-index zio-text">03 / ZIO</span>
-        <h3>Make errors explicit</h3>
-        <p>Get to know environments, typed errors, layers, and streams.</p>
-        <span class="path-link"
-          >ZIO getting started
-          <UIcon name="i-lucide-arrow-up-right" /></span></a
-      ><a class="path-card" href="https://github.com/getkyo/kyo"
-        ><span class="path-index kyo-text">04 / KYO</span>
-        <h3>Explore another approach</h3>
-        <p>Discover pending effects and the handlers that compose them.</p>
-        <span class="path-link"
-          >Explore the Kyo guide <UIcon name="i-lucide-arrow-up-right" /></span
-      ></a>
-    </div>
+    <ul class="guide-card-grid">
+      <li v-for="(guide, index) in guides" :key="guide.id">
+        <NuxtLink
+          :to="localePath(`/guides/${guide.id}`)"
+          class="guide-card"
+          :aria-labelledby="`path-${guide.id}`"
+        >
+          <span class="guide-card-number" aria-hidden="true">
+            {{ String(index + 1).padStart(2, '0') }}
+          </span>
+          <h3 :id="`path-${guide.id}`">
+            {{ t(`guides.${guide.id}.title`) }}
+          </h3>
+          <p>{{ t(`guides.${guide.id}.summary`) }}</p>
+          <span class="guide-card-link">
+            {{ t('paths.read') }}
+            <UIcon name="i-lucide-arrow-right" aria-hidden="true" />
+          </span>
+        </NuxtLink>
+      </li>
+    </ul>
   </section>
 </template>

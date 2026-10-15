@@ -1,0 +1,121 @@
+/* Shared behavior, application-owned skin. */
+.header .app-preferences {
+  flex-wrap: nowrap;
+  gap: 12px;
+}
+.header .preference-field {
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 3px;
+  font-size: 10px;
+}
+.header .preference-select {
+  min-height: 34px;
+  max-width: 160px;
+  font-size: 12px;
+}
+.shared-toolbox {
+  padding: 22px 24px;
+  border-top: 1px solid var(--border);
+  background: var(--background);
+}
+.shared-toolbox summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  cursor: pointer;
+  list-style: none;
+}
+.shared-toolbox summary::-webkit-details-marker {
+  display: none;
+}
+.shared-toolbox summary > span {
+  display: flex;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+}
+.shared-toolbox summary strong {
+  font-size: 17px;
+  font-weight: 600;
+}
+.shared-toolbox summary small,
+.shared-toolbox > p {
+  color: var(--muted-foreground);
+  font-size: 12px;
+  line-height: 1.8;
+}
+.shared-toolbox > p {
+  margin: 18px 0;
+}
+.shared-toolbox[open] summary > .iconify {
+  rotate: 180deg;
+}
+.toolbox-groups {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 16px;
+}
+.toolbox-groups .ecosystem-cluster {
+  border-radius: 16px;
+}
+.toolbox-groups .ecosystem-cluster h3 {
+  font-family: var(--font-sans);
+  font-size: 14px;
+}
+@media (max-width: 1250px) {
+  .header {
+    height: auto;
+    min-height: 84px;
+    flex-wrap: wrap;
+    padding-block: 16px 0;
+    gap: 16px;
+  }
+  .header .app-preferences {
+    margin-left: auto;
+  }
+  .header nav {
+    order: 3;
+    width: 100%;
+    height: 40px;
+    justify-content: center;
+  }
+}
+@media (max-width: 800px) {
+  .toolbox-groups {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+@media (max-width: 700px) {
+  .header .app-preferences {
+    order: 4;
+    width: 100%;
+    margin-left: 0;
+    padding-bottom: 16px;
+  }
+  .header .preference-field {
+    flex: 1;
+    min-width: 0;
+    font-size: 11px;
+  }
+  .header .preference-select {
+    width: 100%;
+    max-width: none;
+    min-width: 0;
+    min-height: 40px;
+  }
+  .header .contribute {
+    margin-left: auto;
+  }
+  .header nav {
+    justify-content: space-between;
+    gap: 12px;
+  }
+  .shared-toolbox {
+    padding: 20px 16px;
+  }
+  .toolbox-groups {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}

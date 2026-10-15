@@ -43,6 +43,7 @@ const delayInSeconds = computed(() => `${delay}s`)
 
 <style scoped>
 .inspira-border-beam {
+  overflow: hidden;
   --size: v-bind(size);
   --duration: v-bind(durationInSeconds);
   --anchor: v-bind(anchor);

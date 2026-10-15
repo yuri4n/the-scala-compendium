@@ -12,7 +12,7 @@ Source: https://github.com/unovue/shadcn-vue at
 
 Button, Input, Badge, and Switch are in `app/components/ui/`. They power atlas
 nodes, ecosystem filters, view controls, search, the bridge toggle, project
-status and membership badges, featured selections, and documentation actions.
+status and membership badges, and documentation actions.
 
 Local adaptations use the starter's `cn` helper, literal prop unions,
 destructured props, typed slots, explicit attribute forwarding, and a
@@ -28,13 +28,12 @@ Source: https://github.com/unovue/inspira-ui at
 `04c57ab62b9713872ebbf68988dff1836ed3d764`,
 `app/components/inspira/ui/`.
 
-- CardSpotlight highlights both featured project groups.
 - PatternBackground supplies the dotted overlap diagram and wider map.
 - BorderBeam accents the newsletter panel.
 
 Local adaptations use semantic colors and the shared `cn` helper. Pattern
-backgrounds are static. Spotlight movement is limited to hover-capable devices
-without reduced motion; the beam also stops for reduced motion. Decorative
+backgrounds are static. The beam stops for reduced motion and clips its
+animated decoration to prevent document overflow. Decorative
 overlays are hidden from assistive technology and do not intercept input.
 BorderBeam's duration is explicitly in seconds.
 

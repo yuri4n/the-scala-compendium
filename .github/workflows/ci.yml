@@ -18,9 +18,10 @@ concurrency:
 # No SUBMODULES_TOKEN is needed (only a private copy of the library needs it).
 jobs:
   ci:
-    uses: yuri4n/yuri4n.dev/.github/workflows/nuxt-ci.yml@v0.1.0
+    uses: yuri4n/yuri4nized-nuxt/.github/workflows/nuxt-ci.yml@v0.1.1-rc.1
     with:
       library-path: vendor/yuri4n.dev
+      library-repository: yuri4n/yuri4nized-nuxt
       # The proof builds what the deploy builds.
       nitro-preset: vercel
       e2e: true

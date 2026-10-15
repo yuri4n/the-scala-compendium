@@ -1,65 +1,72 @@
 # Atlas UI verification
 
-The supplied overlapping-region sketch is the spatial reference. The interface
-uses the owner's Nuxt template and its pinned shared layers. Both requested
-skills were fetched and read completely: `better-ui` and `ui-taste`, with their
-relative references resolved from the provided supporting directories.
+The supplied overlapping-region sketch remains the spatial reference. The app
+uses the owner's Nuxt starter, shadcn-vue controls, and Inspira UI patterns and
+newsletter accent. Both requested skills, `better-ui` and `ui-taste`, were
+read completely with supporting paths resolved from their supplied directories.
 
-## Findings resolved in the expanded atlas
+## Map and content
 
-| Severity         | Location                                                              | Finding                                                                 | Resolution                                                                                            |
-| ---------------- | --------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| Medium, resolved | shared/utils/atlas.ts:261                                             | The Kyo bridge labels touched after adding maintainer bylines.          | Increased vertical separation; measured no node collisions at four viewport widths.                   |
-| Medium, resolved | app/components/AtlasNode.vue:32; app/components/AtlasSpotlight.vue:38 | Accessible labels omitted visible maintainer and maturity information.  | Linked bylines and status text with `aria-describedby`; verified accessible descriptions in Chromium. |
-| Low, resolved    | app/assets/css/atlas.css:487                                          | A selected cluster node’s marker was positioned relative to the canvas. | Made the node its own positioning context.                                                            |
+The diagram uses the full content width within a 1920px page limit and an
+820px canvas. Connection details sit below it. Prominent project panels are
+removed; maintainer and development labels stay with their catalogue entries.
+The 67 entries include 34 nodes in the overlap diagram, 14 entries in other
+named ecosystems, and 19 shared libraries/tools in an expandable section.
+Four documented bridges and one proposed guide remain distinct.
 
-Nested cluster corners use an outer radius equal to the inner node radius
-plus padding and border. Surfaces and selection states use semantic tokens.
+Nine practical guides, a seven-part ecosystem orientation, and a dedicated
+community invitation are complete in English, Spanish, and Brazilian
+Portuguese. Review checked source caveats, related item IDs, translated
+placeholders, and unchanged official resource URLs. Shared tools and backend
+interpreters do not imply that effect runtimes are interchangeable. Play has
+Pekko/Future memberships but renders once in the unfiltered map.
 
-## Craft and accessibility
+## Resolved findings
 
-Search, ecosystem filters, bridges-only filtering, selection, the map/list
-switch, empty-search recovery, external documentation links, and the `/`
-search shortcut were exercised in Chromium on the production build. The
-catalogue now contains 22 entries across eight ecosystem memberships. All 15
-node centers in the overlap diagram were checked against the three depicted
-regions. Seven additional entries appear in separate named regions.
+- Selection now scrolls and focuses the details aside. Back to atlas reveals
+  and focuses the selected node, including an entry inside shared tools.
+- The newsletter decoration is clipped inside its border, preventing mobile
+  overflow during its animation. Reduced motion disables the animation.
+- The permanent sidebar and promotional panels no longer constrain the map.
+- Locale entries explicitly declare their language codes, preserving
+  canonical and alternate-language metadata when app locale files merge.
+- Appearance now has a real dark palette and defaults to System. The shared
+  layer persists explicit choices and follows system changes when selected.
+- Ecosystem chips now toggle independently. Match any (OR) combines their
+  results; Match all (AND) finds shared memberships. Search and bridges-only
+  compose with both modes, and multiply classified entries still render once.
 
-Rendered screenshots were inspected at 1440px and 1963px desktop widths and
-390px mobile width, including featured projects, the expanded regions, and
-selected-item states. Layout measurements also passed at 360px. The
-map scrolls independently on mobile; the list view has no page-wide overflow.
-Normal, hover, selected, focus, and pressed states were inspected in the
-initial review. Press scale was verified as 0.96 at 10% browser animation
-playback speed; reduced motion disabled movement. The new featured controls
-remain stationary, and their hover styling is gated by hover capability.
-Keyboard activation with reduced motion enabled was checked again.
+## Production checks
 
-Featured selection clears conflicting filters and scrolls offscreen details
-into view. Akka and Pekko remain separate; Future filtering includes the
-documented kyo-compat backend. The desktop and mobile Playwright scenarios
-pass, along with six unit/component tests, lint, typecheck, and the production
-build. No browser runtime errors were observed.
+Screenshots were inspected at desktop and mobile sizes in light and dark.
+All three languages passed geometry checks at 1440px, 1963px, 900px, 390px,
+360px: no document overflow and no diagram-node collisions. Desktop map
+widths measured 1374px and 1854px. Narrow screens scroll the map independently;
+list view remains available. All 27 localized guide routes returned 200 and
+rendered their steps, related tools, and correct HTML language without page
+width overflow.
 
-The final skin darkens small ecosystem text and input borders for contrast.
-Icons are local Lucide assets. Proposed guides use a dashed boundary and an
-explicit label, rather than relying on color to imply publication status.
+Twenty-one unit/component tests and ten production-browser tests pass. Browser
+coverage includes combined filters, recovery, owner status, unique nodes,
+keyboard return focus, mobile animation overflow, browser language detection,
+localized navigation, nested-page switching, cookie persistence, canonical
+and alternate links, a real 404, live system appearance changes, persistent
+explicit light/dark overrides, and returning to System.
+The filter regression also checks independent toggles, unions, two-way and
+three-way intersections, proposed-guide exclusion, and reset behavior.
 
-## shadcn-vue and Inspira follow-up
+The root Playwright configuration builds and serves the production app by
+default; CI uses the same command. `PLAYWRIGHT_BASE_URL` can reuse an existing
+production server. Frozen install, lint, typecheck, and Node/Vercel production
+builds are release checks; remote CI and deployment require separate proof.
 
-The updated production build was inspected at 1440px and 390px, with layout
-measurements at 1963px and 360px as well. No page overflow, diagram-node
-collisions, or browser runtime errors were observed. Search focus through the
-wrapped Input, the Reka-backed bridge switch, feature selection, and mobile
-detail scrolling work. Inspira patterns remain present in production CSS.
-Reduced motion hides the spotlight effect and disables the beam animation.
+## Limits
 
-The browser test verifies one Analytics Nuxt script injection, with the
-remote collection script stubbed. This does not verify live Vercel collection;
-the project must enable Web Analytics after import.
+The Analytics test verifies one Nuxt script injection with its Vercel endpoint
+stubbed. A standalone local server cannot serve that endpoint; collection
+requires Web Analytics enabled on Vercel. Live collection and the public
+release are not verified while network access is blocked. Real iOS-device and
+Safari rendering are not verified. Newsletter subscriptions remain
+unimplemented, and the interface states that status explicitly.
 
-No actionable UI-polish findings remain in the inspected scope. There are no
-loading or backend error states in the local-data atlas. Real iOS-device and
-Safari rendering are **Not verified**. Email subscriptions are not implemented.
-
-Approve
+Approve for local UI review. Production publication remains pending.

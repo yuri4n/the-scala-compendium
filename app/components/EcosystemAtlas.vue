@@ -1,43 +1,57 @@
 <script setup lang="ts">
-import type { EcosystemFilter } from '~~/shared/utils/atlas'
+import type {
+  Ecosystem,
+  EcosystemFilter,
+  EcosystemMatch,
+} from '~~/shared/utils/atlas'
 import {
   additionalEcosystems,
   diagramEcosystems,
-  ecosystemNames,
   filterAtlas,
 } from '~~/shared/utils/atlas'
 import { Button as ShadButton } from '~/components/ui/button'
 import { Input as ShadInput } from '~/components/ui/input'
 import { Switch as ShadSwitch } from '~/components/ui/switch'
 
-const ecosystems: { id: EcosystemFilter; name: string }[] = [
+const { t, ecosystemLabel, localizedItems } = useAtlasContent()
+const route = useRoute()
+const ecosystems = computed<{ id: EcosystemFilter; name: string }[]>(() => [
   {
     id: 'all',
-    name: 'All ecosystems',
+    name: ecosystemLabel('all'),
   },
   ...[...diagramEcosystems, ...additionalEcosystems].map((id) => ({
     id,
-    name: ecosystemNames[id],
+    name: ecosystemLabel(id),
   })),
-]
-const regions = diagramEcosystems.map((id) => ({
-  id,
-  name: ecosystemNames[id],
-}))
-const ecosystem = ref<EcosystemFilter>('all')
-const query = ref('')
+  { id: 'shared', name: ecosystemLabel('shared') },
+])
+const regions = computed(() =>
+  diagramEcosystems.map((id) => ({
+    id,
+    name: ecosystemLabel(id),
+  })),
+)
+const selectedEcosystems = ref<Ecosystem[]>([])
+const matchMode = ref<EcosystemMatch>('any')
+const query = ref(typeof route.query.q === 'string' ? route.query.q : '')
 const bridgesOnly = ref(false)
 const view = ref<'map' | 'list'>('map')
-const selectedId = ref<string | undefined>('h34s')
+const selectedId = ref<string | undefined>('zio')
 const searchInput = useTemplateRef('search')
 const viewport = useTemplateRef('viewport')
 const details = useTemplateRef('details')
+const canvas = useTemplateRef('canvas')
 const matches = computed(() =>
-  filterAtlas({
-    ecosystem: ecosystem.value,
-    query: query.value,
-    bridgesOnly: bridgesOnly.value,
-  }),
+  filterAtlas(
+    {
+      ecosystems: selectedEcosystems.value,
+      match: matchMode.value,
+      query: query.value,
+      bridgesOnly: bridgesOnly.value,
+    },
+    localizedItems.value,
+  ),
 )
 const selected = computed(() =>
   matches.value.find((item) => item.id === selectedId.value),
@@ -52,12 +66,29 @@ const additionalGroups = computed(() =>
   additionalEcosystems
     .map((id) => ({
       id,
-      name: ecosystemNames[id],
+      name: ecosystemLabel(id),
       items: matches.value.filter(
-        (item) => item.x === undefined && item.ecosystems.includes(id),
+        (item) =>
+          item.x === undefined &&
+          item.ecosystems.includes(id) &&
+          id ===
+            (item.ecosystems.find(
+              (value) =>
+                additionalEcosystems.includes(value) &&
+                selectedEcosystems.value.includes(value),
+            ) ?? item.ecosystems[0]),
       ),
     }))
     .filter((group) => group.items.length),
+)
+const sharedItems = computed(() =>
+  matches.value.filter((item) => item.ecosystems.includes('shared')),
+)
+const sharedGroups = computed(() =>
+  [...new Set(sharedItems.value.map((item) => item.category))].map((name) => ({
+    name,
+    items: sharedItems.value.filter((item) => item.category === name),
+  })),
 )
 const activeRegions = computed(
   () => new Set(matches.value.flatMap((item) => item.ecosystems)),
@@ -78,26 +109,51 @@ async function selectItem(id: string) {
   const heading = details.value?.querySelector('h2')
   const bounds = heading?.getBoundingClientRect()
   if (bounds && (bounds.top < 0 || bounds.bottom > window.innerHeight)) {
-    details.value?.querySelector('#selection-content')?.scrollIntoView({
+    details.value?.scrollIntoView({
       behavior: 'instant',
       block: 'start',
     })
   }
+  details.value?.focus({ preventScroll: true })
 }
-async function selectFeatured(id: string) {
-  ecosystem.value = 'all'
-  query.value = ''
-  bridgesOnly.value = false
-  selectedId.value = id
-  await nextTick()
-  const node = viewport.value?.querySelector(`[data-item="${id}"]`)
-  if (node instanceof HTMLElement && viewport.value) {
-    viewport.value.scrollLeft = node.offsetLeft - viewport.value.clientWidth / 2
+function returnToAtlas() {
+  const node = canvas.value?.querySelector(
+    `${view.value === 'map' ? '.map-node' : '.list-item'}[aria-pressed="true"]`,
+  )
+  if (node instanceof HTMLElement) {
+    const toolbox = node.closest('details')
+    if (toolbox) toolbox.open = true
+    node.focus({ preventScroll: true })
+    node.scrollIntoView({
+      behavior: 'instant',
+      block: 'center',
+      inline: 'center',
+    })
   }
-  await selectItem(id)
+}
+watch(
+  () => route.query.q,
+  (value) => {
+    query.value = typeof value === 'string' ? value : ''
+  },
+)
+function isEcosystemSelected(id: EcosystemFilter) {
+  return id === 'all'
+    ? selectedEcosystems.value.length === 0
+    : selectedEcosystems.value.includes(id)
+}
+function toggleEcosystem(id: EcosystemFilter) {
+  if (id === 'all') {
+    selectedEcosystems.value = []
+    matchMode.value = 'any'
+    return
+  }
+  selectedEcosystems.value = isEcosystemSelected(id)
+    ? selectedEcosystems.value.filter((value) => value !== id)
+    : [...selectedEcosystems.value, id]
 }
 function clearFilters() {
-  ecosystem.value = 'all'
+  toggleEcosystem('all')
   query.value = ''
   bridgesOnly.value = false
   searchInput.value?.focus()
@@ -133,40 +189,52 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleShortcut))
   <section id="ecosystem" class="atlas-section">
     <div class="page-heading">
       <div>
-        <p class="eyebrow">THE SCALA ECOSYSTEM, IN PERSPECTIVE</p>
-        <h1>Different worlds. <span>Common ground.</span></h1>
+        <p class="eyebrow">{{ t('atlas.eyebrow') }}</p>
+        <h1>
+          {{ t('atlas.title') }} <span>{{ t('atlas.titleAccent') }}</span>
+        </h1>
         <p class="intro">
-          Find your libraries, explore the overlaps, and discover how the pieces
-          connect.
+          {{ t('atlas.intro') }}
         </p>
       </div>
       <a class="map-help" href="#map-legend"
-        ><UIcon name="i-lucide-info" />How to read this map</a
+        ><UIcon name="i-lucide-info" />{{ t('atlas.help') }}</a
       >
     </div>
-    <AtlasSpotlight :selected-id="selected?.id" @select="selectFeatured" />
     <div class="atlas-toolbar">
-      <div
-        class="ecosystem-filters"
-        role="group"
-        aria-label="Filter by ecosystem"
-      >
-        <ShadButton
-          v-for="option in ecosystems"
-          :key="option.id"
-          variant="ghost"
-          size="content"
-          class="filter"
-          :class="[{ active: ecosystem === option.id }]"
-          :aria-pressed="ecosystem === option.id"
-          @click="ecosystem = option.id"
+      <div class="ecosystem-selection">
+        <div
+          class="ecosystem-filters"
+          role="group"
+          :aria-label="t('atlas.filters')"
         >
-          <span
-            v-if="option.id !== 'all'"
-            class="dot"
-            :class="[`${option.id}-dot`]"
-          />{{ option.name }}
-        </ShadButton>
+          <ShadButton
+            v-for="option in ecosystems"
+            :key="option.id"
+            variant="ghost"
+            size="content"
+            class="filter"
+            :class="[{ active: isEcosystemSelected(option.id) }]"
+            :aria-pressed="isEcosystemSelected(option.id)"
+            @click="toggleEcosystem(option.id)"
+          >
+            <span
+              v-if="option.id !== 'all'"
+              class="dot"
+              :class="[`${option.id}-dot`]"
+            />{{ option.name }}
+          </ShadButton>
+        </div>
+        <div class="filter-logic">
+          <label class="match-control">
+            <span>{{ t('atlas.matchLabel') }}</span>
+            <select v-model="matchMode" aria-describedby="match-help">
+              <option value="any">{{ t('atlas.matchAny') }}</option>
+              <option value="all">{{ t('atlas.matchAll') }}</option>
+            </select>
+          </label>
+          <span id="match-help">{{ t('atlas.multiSelectHelp') }}</span>
+        </div>
       </div>
       <div class="toolbar-right">
         <label class="search"
@@ -174,16 +242,16 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleShortcut))
             ref="search"
             v-model="query"
             type="search"
-            placeholder="Find a library or bridge…"
-            aria-label="Search libraries and bridges"
+            :placeholder="t('atlas.searchPlaceholder')"
+            :aria-label="t('atlas.search')"
           /><kbd>/</kbd></label
         >
-        <div class="view-switch" role="group" aria-label="Display mode">
+        <div class="view-switch" role="group" :aria-label="t('atlas.display')">
           <ShadButton
             variant="ghost"
             size="content"
-            aria-label="Map view"
-            title="Map view"
+            :aria-label="t('atlas.mapView')"
+            :title="t('atlas.mapView')"
             :aria-pressed="view === 'map'"
             @click="view = 'map'"
           >
@@ -192,8 +260,8 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleShortcut))
           <ShadButton
             variant="ghost"
             size="content"
-            aria-label="List view"
-            title="List view"
+            :aria-label="t('atlas.listView')"
+            :title="t('atlas.listView')"
             :aria-pressed="view === 'list'"
             @click="view = 'list'"
           >
@@ -203,12 +271,12 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleShortcut))
       </div>
     </div>
     <div class="atlas-layout">
-      <div class="canvas-area">
+      <div ref="canvas" class="canvas-area">
         <div class="canvas-topline">
-          <span><span class="dot live-dot" />THE ECOSYSTEM ATLAS</span>
+          <span><span class="dot live-dot" />{{ t('atlas.canvasTitle') }}</span>
           <div class="bridge-toggle">
             <ShadSwitch id="bridges-only" v-model="bridgesOnly" />
-            <label for="bridges-only">Bridges only</label>
+            <label for="bridges-only">{{ t('atlas.bridgesOnly') }}</label>
           </div>
         </div>
         <div
@@ -216,7 +284,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleShortcut))
           ref="viewport"
           class="map-viewport"
           tabindex="0"
-          aria-label="Scrollable ecosystem map. Use Tab to select libraries and bridges."
+          :aria-label="t('atlas.scrollLabel')"
         >
           <InspiraPatternBackground class="venn-map" variant="dot" size="sm">
             <div
@@ -227,7 +295,8 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleShortcut))
                 `${option.id}-region`,
                 {
                   'region-muted':
-                    ecosystem !== 'all' && !activeRegions.has(option.id),
+                    selectedEcosystems.length > 0 &&
+                    !activeRegions.has(option.id),
                 },
               ]"
               aria-hidden="true"
@@ -235,10 +304,10 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleShortcut))
               <span class="region-caption">{{ option.name }}</span>
               <span class="region-subtitle">{{
                 option.id === 'zio'
-                  ? 'Typed effects. A complete toolkit.'
+                  ? t('atlas.zioSubtitle')
                   : option.id === 'typelevel'
-                    ? 'Small pieces. Powerful composition.'
-                    : 'Algebraic effects. Open possibilities.'
+                    ? t('atlas.typelevelSubtitle')
+                    : t('atlas.kyoSubtitle')
               }}</span>
             </div>
             <AtlasNode
@@ -248,10 +317,6 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleShortcut))
               :selected="selectedId === item.id"
               @select="selectItem"
             />
-            <div class="map-annotation" aria-hidden="true">
-              <span class="annotation-line" />Good things happen<br />at the
-              intersections.
-            </div>
           </InspiraPatternBackground>
         </div>
         <InspiraPatternBackground
@@ -261,15 +326,15 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleShortcut))
           class="extended-map"
         >
           <div class="extended-map-heading">
-            <h2>More of the Scala landscape</h2>
-            <p>Actors, streams, Futures, and emerging approaches.</p>
+            <h2>{{ t('atlas.widerTitle') }}</h2>
+            <p>{{ t('atlas.widerIntro') }}</p>
           </div>
           <div class="ecosystem-clusters">
             <section
               v-for="group in additionalGroups"
               :key="group.id"
               class="ecosystem-cluster"
-              :aria-label="`${group.name} ecosystem`"
+              :aria-label="t('atlas.groupLabel', { name: group.name })"
             >
               <h3>{{ group.name }}</h3>
               <AtlasNode
@@ -282,6 +347,40 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleShortcut))
             </section>
           </div>
         </InspiraPatternBackground>
+        <details
+          v-if="view === 'map' && sharedItems.length"
+          class="shared-toolbox"
+          :open="
+            selectedEcosystems.includes('shared') || query.trim().length > 0
+          "
+        >
+          <summary>
+            <span
+              ><strong>{{ t('atlas.sharedTitle') }}</strong
+              ><small>{{
+                t('atlas.sharedCount', { count: sharedItems.length })
+              }}</small></span
+            >
+            <UIcon name="i-lucide-chevron-down" />
+          </summary>
+          <p>{{ t('atlas.sharedIntro') }}</p>
+          <div class="toolbox-groups">
+            <section
+              v-for="group in sharedGroups"
+              :key="group.name"
+              class="ecosystem-cluster"
+            >
+              <h3>{{ group.name }}</h3>
+              <AtlasNode
+                v-for="item in group.items"
+                :key="item.id"
+                :item="item"
+                :selected="selectedId === item.id"
+                @select="selectItem"
+              />
+            </section>
+          </div>
+        </details>
         <div v-if="view === 'list' && matches.length" class="list-view">
           <AtlasNode
             v-for="item in matches"
@@ -294,32 +393,27 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleShortcut))
         </div>
         <div v-if="!matches.length" class="no-results">
           <UIcon name="i-lucide-search" />
-          <h3>No connections found</h3>
-          <p>Try a library name, another ecosystem, or a broader search.</p>
+          <h3>{{ t('atlas.noResults') }}</h3>
+          <p>{{ t('atlas.noResultsHelp') }}</p>
           <ShadButton
             variant="outline"
             size="content"
             class="clear-button"
             @click="clearFilters"
           >
-            Clear filters
+            {{ t('atlas.clear') }}
           </ShadButton>
         </div>
         <div class="canvas-bottomline">
-          <span aria-live="polite"
-            >{{ matches.length }}
-            {{ matches.length === 1 ? 'item' : 'items' }} ·
-            {{ bridgeCount }} community bridges</span
+          <span aria-live="polite">{{
+            t('atlas.results', { count: matches.length, bridges: bridgeCount })
+          }}</span
           ><span class="canvas-hint">
             <template v-if="view === 'map'">
-              <span class="desktop-map-hint"
-                >Select a library or bridge to explore</span
-              >
-              <span class="mobile-map-hint"
-                >Scroll sideways to explore the map</span
-              >
+              <span class="desktop-map-hint">{{ t('atlas.hint') }}</span>
+              <span class="mobile-map-hint">{{ t('atlas.mobileHint') }}</span>
             </template>
-            <span v-else>The same connections, in a list</span>
+            <span v-else>{{ t('atlas.listHint') }}</span>
             <UIcon name="i-lucide-mouse-pointer-2" />
           </span>
         </div>
@@ -327,10 +421,19 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleShortcut))
       <aside
         ref="details"
         class="detail-panel"
-        aria-label="Selected item details"
+        tabindex="-1"
+        :aria-label="t('atlas.detailsLabel')"
       >
         <div class="detail-label">
-          CONNECTION DETAILS<UIcon name="i-lucide-link" />
+          {{ t('atlas.details') }}
+          <ShadButton
+            v-if="selected"
+            variant="ghost"
+            size="content"
+            class="return-to-atlas"
+            @click="returnToAtlas"
+            ><UIcon name="i-lucide-arrow-up" />{{ t('atlas.back') }}</ShadButton
+          >
         </div>
         <AtlasDetails :item="selected" />
       </aside>
@@ -338,32 +441,29 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleShortcut))
     <p class="sr-only" role="status">
       {{
         selected
-          ? `Selected: ${selected.name}. Details updated.`
-          : 'No item selected.'
+          ? t('atlas.selected', { name: selected.name })
+          : t('atlas.noneSelected')
       }}
     </p>
     <div id="map-legend" class="map-legend">
       <div class="legend-items">
-        <span><i class="legend-region" />Ecosystem</span
-        ><span><i class="legend-library" />Library</span
+        <span><i class="legend-region" />{{ t('atlas.legendEcosystem') }}</span
+        ><span><i class="legend-library" />{{ t('atlas.legendLibrary') }}</span
         ><span
-          ><i class="legend-bridge"><UIcon name="i-lucide-link" /></i>Community
-          bridge</span
-        ><span><i class="legend-proposed" />Proposed guide</span>
+          ><i class="legend-bridge"><UIcon name="i-lucide-link" /></i
+          >{{ t('atlas.bridge') }}</span
+        ><span><i class="legend-proposed" />{{ t('atlas.proposal') }}</span>
       </div>
       <p>
-        Overlaps show integration opportunities, not automatic compatibility.
+        {{ t('atlas.legendNote') }}
       </p>
     </div>
     <div class="atlas-note">
       <UIcon name="i-lucide-info" />
-      <p>
-        A living map, never the whole territory. From actors and Futures to
-        effect systems and emerging libraries—help us chart what’s missing.
-      </p>
+      <p>{{ t('atlas.note') }}</p>
       <a
         href="https://github.com/yuri4n/the-scala-compendium/issues/new?title=Atlas%20suggestion"
-        >Suggest a connection<UIcon name="i-lucide-arrow-right"
+        >{{ t('atlas.suggest') }}<UIcon name="i-lucide-arrow-right"
       /></a>
     </div>
   </section>
