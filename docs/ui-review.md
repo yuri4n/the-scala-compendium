@@ -1,65 +1,43 @@
 # Atlas UI verification
 
-The supplied overlapping-region sketch is the spatial reference. The interface
-uses the owner's Nuxt template and its pinned shared layers. Both requested
-skills were fetched and read completely: `better-ui` and `ui-taste`, with their
-relative references resolved from the provided supporting directories.
+The supplied overlapping-region sketch remains the spatial reference. The app
+uses the owner's Nuxt starter, shadcn-vue controls, and Inspira UI patterns and
+newsletter accent. Both requested skills, `better-ui` and `ui-taste`, were
+read completely with supporting paths resolved from their supplied directories.
 
-## Findings resolved in the expanded atlas
+## Map-first revision
 
-| Severity         | Location                                                              | Finding                                                                 | Resolution                                                                                            |
-| ---------------- | --------------------------------------------------------------------- | ----------------------------------------------------------------------- | ----------------------------------------------------------------------------------------------------- |
-| Medium, resolved | shared/utils/atlas.ts:261                                             | The Kyo bridge labels touched after adding maintainer bylines.          | Increased vertical separation; measured no node collisions at four viewport widths.                   |
-| Medium, resolved | app/components/AtlasNode.vue:32; app/components/AtlasSpotlight.vue:38 | Accessible labels omitted visible maintainer and maturity information.  | Linked bylines and status text with `aria-describedby`; verified accessible descriptions in Chromium. |
-| Low, resolved    | app/assets/css/atlas.css:487                                          | A selected cluster node’s marker was positioned relative to the canvas. | Made the node its own positioning context.                                                            |
+The diagram now uses the full content width, within a 1920px page limit, and a
+780px canvas height. Connection details sit below the map. The prominent
+featured panels are removed; maintainer and development labels remain in the
+catalogue. Seven ZIO modules and seven Kyo modules bring the catalogue to 36
+entries, including four documented bridges and one proposed guide. The 29
+nodes in the overlap diagram are joined by seven entries in separate regions.
 
-Nested cluster corners use an outer radius equal to the inner node radius
-plus padding and border. Surfaces and selection states use semantic tokens.
+| Severity         | Location                                 | Finding                                                                        | Resolution                                                                               |
+| ---------------- | ---------------------------------------- | ------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------- |
+| Medium, resolved | app/components/EcosystemAtlas.vue:76     | Selection scrolled away from keyboard focus and could hide the return control. | Scroll and focus the details aside; Back to atlas focuses and reveals the selected node. |
+| Medium, resolved | app/components/inspira/BorderBeam.vue:46 | The moving decoration could temporarily widen the mobile document.             | Clip the decoration inside its own border; check overflow at four animation positions.   |
+| Low, resolved    | app/assets/css/atlas.css:431             | A permanent sidebar and featured panels constrained the diagram.               | Use a full-width canvas and move details below it, with readable node sizes.             |
 
-## Craft and accessibility
-
-Search, ecosystem filters, bridges-only filtering, selection, the map/list
-switch, empty-search recovery, external documentation links, and the `/`
-search shortcut were exercised in Chromium on the production build. The
-catalogue now contains 22 entries across eight ecosystem memberships. All 15
-node centers in the overlap diagram were checked against the three depicted
-regions. Seven additional entries appear in separate named regions.
+## Production checks
 
 Rendered screenshots were inspected at 1440px and 1963px desktop widths and
-390px mobile width, including featured projects, the expanded regions, and
-selected-item states. Layout measurements also passed at 360px. The
-map scrolls independently on mobile; the list view has no page-wide overflow.
-Normal, hover, selected, focus, and pressed states were inspected in the
-initial review. Press scale was verified as 0.96 at 10% browser animation
-playback speed; reduced motion disabled movement. The new featured controls
-remain stationary, and their hover styling is gated by hover capability.
-Keyboard activation with reduced motion enabled was checked again.
+390px mobile width. Layout measurements also passed at 1100px, 900px, and
+360px: no page-wide overflow, no diagram-node collisions, and no browser
+runtime errors. The map scrolls independently on narrow screens; list view
+provides a direct alternative. Desktop map widths measured 1374px and 1854px.
 
-Featured selection clears conflicting filters and scrolls offscreen details
-into view. Akka and Pekko remain separate; Future filtering includes the
-documented kyo-compat backend. The desktop and mobile Playwright scenarios
-pass, along with six unit/component tests, lint, typecheck, and the production
-build. No browser runtime errors were observed.
+The desktop and 360px mobile Playwright scenarios exercise combined filters,
+search recovery, owner status, new module documentation, keyboard focus,
+return navigation, and separate Akka/Pekko/Future memberships. Both pass,
+alongside six unit/component tests, lint, typecheck, and production builds for
+Node and Vercel. Reduced motion disables the beam animation. Static pattern
+backgrounds and semantic colors remain present in the production build.
 
-The final skin darkens small ecosystem text and input borders for contrast.
-Icons are local Lucide assets. Proposed guides use a dashed boundary and an
-explicit label, rather than relying on color to imply publication status.
-
-## shadcn-vue and Inspira follow-up
-
-The updated production build was inspected at 1440px and 390px, with layout
-measurements at 1963px and 360px as well. No page overflow, diagram-node
-collisions, or browser runtime errors were observed. Search focus through the
-wrapped Input, the Reka-backed bridge switch, feature selection, and mobile
-detail scrolling work. Inspira patterns remain present in production CSS.
-Reduced motion hides the spotlight effect and disables the beam animation.
-
-The browser test verifies one Analytics Nuxt script injection, with the
-remote collection script stubbed. This does not verify live Vercel collection;
-the project must enable Web Analytics after import.
-
-No actionable UI-polish findings remain in the inspected scope. There are no
-loading or backend error states in the local-data atlas. Real iOS-device and
-Safari rendering are **Not verified**. Email subscriptions are not implemented.
+The Analytics test verifies one Nuxt script injection with the remote script
+stubbed. Live collection and the deployed Vercel URL are not verified. Real
+iOS-device and Safari rendering are not verified. Email subscriptions remain
+unimplemented; the interface states that status explicitly.
 
 Approve

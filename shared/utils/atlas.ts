@@ -52,8 +52,8 @@ export const atlasItems: AtlasItem[] = [
     kind: 'library',
     category: 'Effect system',
     ecosystems: ['zio'],
-    x: 310,
-    y: 109,
+    x: 150,
+    y: 130,
     description:
       'Typed errors, environments, and structured concurrency in a'
       + ' single effect system.',
@@ -69,14 +69,135 @@ export const atlasItems: AtlasItem[] = [
     kind: 'library',
     category: 'Streaming',
     ecosystems: ['zio'],
-    x: 310,
-    y: 160,
+    x: 345,
+    y: 130,
     description: 'Composable, backpressured streaming in the ZIO ecosystem.',
     compatibility:
       'Built on ZIO. Crossing into another streaming system'
       + ' requires an explicit bridge.',
     url: 'https://zio.dev/reference/stream/',
     source: 'ZIO documentation',
+  },
+  {
+    id: 'zio-http',
+    name: 'ZIO HTTP',
+    kind: 'library',
+    category: 'HTTP',
+    ecosystems: ['zio'],
+    x: 150,
+    y: 195,
+    description:
+      'HTTP clients, servers, typed endpoints, and WebSockets built on ZIO.',
+    compatibility:
+      'Follow the client/server backend guidance for your platform. Manage'
+      + ' services through ZIO layers and resource scopes.',
+    url: 'https://ziohttp.com',
+    source: 'ZIO HTTP documentation',
+  },
+  {
+    id: 'zio-json',
+    name: 'ZIO JSON',
+    kind: 'library',
+    category: 'JSON',
+    ecosystems: ['zio'],
+    x: 345,
+    y: 195,
+    description:
+      'Derive JSON encoders and decoders for Scala data types, with readable'
+      + ' decoding errors.',
+    compatibility:
+      'Basic encoding and decoding do not require running a ZIO effect. Check'
+      + ' platform dependencies when using Java time-zone types.',
+    url: 'https://zio.dev/zio-json/',
+    source: 'ZIO JSON documentation',
+  },
+  {
+    id: 'zio-schema',
+    name: 'ZIO Schema',
+    kind: 'library',
+    category: 'Data modeling',
+    ecosystems: ['zio'],
+    x: 150,
+    y: 260,
+    description:
+      'Describe data structures as values and derive codecs,'
+      + ' transformations, and'
+      + ' migrations.',
+    compatibility:
+      'Add the derivation and format-specific modules you need.'
+      + ' Sharing a schema'
+      + ' does not automatically preserve wire-format compatibility.',
+    url: 'https://zio.dev/zio-schema/',
+    source: 'ZIO Schema documentation',
+  },
+  {
+    id: 'zio-config',
+    name: 'ZIO Config',
+    kind: 'library',
+    category: 'Configuration',
+    ecosystems: ['zio'],
+    x: 345,
+    y: 260,
+    description:
+      'Typed configuration with automatic derivation and sources such as HOCON,'
+      + ' YAML, and TOML.',
+    compatibility:
+      'The 4.x line extends ZIO’s core Config API. Select matching'
+      + ' source modules'
+      + ' and follow the migration guide when coming from older versions.',
+    url: 'https://zio.dev/zio-config/',
+    source: 'ZIO Config documentation',
+  },
+  {
+    id: 'zio-cli',
+    name: 'ZIO CLI',
+    kind: 'library',
+    category: 'Command line',
+    ecosystems: ['zio'],
+    x: 150,
+    y: 325,
+    description:
+      'Compose typed commands, options, arguments, and help text for ZIO'
+      + ' applications.',
+    compatibility:
+      'Command handlers run in ZIO. Check platform support for filesystem and'
+      + ' process features used by your application.',
+    url: 'https://zio.dev/zio-cli/',
+    source: 'ZIO CLI documentation',
+  },
+  {
+    id: 'zio-kafka',
+    name: 'ZIO Kafka',
+    kind: 'library',
+    category: 'Messaging',
+    ecosystems: ['zio'],
+    x: 345,
+    y: 325,
+    description:
+      'ZIO and ZStream APIs for Kafka consumers, producers, and'
+      + ' administration.',
+    compatibility:
+      'Wraps the Java Kafka client. Scope clients carefully and choose offset-'
+      + ' commit and delivery behavior explicitly.',
+    url: 'https://zio.dev/zio-kafka/',
+    source: 'ZIO Kafka documentation',
+  },
+  {
+    id: 'zio-logging',
+    name: 'ZIO Logging',
+    kind: 'library',
+    category: 'Observability',
+    ecosystems: ['zio'],
+    x: 150,
+    y: 390,
+    description:
+      'Structured logging with fiber-local context, configurable output, and'
+      + ' logging-backend integrations.',
+    compatibility:
+      'Core logging supports JVM, JS, and Native. Backend integrations are JVM'
+      + ' modules; choose the adapter matching your SLF4J version.',
+    url: 'https://zio.dev/zio-logging/',
+    source: 'ZIO Logging documentation',
   },
   {
     id: 'h34s',
@@ -86,8 +207,8 @@ export const atlasItems: AtlasItem[] = [
     ecosystems: ['zio'],
     maintainer: 'yuri4n',
     status: 'In development',
-    x: 310,
-    y: 221,
+    x: 345,
+    y: 390,
     description:
       'A Scala.js toolbox for Nuxt and Nitro server handlers.'
       + ' The current repository contains a ZIO-based playground baseline.',
@@ -110,8 +231,8 @@ export const atlasItems: AtlasItem[] = [
     kind: 'library',
     category: 'Effect system',
     ecosystems: ['typelevel'],
-    x: 137,
-    y: 375,
+    x: 150,
+    y: 575,
     description:
       'Pure asynchronous programs, structured concurrency, and safe'
       + ' resource management.',
@@ -127,8 +248,8 @@ export const atlasItems: AtlasItem[] = [
     kind: 'library',
     category: 'Streaming',
     ecosystems: ['typelevel'],
-    x: 333,
-    y: 375,
+    x: 345,
+    y: 575,
     description: 'Composable, resource-safe streams built on Cats Effect.',
     compatibility:
       'The Stream effect parameter works with Cats Effect'
@@ -143,8 +264,8 @@ export const atlasItems: AtlasItem[] = [
     kind: 'library',
     category: 'HTTP',
     ecosystems: ['typelevel'],
-    x: 137,
-    y: 452,
+    x: 150,
+    y: 650,
     description:
       'Functional HTTP clients and servers built on Cats Effect and'
       + ' FS2.',
@@ -160,8 +281,8 @@ export const atlasItems: AtlasItem[] = [
     kind: 'library',
     category: 'Database',
     ecosystems: ['typelevel'],
-    x: 333,
-    y: 452,
+    x: 345,
+    y: 650,
     description:
       'Functional JDBC access. Compose database programs and'
       + ' transact them into an effect.',
@@ -178,8 +299,8 @@ export const atlasItems: AtlasItem[] = [
     category: 'Effect system',
     ecosystems: ['kyo'],
     maintainer: 'kyo',
-    x: 794,
-    y: 245,
+    x: 735,
+    y: 290,
     description:
       'An algebraic effect toolkit with an open set of pending'
       + ' effects and composable handlers.',
@@ -196,8 +317,8 @@ export const atlasItems: AtlasItem[] = [
     category: 'Streaming',
     ecosystems: ['kyo'],
     maintainer: 'kyo',
-    x: 794,
-    y: 315,
+    x: 900,
+    y: 290,
     description:
       'Streaming computations in Kyo, with composable processing'
       + ' and explicit effects.',
@@ -209,6 +330,138 @@ export const atlasItems: AtlasItem[] = [
     source: 'Kyo Prelude streaming documentation',
   },
   {
+    id: 'kyo-http',
+    name: 'kyo-http',
+    kind: 'library',
+    category: 'HTTP',
+    ecosystems: ['kyo'],
+    maintainer: 'kyo',
+    x: 735,
+    y: 375,
+    description:
+      'HTTP clients and servers with streaming bodies, composable'
+      + ' middleware, and'
+      + ' OpenAPI support.',
+    compatibility:
+      'Uses Kyo effects. Select the documented platform backend;'
+      + ' Scala.js server'
+      + ' deployment uses Node.js.',
+    url: 'https://github.com/getkyo/kyo/tree/main/kyo-http',
+    source: 'Kyo module documentation',
+  },
+  {
+    id: 'kyo-sql',
+    name: 'kyo-sql',
+    kind: 'library',
+    category: 'Database',
+    ecosystems: ['kyo'],
+    maintainer: 'kyo',
+    x: 900,
+    y: 375,
+    description:
+      'Raw SQL and typed queries sharing one execution model, with Kyo-managed'
+      + ' database connections.',
+    compatibility:
+      'Add a driver module for your database. PostgreSQL and MySQL use native'
+      + ' wire protocols; SQLite uses an embedded native backend.',
+    url: 'https://github.com/getkyo/kyo/tree/main/kyo-sql',
+    source: 'Kyo module documentation',
+  },
+  {
+    id: 'kyo-schema',
+    name: 'kyo-schema',
+    kind: 'library',
+    category: 'Schemas & data',
+    ecosystems: ['kyo'],
+    maintainer: 'kyo',
+    x: 735,
+    y: 460,
+    description:
+      'Derive schemas, validation, lenses, structural diffs, and'
+      + ' conversions from'
+      + ' Scala types.',
+    compatibility:
+      'The core is usable without Kyo’s effect runtime. JSON, YAML,'
+      + ' Protobuf, and'
+      + ' other formats require their separate codec modules.',
+    url: 'https://github.com/getkyo/kyo/tree/main/kyo-schema',
+    source: 'Kyo module documentation',
+  },
+  {
+    id: 'kyo-ui',
+    name: 'kyo-ui',
+    kind: 'library',
+    category: 'User interfaces',
+    ecosystems: ['kyo'],
+    maintainer: 'kyo',
+    x: 900,
+    y: 545,
+    description:
+      'Reactive interfaces described as pure Scala values, with'
+      + ' browser, server-'
+      + ' driven, and SSR runners.',
+    compatibility:
+      'DOM mounting uses Scala.js. Server-driven rendering uses HTTP and'
+      + ' WebSocket handlers; choose the runner for the deployment target.',
+    url: 'https://github.com/getkyo/kyo/tree/main/kyo-ui',
+    source: 'Kyo module documentation',
+  },
+  {
+    id: 'kyo-config',
+    name: 'kyo-config',
+    kind: 'library',
+    category: 'Configuration',
+    ecosystems: ['kyo'],
+    maintainer: 'kyo',
+    x: 900,
+    y: 460,
+    description:
+      'Typed configuration and feature flags, including static settings and'
+      + ' dynamic rollout rules.',
+    compatibility:
+      'Static flags resolve once; dynamic flags evaluate for a supplied key.'
+      + ' System properties take precedence over environment variables'
+      + ' and defaults.',
+    url: 'https://github.com/getkyo/kyo/tree/main/kyo-config',
+    source: 'Kyo module documentation',
+  },
+  {
+    id: 'kyo-stm',
+    name: 'kyo-stm',
+    kind: 'library',
+    category: 'Shared state',
+    ecosystems: ['kyo'],
+    maintainer: 'kyo',
+    x: 735,
+    y: 545,
+    description:
+      'Software transactional memory for composing atomic updates across'
+      + ' references, maps, and tables.',
+    compatibility:
+      'Transaction bodies can run again after conflicts. Keep external I/O and'
+      + ' other observable side effects outside the transaction.',
+    url: 'https://github.com/getkyo/kyo/tree/main/kyo-stm',
+    source: 'Kyo module documentation',
+  },
+  {
+    id: 'kyo-test',
+    name: 'kyo-test',
+    kind: 'library',
+    category: 'Testing',
+    ecosystems: ['kyo'],
+    maintainer: 'kyo',
+    x: 735,
+    y: 630,
+    description:
+      'A test framework for Kyo computations, with asynchronous tests and'
+      + ' optional property and snapshot testing.',
+    compatibility:
+      'Suites handle their additional effects before execution. Supports JVM,'
+      + ' Scala.js, and Scala Native; distinct from the kyo-zio-test bridge.',
+    url: 'https://github.com/getkyo/kyo/tree/main/kyo-test',
+    source: 'Kyo module documentation',
+  },
+  {
     id: 'tui4s',
     name: 'tui4s',
     kind: 'library',
@@ -216,8 +469,8 @@ export const atlasItems: AtlasItem[] = [
     ecosystems: ['kyo'],
     maintainer: 'yuri4n',
     status: 'Unpublished',
-    x: 794,
-    y: 397,
+    x: 900,
+    y: 630,
     description:
       'A terminal runner for kyo-ui. Build terminal interfaces with Kyo'
       + ' and render cells through jatatui.',
@@ -235,8 +488,8 @@ export const atlasItems: AtlasItem[] = [
     kind: 'bridge',
     category: 'Effect interoperability',
     ecosystems: ['zio', 'typelevel'],
-    x: 329,
-    y: 280,
+    x: 300,
+    y: 480,
     description:
       'Bring Cats and Cats Effect abstractions into ZIO'
       + ' applications. A bridge between two established ecosystems.',
@@ -257,8 +510,8 @@ export const atlasItems: AtlasItem[] = [
     category: 'Effects, streams & layers',
     ecosystems: ['zio', 'kyo'],
     maintainer: 'kyo',
-    x: 549,
-    y: 149,
+    x: 560,
+    y: 265,
     description:
       'Bidirectional integration between Kyo and ZIO, including'
       + ' effects, streams, and layers.',
@@ -278,8 +531,8 @@ export const atlasItems: AtlasItem[] = [
     category: 'Library portability',
     ecosystems: ['zio', 'kyo', 'future', 'ox'],
     maintainer: 'kyo',
-    x: 549,
-    y: 219,
+    x: 560,
+    y: 350,
     description:
       'Write a library against a shared API and provide bindings for Kyo,'
       + ' ZIO, Scala Future, Twitter Future, and Ox.',
@@ -300,8 +553,8 @@ export const atlasItems: AtlasItem[] = [
     category: 'Protocol-based integration',
     ecosystems: ['typelevel', 'kyo'],
     maintainer: 'kyo',
-    x: 549,
-    y: 392,
+    x: 560,
+    y: 620,
     description:
       'Kyo’s adapter for connecting its streams with other'
       + ' streaming libraries, including FS2 through its own adapter.',
@@ -439,8 +692,8 @@ export const atlasItems: AtlasItem[] = [
     kind: 'proposal',
     category: 'Proposed contribution',
     ecosystems: ['zio', 'typelevel', 'kyo'],
-    x: 549,
-    y: 280,
+    x: 560,
+    y: 480,
     description:
       'A proposed community guide to composing ZIO, Typelevel'
       + ' libraries, and Kyo in one architecture.',

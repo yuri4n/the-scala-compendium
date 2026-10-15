@@ -28,10 +28,11 @@ const ecosystem = ref<EcosystemFilter>('all')
 const query = ref('')
 const bridgesOnly = ref(false)
 const view = ref<'map' | 'list'>('map')
-const selectedId = ref<string | undefined>('h34s')
+const selectedId = ref<string | undefined>('zio')
 const searchInput = useTemplateRef('search')
 const viewport = useTemplateRef('viewport')
 const details = useTemplateRef('details')
+const canvas = useTemplateRef('canvas')
 const matches = computed(() =>
   filterAtlas({
     ecosystem: ecosystem.value,
@@ -78,23 +79,25 @@ async function selectItem(id: string) {
   const heading = details.value?.querySelector('h2')
   const bounds = heading?.getBoundingClientRect()
   if (bounds && (bounds.top < 0 || bounds.bottom > window.innerHeight)) {
-    details.value?.querySelector('#selection-content')?.scrollIntoView({
+    details.value?.scrollIntoView({
       behavior: 'instant',
       block: 'start',
     })
   }
+  details.value?.focus({ preventScroll: true })
 }
-async function selectFeatured(id: string) {
-  ecosystem.value = 'all'
-  query.value = ''
-  bridgesOnly.value = false
-  selectedId.value = id
-  await nextTick()
-  const node = viewport.value?.querySelector(`[data-item="${id}"]`)
-  if (node instanceof HTMLElement && viewport.value) {
-    viewport.value.scrollLeft = node.offsetLeft - viewport.value.clientWidth / 2
+function returnToAtlas() {
+  const node = canvas.value?.querySelector(
+    `${view.value === 'map' ? '.map-node' : '.list-item'}[aria-pressed="true"]`,
+  )
+  if (node instanceof HTMLElement) {
+    node.focus({ preventScroll: true })
+    node.scrollIntoView({
+      behavior: 'instant',
+      block: 'center',
+      inline: 'center',
+    })
   }
-  await selectItem(id)
 }
 function clearFilters() {
   ecosystem.value = 'all'
@@ -144,7 +147,6 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleShortcut))
         ><UIcon name="i-lucide-info" />How to read this map</a
       >
     </div>
-    <AtlasSpotlight :selected-id="selected?.id" @select="selectFeatured" />
     <div class="atlas-toolbar">
       <div
         class="ecosystem-filters"
@@ -203,7 +205,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleShortcut))
       </div>
     </div>
     <div class="atlas-layout">
-      <div class="canvas-area">
+      <div ref="canvas" class="canvas-area">
         <div class="canvas-topline">
           <span><span class="dot live-dot" />THE ECOSYSTEM ATLAS</span>
           <div class="bridge-toggle">
@@ -248,10 +250,6 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleShortcut))
               :selected="selectedId === item.id"
               @select="selectItem"
             />
-            <div class="map-annotation" aria-hidden="true">
-              <span class="annotation-line" />Good things happen<br />at the
-              intersections.
-            </div>
           </InspiraPatternBackground>
         </div>
         <InspiraPatternBackground
@@ -327,10 +325,19 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleShortcut))
       <aside
         ref="details"
         class="detail-panel"
+        tabindex="-1"
         aria-label="Selected item details"
       >
         <div class="detail-label">
-          CONNECTION DETAILS<UIcon name="i-lucide-link" />
+          CONNECTION DETAILS
+          <ShadButton
+            v-if="selected"
+            variant="ghost"
+            size="content"
+            class="return-to-atlas"
+            @click="returnToAtlas"
+            ><UIcon name="i-lucide-arrow-up" />Back to atlas</ShadButton
+          >
         </div>
         <AtlasDetails :item="selected" />
       </aside>

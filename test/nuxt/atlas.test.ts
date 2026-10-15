@@ -6,7 +6,7 @@ describe('atlas interactions', () => {
   it('filters connections and recovers from empty search', async () => {
     const wrapper = await mountSuspended(EcosystemAtlas)
     expect(wrapper.find('#selection-content h2').text()).toBe(
-      'h34s',
+      'ZIO',
     )
     await wrapper.find('[data-item="kyo-zio"]').trigger('click')
     expect(wrapper.find('#selection-content h2').text()).toBe('kyo-zio')
@@ -20,7 +20,7 @@ describe('atlas interactions', () => {
     await wrapper.find('input[type="search"]').setValue('missing-library')
     expect(wrapper.find('.no-results').exists()).toBe(true)
     await wrapper.find('.clear-button').trigger('click')
-    expect(wrapper.findAll('.map-node')).toHaveLength(22)
+    expect(wrapper.findAll('.map-node')).toHaveLength(36)
     wrapper.unmount()
   })
 })
