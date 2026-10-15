@@ -1,0 +1,26 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  # Never cancel a run on main: it may be deploying.
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
+
+# The library is public, so the reusable workflows read it with github.token.
+# No SUBMODULES_TOKEN is needed (only a private copy of the library needs it).
+jobs:
+  ci:
+    uses: yuri4n/yuri4n.dev/.github/workflows/nuxt-ci.yml@v0.1.0
+    with:
+      library-path: vendor/yuri4n.dev
+      # The proof builds what the deploy builds.
+      nitro-preset: vercel
+      e2e: true

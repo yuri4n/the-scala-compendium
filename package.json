@@ -1,0 +1,57 @@
+{
+  "name": "the-scala-compendium",
+  "type": "module",
+  "private": true,
+  "packageManager": "pnpm@10.34.6",
+  "engines": {
+    "node": "24.x"
+  },
+  "scripts": {
+    "dev": "nuxt dev",
+    "build": "nuxt build",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "typecheck": "nuxt typecheck",
+    "test": "vitest run",
+    "test:unit": "vitest run --project unit",
+    "test:nuxt": "vitest run --project nuxt",
+    "test:coverage": "vitest run --coverage",
+    "test:e2e": "playwright test",
+    "test:e2e:ui": "playwright test --ui",
+    "lib:init": "git submodule update --init --recursive"
+  },
+  "dependencies": {
+    "@iconify-json/lucide": "^1.2.106",
+    "@nuxt/ui": "^4.11.3",
+    "@vercel/analytics": "2.0.1",
+    "@yuri4n/nuxt-base": "workspace:*",
+    "@yuri4n/nuxt-ui": "workspace:*",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "nuxt": "^4.6.0",
+    "reka-ui": "2.10.5",
+    "tailwind-merge": "^3.7.0",
+    "tailwindcss": "^4.3.3",
+    "vue": "^3.5.43",
+    "zod": "^4.6.5"
+  },
+  "devDependencies": {
+    "@nuxt/eslint": "^1.17.0",
+    "@nuxt/test-utils": "^4.3.3",
+    "@playwright/test": "^1.64.0",
+    "@types/node": "^24.0.0",
+    "@vitest/coverage-v8": "^5.0.3",
+    "@vue/test-utils": "^2.5.1",
+    "@yuri4n/eslint-config": "workspace:*",
+    "eslint": "^10.12.0",
+    "happy-dom": "^20.9.0",
+    "jiti": "^2.7.0",
+    "playwright-core": "^1.64.0",
+    "typescript": "~6.0.3",
+    "vitest": "^5.0.3",
+    "vue-tsc": "^3.3.12"
+  }
+}

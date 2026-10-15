@@ -1,0 +1,31 @@
+# Keys are in the order of the antfu pnpm-workspace sort rule (yaml/sort-keys).
+
+# Supply chain. Renovate waits 25 h, which is longer.
+blockExoticSubdeps: true
+minimumReleaseAge: 1440
+trustPolicy: no-downgrade
+trustPolicyIgnoreAfter: 525600
+
+# The template root is the app. The library's packages join this workspace so
+# `workspace:*` resolves and their dependencies install. List only what this app
+# uses. Run pnpm in this directory, never inside vendor/ (pnpm would use the
+# library's own pnpm-workspace.yaml there).
+packages:
+  - vendor/yuri4n.dev/layers/base
+  - vendor/yuri4n.dev/layers/ui
+  - vendor/yuri4n.dev/packages/eslint-config
+
+# One copy, so @nuxt/eslint withNuxt() and antfu() compose (two copies break
+# the merge of their config items).
+overrides:
+  eslint-flat-config-utils: ^3.2.0
+
+# Build scripts: allow only what is needed. false = install without running the
+# script.
+allowBuilds:
+  '@parcel/watcher': false
+  '@tailwindcss/oxide': false
+  esbuild: false
+  sharp: false
+  unrs-resolver: false
+  vue-demi: false

@@ -1,0 +1,43 @@
+@import '@yuri4n/nuxt-ui/app/assets/css/base.css';
+@import './atlas.css';
+
+@theme {
+  --font-sans: Inter, system-ui, sans-serif;
+  --font-serif: Alegreya, serif;
+  --font-sans-serif: 'Alegreya Sans', sans-serif;
+  --font-mono: Inconsolata, monospace;
+}
+
+/* The app owns the skin; shared layers own the semantic contract. */
+:root,
+.dark {
+  color-scheme: light;
+  --background: #faf9f6;
+  --foreground: #29292e;
+  --card: #fffefa;
+  --card-foreground: var(--foreground);
+  --popover: var(--card);
+  --popover-foreground: var(--foreground);
+  --primary: #74558e;
+  --primary-hover: #654778;
+  --primary-foreground: #fffafc;
+  --secondary: #e8e1ed;
+  --secondary-foreground: #614f6d;
+  --muted: #f3f0eb;
+  --muted-foreground: #6c626f;
+  --accent: #efe8f5;
+  --accent-foreground: #6c4b87;
+  --destructive: #b4515f;
+  --border: #e3ddd8;
+  --input: #958a9b;
+  --ring: #a78aba;
+  --code: var(--card);
+  --ecosystem-zio: #9e5c24;
+  --ecosystem-typelevel: #b45565;
+  --ecosystem-kyo: #8059a9;
+  --success: #637c51;
+  --surface-zio: #e8b27609;
+  --surface-typelevel: #e9a0a50a;
+  --surface-kyo: #bba6de0b;
+  --shadow-neutral: #22222212;
+}

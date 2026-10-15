@@ -1,0 +1,4 @@
+[submodule "vendor/yuri4n.dev"]
+	path = vendor/yuri4n.dev
+	url = https://github.com/yuri4n/yuri4n.dev.git
+	branch = v0.1.0
