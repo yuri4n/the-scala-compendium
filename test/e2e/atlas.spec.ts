@@ -1,4 +1,35 @@
+import type { Locator, Page } from '@playwright/test'
 import { expect, test } from '@playwright/test'
+
+async function expectFloatingPanel(page: Page, anchor: Locator) {
+  const dialog = page.getByRole('dialog')
+  await expect(dialog).toHaveCount(1)
+  await expect(dialog).toBeVisible()
+  await expect.poll(async () => {
+    const panel = await dialog.boundingBox()
+    const node = await anchor.boundingBox()
+    const viewport = page.viewportSize()
+    if (!panel || !node || !viewport)
+      return false
+    const horizontalGap = Math.max(
+      panel.x - node.x - node.width,
+      node.x - panel.x - panel.width,
+      0,
+    )
+    const verticalGap = Math.max(
+      panel.y - node.y - node.height,
+      node.y - panel.y - panel.height,
+      0,
+    )
+    return (
+      panel.x >= 10
+      && panel.y >= 10
+      && panel.x + panel.width <= viewport.width - 10
+      && panel.y + panel.height <= viewport.height - 10
+      && Math.hypot(horizontalGap, verticalGap) <= 28
+    )
+  }).toBe(true)
+}
 
 // The root Playwright config starts or reuses a production server.
 test.beforeEach(async ({ page }) => {
@@ -30,17 +61,30 @@ test('explore bridges and recover search and keyboard focus', async ({
     'kyo-zio, Community bridge, ZIO and Kyo',
   )
   await expect(bridge).toHaveAccessibleDescription('Kyo project')
+  await expect(page.getByRole('dialog')).toHaveCount(0)
+  await bridge.scrollIntoViewIfNeeded()
+  const scrollBefore = await page.evaluate(() => window.scrollY)
+  const mapScrollBefore = await page.locator('.map-viewport').evaluate(
+    element => element.scrollLeft,
+  )
   await bridge.click()
   await expect(page.locator('#selection-content h2')).toHaveText('kyo-zio')
   await expect(page.locator('.detail-kind')).toHaveText('Community bridge')
   await expect(
-    page.getByRole('complementary', { name: 'Selected item details' }),
+    page.getByRole(
+      'dialog',
+      { name: 'kyo-zio, Community bridge, ZIO and Kyo', exact: true },
+    ),
   )
-    .toBeFocused()
-  await page.keyboard.press('Tab')
-  const back = page.getByRole('button', { name: 'Back to atlas' })
-  await expect(back).toBeFocused()
-  await expect(back).toBeInViewport()
+    .toBeVisible()
+  const close = page.getByRole('button', { name: 'Close details' })
+  await expect(close).toBeFocused()
+  await expect(close).toBeInViewport()
+  await expectFloatingPanel(page, bridge)
+  expect(await page.evaluate(() => window.scrollY)).toBe(scrollBefore)
+  expect(await page.locator('.map-viewport').evaluate(
+    element => element.scrollLeft,
+  )).toBe(mapScrollBefore)
 
   await page.getByRole('button', { name: 'Kyo', exact: true }).click()
   await page.getByRole('switch', { name: 'Bridges only' }).click()
@@ -79,7 +123,7 @@ test('explore bridges and recover search and keyboard focus', async ({
     'href',
     'https://ziohttp.com',
   )
-  await back.click()
+  await close.click()
   await expect(page.locator('.list-item[data-item="zio-http"]')).toBeFocused()
   await page.locator('.list-item[data-item="kyo-ui"]').click()
   await expect(page.locator('.docs-link')).toHaveAttribute(
@@ -114,7 +158,7 @@ test('show Play once and find it through either membership', async ({
     )
     await expect(page.locator('.membership')).toContainText('Apache Pekko')
     await expect(page.locator('.membership')).toContainText('Scala Future')
-    await page.getByRole('button', { name: 'Back to atlas' }).click()
+    await page.getByRole('button', { name: 'Close details' }).click()
     await expect(play).toBeFocused()
   }
   // Both filters include Play, but it must still have one map node.
@@ -154,6 +198,10 @@ test('keep the mobile map and list usable without page overflow', async ({
   await expect(page.locator('#selection-content h2')).toBeInViewport()
   await expect(page.locator('#selection-content h2')).toHaveText('tui4s')
   await expect(page.locator('.project-status')).toHaveText('Unpublished')
+  await expectFloatingPanel(page, tui4s)
+  expect(await page.evaluate(
+    () => document.documentElement.scrollWidth <= window.innerWidth,
+  )).toBe(true)
   await expect(page.locator('.docs-link')).toHaveAttribute(
     'href',
     'https://github.com/yuri4n/tui4s',
@@ -161,12 +209,14 @@ test('keep the mobile map and list usable without page overflow', async ({
   expect(await page.locator('.map-viewport').evaluate(
     element => element.scrollWidth > element.clientWidth,
   )).toBe(true)
-  await page.getByRole('button', { name: 'Back to atlas' }).click()
+  await page.getByRole('button', { name: 'Close details' }).click()
   await expect(tui4s).toBeFocused()
 
   await page.getByRole('searchbox').fill('')
   await page.getByRole('button', { name: 'List view' }).click()
-  await page.locator('.list-item[data-item="kyo-zio"]').click()
+  const listBridge = page.locator('.list-item[data-item="kyo-zio"]')
+  await listBridge.click()
+  await expectFloatingPanel(page, listBridge)
   await expect(page.locator('#selection-content h2')).toHaveText('kyo-zio')
   await expect(page.locator('.docs-link')).toHaveAttribute(
     'href',
@@ -289,3 +339,88 @@ test('combine ecosystems with OR and AND and reset empty matches', async ({
   await expect(page.locator('.list-item[data-item="cats-effect"]'))
     .toBeVisible()
 })
+
+test('open details by keyboard and dismiss without losing the map', async ({
+  page,
+}) => {
+  const bridge = page.locator('.map-node[data-item="kyo-zio"]')
+  const dialog = page.getByRole('dialog')
+  const close = page.getByRole('button', { name: 'Close details' })
+  await bridge.scrollIntoViewIfNeeded()
+  await bridge.focus()
+  await page.keyboard.press('Enter')
+  await expect(dialog).toHaveAccessibleName(
+    'kyo-zio, Community bridge, ZIO and Kyo',
+  )
+  await expect(bridge).toHaveAttribute('aria-expanded', 'true')
+  await expect(close).toBeFocused()
+  await page.keyboard.press('Escape')
+  await expect(dialog).toHaveCount(0)
+  await expect(bridge).toBeFocused()
+  await expect(bridge).toHaveAttribute('aria-expanded', 'false')
+
+  await page.keyboard.press('Space')
+  await expect(dialog).toBeVisible()
+  await close.click()
+  await expect(dialog).toHaveCount(0)
+  await expect(bridge).toBeFocused()
+
+  await bridge.click()
+  await expect(dialog).toBeVisible()
+  await page.getByRole('searchbox').click()
+  await expect(dialog).toHaveCount(0)
+  await expect(page.getByRole('searchbox')).toBeFocused()
+
+  // A second node replaces the inspector, with only one dialog mounted.
+  await bridge.click()
+  const zio = page.locator('.map-node[data-item="zio"]')
+  await zio.click()
+  await expect(dialog).toHaveCount(1)
+  await expect(dialog).toHaveAccessibleName('ZIO, Library, ZIO')
+  await expect(bridge).toHaveAttribute('aria-expanded', 'false')
+  await expect(zio).toHaveAttribute('aria-expanded', 'true')
+  await page.keyboard.press('/')
+  await expect(page.getByRole('searchbox')).toBeFocused()
+  await expect(dialog).toHaveCount(0)
+})
+
+for (const width of [1280, 390]) {
+  test(`scroll the page over the diagram at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 })
+    const map = page.locator('.map-viewport')
+    await map.evaluate((element) => {
+      window.scrollTo({
+        top: window.scrollY + element.getBoundingClientRect().top - 80,
+        behavior: 'instant',
+      })
+    })
+
+    // Use real wheel input: computed CSS alone cannot prove scroll chaining.
+    for (const target of ['background', 'node']) {
+      if (target === 'background')
+        await map.hover({ position: { x: 20, y: 250 } })
+      else
+        await page.locator('.map-node[data-item="zio"]').hover()
+      const before = await page.evaluate(() => window.scrollY)
+      await page.mouse.wheel(0, 160)
+      await expect.poll(() => page.evaluate(() => window.scrollY))
+        .toBeGreaterThan(before + 100)
+      const after = await page.evaluate(() => window.scrollY)
+      await page.mouse.wheel(0, -160)
+      await expect.poll(() => page.evaluate(() => window.scrollY))
+        .toBeLessThan(after - 100)
+      expect(await map.evaluate(element => element.scrollTop)).toBe(0)
+    }
+
+    if (width < 1100) {
+      await map.hover({ position: { x: 20, y: 250 } })
+      const before = await map.evaluate(element => element.scrollLeft)
+      const pageTop = await page.evaluate(() => window.scrollY)
+      await page.mouse.wheel(160, 0)
+      await expect.poll(() => map.evaluate(element => element.scrollLeft))
+        .toBeGreaterThan(before + 100)
+      expect(await page.evaluate(() => window.scrollY)).toBe(pageTop)
+      expect(await page.evaluate(() => window.scrollX)).toBe(0)
+    }
+  })
+}

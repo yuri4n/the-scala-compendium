@@ -58,6 +58,7 @@
     "mobileHint": "Role para os lados para explorar o mapa",
     "listHint": "As mesmas conexões, em uma lista",
     "details": "DETALHES DA CONEXÃO",
+    "closeDetails": "Fechar detalhes",
     "detailsLabel": "Detalhes do item selecionado",
     "back": "Voltar ao atlas",
     "selected": "Selecionado: {name}. Detalhes atualizados.",

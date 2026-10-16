@@ -58,6 +58,7 @@
     "mobileHint": "Scroll sideways to explore the map",
     "listHint": "The same connections, in a list",
     "details": "CONNECTION DETAILS",
+    "closeDetails": "Close details",
     "detailsLabel": "Selected item details",
     "back": "Back to atlas",
     "selected": "Selected: {name}. Details updated.",

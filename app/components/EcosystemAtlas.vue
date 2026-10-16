@@ -37,11 +37,9 @@ const matchMode = ref<EcosystemMatch>('any')
 const query = ref(typeof route.query.q === 'string' ? route.query.q : '')
 const bridgesOnly = ref(false)
 const view = ref<'map' | 'list'>('map')
-const selectedId = ref<string | undefined>('zio')
+const selectedId = ref<string>()
 const searchInput = useTemplateRef('search')
 const viewport = useTemplateRef('viewport')
-const details = useTemplateRef('details')
-const canvas = useTemplateRef('canvas')
 const matches = computed(() =>
   filterAtlas(
     {
@@ -94,42 +92,14 @@ const activeRegions = computed(
   () => new Set(matches.value.flatMap((item) => item.ecosystems)),
 )
 
-watch(
-  matches,
-  (items) => {
-    if (!items.some((item) => item.id === selectedId.value))
-      selectedId.value = items[0]?.id
-  },
-  { immediate: true },
-)
+// A changed view or result set dismisses the inspector; filtering never opens one.
+watch([matches, view], () => {
+  selectedId.value = undefined
+})
 
-async function selectItem(id: string) {
-  selectedId.value = id
-  await nextTick()
-  const heading = details.value?.querySelector('h2')
-  const bounds = heading?.getBoundingClientRect()
-  if (bounds && (bounds.top < 0 || bounds.bottom > window.innerHeight)) {
-    details.value?.scrollIntoView({
-      behavior: 'instant',
-      block: 'start',
-    })
-  }
-  details.value?.focus({ preventScroll: true })
-}
-function returnToAtlas() {
-  const node = canvas.value?.querySelector(
-    `${view.value === 'map' ? '.map-node' : '.list-item'}[aria-pressed="true"]`,
-  )
-  if (node instanceof HTMLElement) {
-    const toolbox = node.closest('details')
-    if (toolbox) toolbox.open = true
-    node.focus({ preventScroll: true })
-    node.scrollIntoView({
-      behavior: 'instant',
-      block: 'center',
-      inline: 'center',
-    })
-  }
+function selectItem(id: string, open: boolean) {
+  if (open) selectedId.value = id
+  else if (selectedId.value === id) selectedId.value = undefined
 }
 watch(
   () => route.query.q,
@@ -271,7 +241,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleShortcut))
       </div>
     </div>
     <div class="atlas-layout">
-      <div ref="canvas" class="canvas-area">
+      <div class="canvas-area">
         <div class="canvas-topline">
           <span><span class="dot live-dot" />{{ t('atlas.canvasTitle') }}</span>
           <div class="bridge-toggle">
@@ -314,7 +284,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleShortcut))
               v-for="item in diagramItems"
               :key="item.id"
               :item="item"
-              :selected="selectedId === item.id"
+              :selected="view === 'map' && selectedId === item.id"
               @select="selectItem"
             />
           </InspiraPatternBackground>
@@ -341,7 +311,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleShortcut))
                 v-for="item in group.items"
                 :key="item.id"
                 :item="item"
-                :selected="selectedId === item.id"
+                :selected="view === 'map' && selectedId === item.id"
                 @select="selectItem"
               />
             </section>
@@ -375,7 +345,7 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleShortcut))
                 v-for="item in group.items"
                 :key="item.id"
                 :item="item"
-                :selected="selectedId === item.id"
+                :selected="view === 'map' && selectedId === item.id"
                 @select="selectItem"
               />
             </section>
@@ -418,25 +388,6 @@ onBeforeUnmount(() => document.removeEventListener('keydown', handleShortcut))
           </span>
         </div>
       </div>
-      <aside
-        ref="details"
-        class="detail-panel"
-        tabindex="-1"
-        :aria-label="t('atlas.detailsLabel')"
-      >
-        <div class="detail-label">
-          {{ t('atlas.details') }}
-          <ShadButton
-            v-if="selected"
-            variant="ghost"
-            size="content"
-            class="return-to-atlas"
-            @click="returnToAtlas"
-            ><UIcon name="i-lucide-arrow-up" />{{ t('atlas.back') }}</ShadButton
-          >
-        </div>
-        <AtlasDetails :item="selected" />
-      </aside>
     </div>
     <p class="sr-only" role="status">
       {{
