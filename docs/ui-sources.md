@@ -18,7 +18,10 @@ Local adaptations use the starter's `cn` helper, literal prop unions,
 destructured props, typed slots, explicit attribute forwarding, and a
 string-only search model with an exposed focus method. High-frequency controls
 stay stationary. `components.json` records the registry and existing skin.
-Reka is shared with Nuxt UI; no React runtime is added.
+Reka is shared with Nuxt UI; no React runtime is added. Atlas inspectors use
+the installed Reka Popover primitives directly with shadcn-vue buttons. Reka
+provides portal rendering, collision positioning, dismissal, and focus return;
+the app owns the content and semantic styles.
 
 License: [shadcn-vue MIT license](licenses/shadcn-vue.txt).
 

@@ -7,7 +7,7 @@ The main interface is an interactive Venn-style atlas. ZIO, Typelevel, and Kyo
 occupy overlapping regions; libraries sit inside their ecosystem and bridges
 sit in the intersections. Search, multi-select ecosystem filters with OR/AND
 matching, a bridges-only filter,
-and a list view expose the same typed catalogue. Selection opens documentation
+and a list view expose the same typed catalogue. Selection opens a floating inspector beside the node with documentation
 and compatibility notes. Proposed guides are distinct from published bridges.
 
 The catalogue includes yuri4n’s tui4s and h34s and Kyo’s integration modules,
@@ -74,8 +74,10 @@ the saved environment install script contains the exact commands.
 - `i18n/locales/`: complete English, Spanish, and Brazilian Portuguese content.
 - `vendor/yuri4n.dev`: unmodified UI, base, preferences, and ESLint layers.
 
-The map scrolls horizontally on narrow screens, while the detail panel stacks
-below it. List view provides a compact alternative. All Lucide icons are
+The set outlines have staggered edges while their overlaps retain the documented
+connections. The map scrolls horizontally on narrow screens. A floating inspector
+opens beside the selected node and adjusts to the viewport; Escape, its close
+button, or an outside click dismisses it. List view provides a compact alternative. All Lucide icons are
 bundled locally. Font families follow the template with system fallbacks;
 remote font providers are disabled so rendering does not require font-service
 access.

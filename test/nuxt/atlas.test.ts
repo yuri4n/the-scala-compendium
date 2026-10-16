@@ -17,7 +17,11 @@ describe('atlas interactions', () => {
       expect(wrapper.findAll('.map-node[data-item="play"]')).toHaveLength(1)
 
       await wrapper.get('[data-item="kyo-zio"]').trigger('click')
-      expect(wrapper.get('#selection-content h2').text()).toBe('kyo-zio')
+      await expect.poll(
+        () => document.querySelector('#selection-content h2')?.textContent,
+      ).toBe(
+        'kyo-zio',
+      )
       const kyoFilter = wrapper.findAll('.filter')
         .find(button => button.text() === 'Kyo')
       if (!kyoFilter)
@@ -138,7 +142,9 @@ describe('atlas interactions', () => {
         if (!node)
           throw new Error(`Play is missing from the ${label} map`)
         await node.trigger('click')
-        expect(wrapper.get('#selection-content h2').text()).toBe(
+        await expect.poll(
+          () => document.querySelector('#selection-content h2')?.textContent,
+        ).toBe(
           'Play Framework',
         )
       }
