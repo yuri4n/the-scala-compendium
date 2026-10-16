@@ -24,6 +24,11 @@ Pekko/Future memberships but renders once in the unfiltered map.
 
 ## Resolved findings
 
+- Wheel input over the diagram now scrolls the page vertically. Horizontal
+  panning stays within the map; narrow screens use the full diagram height
+  without a second vertical scroll area. Browser checks cover background and
+  node hover, both vertical directions, and horizontal panning.
+
 - Selection opens a nonmodal inspector without scrolling away from the map.
   Close and Escape restore focus to the node; outside clicks retain their
   intended focus. Filters and view changes dismiss the inspector. Map and list
@@ -51,7 +56,7 @@ list view remains available. All 27 localized guide routes returned 200 and
 rendered their steps, related tools, and correct HTML language without page
 width overflow.
 
-Twenty-one unit/component tests and eleven production-browser tests pass. Browser
+Twenty-one unit/component tests and thirteen production-browser tests pass. Browser
 coverage includes combined filters, recovery, owner status, unique nodes,
 anchored placement, preserved scroll position, keyboard opening and return
 focus, outside dismissal, mobile animation overflow, browser language detection,

@@ -383,3 +383,44 @@ test('open details by keyboard and dismiss without losing the map', async ({
   await expect(page.getByRole('searchbox')).toBeFocused()
   await expect(dialog).toHaveCount(0)
 })
+
+for (const width of [1280, 390]) {
+  test(`scroll the page over the diagram at ${width}px`, async ({ page }) => {
+    await page.setViewportSize({ width, height: 900 })
+    const map = page.locator('.map-viewport')
+    await map.evaluate((element) => {
+      window.scrollTo({
+        top: window.scrollY + element.getBoundingClientRect().top - 80,
+        behavior: 'instant',
+      })
+    })
+
+    // Use real wheel input: computed CSS alone cannot prove scroll chaining.
+    for (const target of ['background', 'node']) {
+      if (target === 'background')
+        await map.hover({ position: { x: 20, y: 250 } })
+      else
+        await page.locator('.map-node[data-item="zio"]').hover()
+      const before = await page.evaluate(() => window.scrollY)
+      await page.mouse.wheel(0, 160)
+      await expect.poll(() => page.evaluate(() => window.scrollY))
+        .toBeGreaterThan(before + 100)
+      const after = await page.evaluate(() => window.scrollY)
+      await page.mouse.wheel(0, -160)
+      await expect.poll(() => page.evaluate(() => window.scrollY))
+        .toBeLessThan(after - 100)
+      expect(await map.evaluate(element => element.scrollTop)).toBe(0)
+    }
+
+    if (width < 1100) {
+      await map.hover({ position: { x: 20, y: 250 } })
+      const before = await map.evaluate(element => element.scrollLeft)
+      const pageTop = await page.evaluate(() => window.scrollY)
+      await page.mouse.wheel(160, 0)
+      await expect.poll(() => map.evaluate(element => element.scrollLeft))
+        .toBeGreaterThan(before + 100)
+      expect(await page.evaluate(() => window.scrollY)).toBe(pageTop)
+      expect(await page.evaluate(() => window.scrollX)).toBe(0)
+    }
+  })
+}

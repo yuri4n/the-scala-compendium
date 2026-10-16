@@ -406,7 +406,7 @@ h1 span {
 }
 .map-viewport {
   overflow: auto;
-  overscroll-behavior: contain;
+  overscroll-behavior: contain auto;
   flex: 0 0 auto;
   scrollbar-width: thin;
   scrollbar-color: var(--muted-foreground) transparent;
@@ -1710,9 +1710,6 @@ h2 {
   }
   .no-results p {
     font-size: 11px;
-  }
-  .map-viewport {
-    max-height: 680px;
   }
 }
 @media (forced-colors: active) {
